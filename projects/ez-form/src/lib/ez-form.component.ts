@@ -62,7 +62,6 @@ export class EzFormComponent implements OnInit {
         } else {
           this.mensajesErrores[nombreControl] = this.mensajesErrorDefecto;
         }
-        console.log(this.mensajesErrores);
       }
     );
     return controles;
