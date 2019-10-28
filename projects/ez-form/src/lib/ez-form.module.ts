@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { EzFormComponent } from './ez-form.component';
 import {CommonModule} from '@angular/common';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {ToasterModule} from 'angular2-toaster';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 
 
@@ -11,6 +13,8 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
+    ToasterModule.forRoot(),
+    BrowserAnimationsModule,
   ],
   exports: [EzFormComponent]
 })
