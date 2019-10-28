@@ -8,5 +8,10 @@
         {{opcion.nombre}}
       </option>
     </select>
+    <div *ngIf="verificarMensajeError(control.nombre)" class="alert alert-primary" role="alert">
+      <ul>
+        <li *ngFor="let error of obtenerMensajesError(control.nombre)">{{error}}</li>
+      </ul>
+    </div>
   </div>
 </form>

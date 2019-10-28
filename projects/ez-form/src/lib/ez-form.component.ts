@@ -28,17 +28,13 @@ export class EzFormComponent implements OnInit {
   }
 
   public config: ToasterConfig =
-    new ToasterConfig({
-      showCloseButton: true,
-      tapToDismiss: false,
-      timeout: 1,
-      limit: 1
-    });
+    new ToasterConfig({animation: 'fade', limit: 1});
 
   ngOnInit() {
     this.contruirFormulario();
     this.escucharFormulario();
     this.escucharCampos();
+    console.log(this.mensajesErrores);
   }
 
   protected contruirFormulario() {
@@ -130,5 +126,14 @@ export class EzFormComponent implements OnInit {
           }
         }
       );
+  }
+
+  protected verificarMensajeError(nombreControl) {
+    const tieneMensajesError = this.objetoArreglosErrores[nombreControl] && this.objetoArreglosErrores[nombreControl].length > 0;
+    return tieneMensajesError;
+  }
+
+  obtenerMensajesError(nombreControl) {
+    return this.objetoArreglosErrores[nombreControl];
   }
 }
