@@ -31,7 +31,7 @@ export class EzFormComponent implements OnInit {
     new ToasterConfig({
       showCloseButton: true,
       tapToDismiss: false,
-      timeout: 0,
+      timeout: 1,
       limit: 1
     });
 
