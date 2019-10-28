@@ -124,6 +124,41 @@
           }
         }
       }
+    },
+    "ez-form": {
+      "projectType": "library",
+      "root": "projects/ez-form",
+      "sourceRoot": "projects/ez-form/src",
+      "prefix": "NgxMat",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/ez-form/tsconfig.lib.json",
+            "project": "projects/ez-form/ng-package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/ez-form/src/test.ts",
+            "tsConfig": "projects/ez-form/tsconfig.spec.json",
+            "karmaConfig": "projects/ez-form/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/ez-form/tsconfig.lib.json",
+              "projects/ez-form/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
     }},
   "defaultProject": "formularios"
 }

@@ -1,0 +1,6 @@
+<form>
+  <div *ngFor="let control of configuracion">
+    <label for={{control.nombre}}>{{control.nombre}}</label>
+    <input type="text" id={{control.nombre}} name={{control.nombre}}>
+  </div>
+</form>
