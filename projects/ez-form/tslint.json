@@ -11,7 +11,8 @@
       false,
       "element",
       "ngx-mat",
-      "kebab-case"
+      "kebab-case",
+      "ez"
     ]
   }
 }

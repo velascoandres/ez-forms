@@ -33,7 +33,7 @@ export class EzFormComponent implements OnInit {
         const valorDefecto = itemConfiguracion.valor;
         const validadores = [...itemConfiguracion.validadores];
         controles[nombreControl] = [valorDefecto, validadores];
-        console.log([valorDefecto, validadores])
+        console.log([valorDefecto, validadores]);
       }
     );
     console.log(controles);

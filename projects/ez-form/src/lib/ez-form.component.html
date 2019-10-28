@@ -1,6 +1,11 @@
 <form>
   <div *ngFor="let control of configuracion">
     <label for={{control.nombre}}>{{control.nombre}}</label>
-    <input type="text" id={{control.nombre}} name={{control.nombre}}>
+    <input *ngIf="control.tipo.nombreTipo === 'input'" type="text" id={{control.nombre}} name={{control.nombre}}>
+    <select *ngIf="control.tipo.nombreTipo === 'select'" name="{{control.nombre}}" id="{{control.nombre}}+1">
+      <option value={{opcion.valor}} *ngFor="let opcion of control.tipo.opciones">
+        {{opcion.nombre}}
+      </option>
+    </select>
   </div>
 </form>
