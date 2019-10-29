@@ -1,21 +1,27 @@
 <toaster-container [toasterconfig]="config"></toaster-container>
+
 <form [formGroup]="formulario" class="filled">
-  <div *ngFor="let control of configuracion">
-    <mat-form-field  appearance="outline" class="filled">
-      <mat-label>{{control.nombre}}</mat-label>
-      <input  matInput *ngIf="control.tipo.nombreTipo === 'input'" type="text" id={{control.nombre}} name={{control.nombre}}
-             formControlName={{control.nombre}}>
-      <mat-select  *ngIf="control.tipo.nombreTipo === 'select'"
-              formControlName={{control.nombre}}>
-        <mat-option value={{opcion.valor}} *ngFor="let opcion of control.tipo.opciones">
-          {{opcion.nombre}}
-        </mat-option>
-      </mat-select>
-      </mat-form-field>
+  <div class="d-flex justify-content-center">
+    <div class="p-2 flex-fill">
+      <div *ngFor="let control of configuracion">
+        <mat-form-field  appearance="outline" class="filled">
+          <mat-label>{{control.nombre}}</mat-label>
+          <input  matInput *ngIf="control.tipo.nombreTipo === 'input'" type="text" id={{control.nombre}} name={{control.nombre}}
+                  formControlName={{control.nombre}}>
+          <mat-select  *ngIf="control.tipo.nombreTipo === 'select'"
+                       formControlName={{control.nombre}}>
+            <mat-option value={{opcion.valor}} *ngFor="let opcion of control.tipo.opciones">
+              {{opcion.nombre}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
         <div *ngIf="verificarMensajeError(control.nombre)" class="alert alert-primary" role="alert">
           <ul>
             <li *ngFor="let error of obtenerMensajesError(control.nombre)">{{error}}</li>
           </ul>
         </div>
-  </div>
+      </div>
+    </div>
+    </div>
+
 </form>
