@@ -32,7 +32,11 @@ export class AppComponent {
     {
       nombre: 'estado-civil',
       validadores: [Validators.required],
-      tipo: {nombreTipo: 'select', opciones: [{valor: 1, nombre: 'casado'}, {valor: 2, nombre: 'soltero'}]},
+      tipo: {
+        nombreTipo: 'select',
+        opciones: [{valor: 0, nombre: 'Selecione'}, {valor: 1, nombre: 'casado'}, {valor: 2, nombre: 'soltero'}]
+      },
+      valor: 0
     },
   ];
 }
