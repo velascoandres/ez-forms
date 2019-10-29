@@ -1,7 +1,7 @@
 <toaster-container [toasterconfig]="config"></toaster-container>
-<form [formGroup]="formulario">
+<form [formGroup]="formulario" class="filled">
   <div *ngFor="let control of configuracion">
-    <mat-form-field  appearance="outline">
+    <mat-form-field  appearance="outline" class="filled">
       <mat-label>{{control.nombre}}</mat-label>
       <input  matInput *ngIf="control.tipo.nombreTipo === 'input'" type="text" id={{control.nombre}} name={{control.nombre}}
              formControlName={{control.nombre}}>

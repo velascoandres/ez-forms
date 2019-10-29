@@ -5,7 +5,7 @@ import {ToasterConfig, ToasterService} from 'angular2-toaster';
 @Component({
   selector: 'ez-form',
   templateUrl: 'ez-form.component.html',
-  styles: []
+  styleUrls: ['ez-form.component.sass'],
 })
 export class EzFormComponent implements OnInit {
   formulario: FormGroup;
