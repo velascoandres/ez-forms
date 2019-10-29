@@ -6,6 +6,7 @@ import {ToasterModule} from 'angular2-toaster';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
+import {MatOptionModule, MatSelectModule} from '@angular/material';
 
 
 
@@ -19,6 +20,8 @@ import {MatInputModule} from '@angular/material/input';
     BrowserAnimationsModule,
     MatFormFieldModule,
     MatInputModule,
+    MatOptionModule,
+    MatSelectModule,
   ],
   exports: [EzFormComponent]
 })

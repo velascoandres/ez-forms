@@ -5,12 +5,12 @@
       <mat-label>{{control.nombre}}</mat-label>
       <input  matInput *ngIf="control.tipo.nombreTipo === 'input'" type="text" id={{control.nombre}} name={{control.nombre}}
              formControlName={{control.nombre}}>
-      <select matNativeControl  matSelect *ngIf="control.tipo.nombreTipo === 'select'" name="{{control.nombre}}" id="{{control.nombre}}+1"
+      <mat-select  *ngIf="control.tipo.nombreTipo === 'select'"
               formControlName={{control.nombre}}>
-        <option value={{opcion.valor}} *ngFor="let opcion of control.tipo.opciones">
+        <mat-option value={{opcion.valor}} *ngFor="let opcion of control.tipo.opciones">
           {{opcion.nombre}}
-        </option>
-      </select>
+        </mat-option>
+      </mat-select>
       </mat-form-field>
         <div *ngIf="verificarMensajeError(control.nombre)" class="alert alert-primary" role="alert">
           <ul>

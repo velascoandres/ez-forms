@@ -31,13 +31,13 @@ export class EzFormComponent implements OnInit {
     new ToasterConfig({animation: 'fade', limit: 1});
 
   ngOnInit() {
-    this.contruirFormulario();
+    this.construirFormulario();
     this.escucharFormulario();
     this.escucharCampos();
     console.log(this.mensajesErrores);
   }
 
-  protected contruirFormulario() {
+  protected construirFormulario() {
     const controlesFB = this.generarControles(this.configuracion);
     this.formulario = this.fb.group(
       controlesFB,

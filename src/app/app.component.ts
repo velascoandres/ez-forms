@@ -34,7 +34,7 @@ export class AppComponent {
       validadores: [Validators.required],
       tipo: {
         nombreTipo: 'select',
-        opciones: [{valor: 0, nombre: 'Selecione'}, {valor: 1, nombre: 'casado'}, {valor: 2, nombre: 'soltero'}]
+        opciones: [{valor: '', nombre: 'Selecione'}, {valor: 1, nombre: 'casado'}, {valor: 2, nombre: 'soltero'}]
       },
       valor: 0
     },
