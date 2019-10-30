@@ -7,9 +7,9 @@
         <mat-form-field  appearance="outline" class="filled">
           <mat-label>{{control.nombre}}</mat-label>
           <input  matInput *ngIf="control.tipo.nombreTipo === 'input'" type="text" id={{control.nombre}} name={{control.nombre}}
-                  formControlName={{control.nombre}}>
+                  formControlName={{control.nombre}} placeholder="{{control.placeholder ? control.placeholder : ''}}">
           <mat-select  *ngIf="control.tipo.nombreTipo === 'select'"
-                       formControlName={{control.nombre}}>
+                       formControlName={{control.nombre}} placeholder="{{control.placeholder ? control.placeholder : ''}}">
             <mat-option value={{opcion.valor}} *ngFor="let opcion of control.tipo.opciones">
               {{opcion.nombre}}
             </mat-option>

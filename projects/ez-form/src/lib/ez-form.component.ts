@@ -10,6 +10,8 @@ import {ToasterConfig, ToasterService} from 'angular2-toaster';
 export class EzFormComponent implements OnInit {
   formulario: FormGroup;
   @Input()
+  registro;
+  @Input()
   configuracion = [];
   mensajesErrores = {};
   objetoArreglosErrores = {};
@@ -35,6 +37,11 @@ export class EzFormComponent implements OnInit {
     this.escucharFormulario();
     this.escucharCampos();
     console.log(this.mensajesErrores);
+  }
+  protected llenarFormulario() {
+    if (this.registro) {
+      this.formulario.setValue(this.registro);
+    }
   }
 
   protected construirFormulario() {

@@ -31,6 +31,7 @@ export class AppComponent {
     },
     {
       nombre: 'estado-civil',
+      placeholder: 'Ingrese un estado civil',
       validadores: [Validators.required],
       tipo: {
         nombreTipo: 'select',
