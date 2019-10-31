@@ -4,19 +4,28 @@
   <div class="d-flex justify-content-center">
     <div class="p-2 flex-fill">
       <div *ngFor="let control of configuracion">
-        <mat-form-field  appearance="outline" class="filled">
+        <mat-form-field appearance="outline" class="filled">
           <mat-label>{{control.nombre}}</mat-label>
-          <input  matInput *ngIf="control.tipo.nombreTipo === 'input'" type="text" id={{control.nombre}} name={{control.nombre}}
-                  formControlName={{control.nombre}} placeholder="{{control.placeholder ? control.placeholder : ''}}">
-          <mat-select  *ngIf="control.tipo.nombreTipo === 'select'"
-                       formControlName={{control.nombre}} placeholder="{{control.placeholder ? control.placeholder : ''}}">
+          <input matInput *ngIf="control.tipo.nombreTipo === 'input'" type="text" id={{control.nombre}}
+                 name={{control.nombre}}
+                 formControlName={{control.nombre}} placeholder="{{control.placeholder ? control.placeholder : ''}}">
+          <mat-select *ngIf="control.tipo.nombreTipo === 'select'"
+                      formControlName={{control.nombre}}
+                      placeholder="{{control.placeholder ? control.placeholder : ''}}">
             <mat-option value={{opcion.valor}} *ngFor="let opcion of control.tipo.opciones">
               {{opcion.nombre}}
             </mat-option>
           </mat-select>
-          <mat-checkbox *ngIf="control.tipo.nombreTipo === 'check'"  formControlName={{control.nombre}}  name={{control.nombre}}>
+          <mat-checkbox *ngIf="control.tipo.nombreTipo === 'check'" formControlName={{control.nombre}}
+                        name={{control.nombre}}>
             {{control.nombre}}
           </mat-checkbox>
+          <mat-radio-group *ngIf="control.tipo.nombreTipo === 'radio'" formControlName={{control.nombre}}
+                           name={{control.nombre}}>
+            <mat-radio-button value={{opcion.valor}} *ngFor="let opcion of control.tipo.opciones">
+              {{opcion.nombre}}
+            </mat-radio-button>
+          </mat-radio-group>
         </mat-form-field>
         <div *ngIf="verificarMensajeError(control.nombre)" class="alert alert-primary" role="alert">
           <ul>
@@ -25,6 +34,6 @@
         </div>
       </div>
     </div>
-    </div>
+  </div>
 
 </form>

@@ -8,6 +8,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatOptionModule, MatSelectModule} from '@angular/material';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatRadioModule} from '@angular/material/radio';
 
 
 
@@ -24,6 +25,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     MatOptionModule,
     MatSelectModule,
     MatCheckboxModule,
+    MatRadioModule,
   ],
   exports: [EzFormComponent]
 })

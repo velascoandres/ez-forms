@@ -52,6 +52,15 @@ export class AppComponent {
       tipo: {
         nombreTipo: 'check'
       },
+    },
+    {
+      nombre: 'frutaFavorita',
+      validadores: [Validators.required],
+      tipo: {
+        nombreTipo: 'radio',
+        label: 'Elige una fruta favorita',
+        opciones: [{valor: 3, nombre: 'Manzana'}, {valor: 1, nombre: 'Pera'}, {valor: 2, nombre: 'Piña'}]
+      },
     }
   ];
 }
