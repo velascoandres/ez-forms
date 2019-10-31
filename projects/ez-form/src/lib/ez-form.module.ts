@@ -7,6 +7,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatOptionModule, MatSelectModule} from '@angular/material';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 
 
@@ -22,6 +23,7 @@ import {MatOptionModule, MatSelectModule} from '@angular/material';
     MatInputModule,
     MatOptionModule,
     MatSelectModule,
+    MatCheckboxModule,
   ],
   exports: [EzFormComponent]
 })

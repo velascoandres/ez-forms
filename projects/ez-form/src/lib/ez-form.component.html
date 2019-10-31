@@ -14,6 +14,9 @@
               {{opcion.nombre}}
             </mat-option>
           </mat-select>
+          <mat-checkbox *ngIf="control.tipo.nombreTipo === 'check'"  formControlName={{control.nombre}}  name={{control.nombre}}>
+            {{control.nombre}}
+          </mat-checkbox>
         </mat-form-field>
         <div *ngIf="verificarMensajeError(control.nombre)" class="alert alert-primary" role="alert">
           <ul>

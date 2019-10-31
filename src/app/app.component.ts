@@ -39,5 +39,19 @@ export class AppComponent {
       },
       valor: 0
     },
+    {
+      nombre: 'futbol',
+      validadores: [Validators.required],
+      tipo: {
+        nombreTipo: 'check'
+      },
+    },
+    {
+      nombre: 'basket',
+      validadores: [Validators.required],
+      tipo: {
+        nombreTipo: 'check'
+      },
+    }
   ];
 }
