@@ -55,6 +55,19 @@ export class AppComponent {
         required: 'Eliga por lo menos una ciudad',
       }
     },
+    {
+      nombre: 'deportes',
+      validadores: [Validators.required],
+      tipo: {
+        nombreTipo: 'check',
+      },
+      opciones: [{valor: 3, nombre: 'Futbol', seleccionado: true}, {valor: 1, nombre: 'Basquet', seleccionado: true}, {
+        valor: 2,
+        nombre: 'Tennis',
+        seleccionado: false,
+      }],
+      label: 'Deportes',
+    },
     /*
     {
       nombre: 'frutaFavorita',
