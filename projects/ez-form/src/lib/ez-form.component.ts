@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {AbstractControl, FormBuilder, FormGroup} from '@angular/forms';
+import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ToasterConfig, ToasterService} from 'angular2-toaster';
 
 @Component({
@@ -26,7 +26,6 @@ export class EzFormComponent implements OnInit {
     private fb: FormBuilder,
     private readonly toaster: ToasterService,
   ) {
-
   }
 
   public config: ToasterConfig =
@@ -34,9 +33,9 @@ export class EzFormComponent implements OnInit {
 
   ngOnInit() {
     this.construirFormulario();
+    this.llenarFormulario();
     this.escucharFormulario();
     this.escucharCampos();
-    console.log(this.mensajesErrores);
   }
   protected llenarFormulario() {
     if (this.registro) {
@@ -47,8 +46,13 @@ export class EzFormComponent implements OnInit {
   protected construirFormulario() {
     const controlesFB = this.generarControles(this.configuracion);
     this.formulario = this.fb.group(
-      controlesFB,
+      {
+        hideRequired: [false, [Validators.required]],
+        floatLabel: 'auto',
+          ...controlesFB
+      },
     );
+    console.log(this.formulario);
   }
 
   protected generarControles(configuracion: any) {

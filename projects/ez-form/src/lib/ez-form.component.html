@@ -1,13 +1,30 @@
 <toaster-container [toasterconfig]="config"></toaster-container>
 
 <form [formGroup]="formulario" class="filled">
+  <div>
+    <mat-checkbox formControlName="hideRequired">Hide required marker</mat-checkbox>
+    <div>
+      <mat-radio-group formControlName="floatLabel">
+        <mat-radio-button value="auto">Auto</mat-radio-button>
+        <mat-radio-button value="always">Always</mat-radio-button>
+        <mat-radio-button value="never">Never</mat-radio-button>
+      </mat-radio-group>
+    </div>
+  </div>
   <div class="d-flex justify-content-center">
     <div class="p-2 flex-fill">
       <div *ngFor="let control of configuracion">
+        <mat-checkbox *ngIf="control.tipo.nombreTipo === 'check'"
+                      formControlName={{control.nombre}}>{{control.nombre}}
+        </mat-checkbox>
+        <mat-radio-group *ngIf="control.tipo.nombreTipo === 'radio'" formControlName={{control.nombre}}>
+          <mat-radio-button value={{opcion.valor}} *ngFor="let opcion of control.tipo.opciones">
+            {{opcion.nombre}}
+          </mat-radio-button>
+        </mat-radio-group>
         <mat-form-field appearance="outline" class="filled">
           <mat-label>{{control.nombre}}</mat-label>
-          <input matInput *ngIf="control.tipo.nombreTipo === 'input'" type="text" id={{control.nombre}}
-                 name={{control.nombre}}
+          <input matInput *ngIf="control.tipo.nombreTipo === 'input'" type="text"
                  formControlName={{control.nombre}} placeholder="{{control.placeholder ? control.placeholder : ''}}">
           <mat-select *ngIf="control.tipo.nombreTipo === 'select'"
                       formControlName={{control.nombre}}
@@ -16,16 +33,6 @@
               {{opcion.nombre}}
             </mat-option>
           </mat-select>
-          <mat-checkbox *ngIf="control.tipo.nombreTipo === 'check'" formControlName={{control.nombre}}
-                        name={{control.nombre}}>
-            {{control.nombre}}
-          </mat-checkbox>
-          <mat-radio-group *ngIf="control.tipo.nombreTipo === 'radio'" formControlName={{control.nombre}}
-                           name={{control.nombre}}>
-            <mat-radio-button value={{opcion.valor}} *ngFor="let opcion of control.tipo.opciones">
-              {{opcion.nombre}}
-            </mat-radio-button>
-          </mat-radio-group>
         </mat-form-field>
         <div *ngIf="verificarMensajeError(control.nombre)" class="alert alert-primary" role="alert">
           <ul>
