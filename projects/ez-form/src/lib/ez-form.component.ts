@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {ToasterConfig, ToasterService} from 'angular2-toaster';
 
 @Component({
@@ -37,6 +37,7 @@ export class EzFormComponent implements OnInit {
     this.escucharFormulario();
     this.escucharCampos();
   }
+
   protected llenarFormulario() {
     if (this.registro) {
       this.formulario.setValue(this.registro);
@@ -47,9 +48,7 @@ export class EzFormComponent implements OnInit {
     const controlesFB = this.generarControles(this.configuracion);
     this.formulario = this.fb.group(
       {
-        hideRequired: [false, [Validators.required]],
-        floatLabel: 'auto',
-          ...controlesFB
+        ...controlesFB
       },
     );
     console.log(this.formulario);
@@ -62,7 +61,11 @@ export class EzFormComponent implements OnInit {
         const nombreControl = itemConfiguracion.nombre ? itemConfiguracion.nombre : '';
         const valorDefecto = itemConfiguracion.valor;
         const validadores = [...itemConfiguracion.validadores];
-        controles[nombreControl] = [valorDefecto, validadores];
+        if (itemConfiguracion.tipo.nombreTipo === 'check') {
+          controles[nombreControl] = new FormArray(this.agregarSubControles(itemConfiguracion.opciones), validadores);
+        } else {
+          controles[nombreControl] = [valorDefecto, validadores];
+        }
         const tieneMensajesError = itemConfiguracion.mensajesError !== undefined;
         if (tieneMensajesError) {
           this.mensajesErrores[nombreControl] = itemConfiguracion.mensajesError;
@@ -71,7 +74,20 @@ export class EzFormComponent implements OnInit {
         }
       }
     );
+    console.log(controles);
     return controles;
+  }
+
+  agregarSubControles(opciones: []) {
+    const arregloControles = [];
+    opciones.forEach(
+      (opcion: any) => {
+        if (opcion.seleccionado) {
+          arregloControles.push(new FormControl(opcion.valor));
+        }
+      }
+    );
+    return arregloControles;
   }
 
   escucharCampo(nombreCampo: string) {
@@ -111,6 +127,7 @@ export class EzFormComponent implements OnInit {
       .valueChanges
       .subscribe(
         (informacionFormulario) => {
+          console.log(informacionFormulario);
           const formularioValido = !this.formulario.invalid;
           if (formularioValido) {
             if (this.toaster) {
@@ -146,5 +163,17 @@ export class EzFormComponent implements OnInit {
 
   obtenerMensajesError(nombreControl) {
     return this.objetoArreglosErrores[nombreControl];
+  }
+
+  updateChkbxArray(opcionCheck, estaSeleccionado, key) {
+    const arregloOpcionesCheck = this.formulario.get(key) as FormArray;
+    if (estaSeleccionado) {
+      if (arregloOpcionesCheck.controls.findIndex(opcion => opcion.value === opcionCheck.valor) === -1) {
+        arregloOpcionesCheck.push(new FormControl(opcionCheck.valor));
+      }
+    } else {
+      const idx = arregloOpcionesCheck.controls.findIndex(x => x.value === opcionCheck.valor);
+      arregloOpcionesCheck.removeAt(idx);
+    }
   }
 }

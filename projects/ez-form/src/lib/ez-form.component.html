@@ -1,32 +1,19 @@
 <toaster-container [toasterconfig]="config"></toaster-container>
 
 <form [formGroup]="formulario" class="filled">
-  <div>
-    <mat-checkbox formControlName="hideRequired">Hide required marker</mat-checkbox>
-    <div>
-      <mat-radio-group formControlName="floatLabel">
-        <mat-radio-button value="auto">Auto</mat-radio-button>
-        <mat-radio-button value="always">Always</mat-radio-button>
-        <mat-radio-button value="never">Never</mat-radio-button>
-      </mat-radio-group>
-    </div>
-  </div>
   <div class="d-flex justify-content-center">
     <div class="p-2 flex-fill">
       <div *ngFor="let control of configuracion">
-        <mat-checkbox *ngIf="control.tipo.nombreTipo === 'check'"
-                      formControlName={{control.nombre}}>{{control.nombre}}
-        </mat-checkbox>
-        <mat-radio-group *ngIf="control.tipo.nombreTipo === 'radio'" formControlName={{control.nombre}}>
-          <mat-radio-button value={{opcion.valor}} *ngFor="let opcion of control.tipo.opciones">
-            {{opcion.nombre}}
-          </mat-radio-button>
-        </mat-radio-group>
-        <mat-form-field appearance="outline" class="filled">
+        <mat-form-field *ngIf="control.tipo.nombreTipo === 'input'" appearance="outline" class="filled">
           <mat-label>{{control.nombre}}</mat-label>
-          <input matInput *ngIf="control.tipo.nombreTipo === 'input'" type="text"
-                 formControlName={{control.nombre}} placeholder="{{control.placeholder ? control.placeholder : ''}}">
-          <mat-select *ngIf="control.tipo.nombreTipo === 'select'"
+          <input
+            matInput *ngIf="control.tipo.nombreTipo === 'input'"
+            type="text"
+            formControlName={{control.nombre}}
+            placeholder="{{control.placeholder ? control.placeholder : ''}}">
+        </mat-form-field>
+        <mat-form-field *ngIf="control.tipo.nombreTipo === 'select'" appearance="outline" class="filled">
+          <mat-select
                       formControlName={{control.nombre}}
                       placeholder="{{control.placeholder ? control.placeholder : ''}}">
             <mat-option value={{opcion.valor}} *ngFor="let opcion of control.tipo.opciones">
@@ -34,6 +21,16 @@
             </mat-option>
           </mat-select>
         </mat-form-field>
+        <div *ngIf="control.tipo.nombreTipo === 'check'">
+          <h5>{{control.label}}</h5>
+          <mat-checkbox *ngFor="let opcion of control.opciones; let i = index"
+                        formArrayName={{control.nombre}}
+                        [checked]="opcion.seleccionado"
+                        (change)="updateChkbxArray(opcion, $event.checked, control.nombre)"
+          >
+            {{opcion.nombre}}
+          </mat-checkbox>
+        </div>
         <div *ngIf="verificarMensajeError(control.nombre)" class="alert alert-primary" role="alert">
           <ul>
             <li *ngFor="let error of obtenerMensajesError(control.nombre)">{{error}}</li>

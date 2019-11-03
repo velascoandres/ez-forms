@@ -40,12 +40,17 @@ export class AppComponent {
       valor: 0
     },
     {
-      nombre: 'futbol',
+      nombre: 'ciudades',
       validadores: [Validators.required],
       tipo: {
-        nombreTipo: 'check'
+        nombreTipo: 'check',
       },
-      valor: false,
+      opciones: [{valor: 3, nombre: 'Quito', seleccionado: true}, {valor: 1, nombre: 'Cuenca', seleccionado: false}, {
+        valor: 2,
+        nombre: 'Ambato',
+        seleccionado: false,
+      }],
+      label: 'Ciudades',
     },
     /*
     {
