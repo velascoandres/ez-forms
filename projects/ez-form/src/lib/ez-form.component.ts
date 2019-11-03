@@ -51,7 +51,6 @@ export class EzFormComponent implements OnInit {
         ...controlesFB
       },
     );
-    console.log(this.formulario);
   }
 
   protected generarControles(configuracion: any) {
@@ -74,7 +73,6 @@ export class EzFormComponent implements OnInit {
         }
       }
     );
-    console.log(controles);
     return controles;
   }
 
@@ -110,9 +108,10 @@ export class EzFormComponent implements OnInit {
     );
   }
 
-  protected llenarMensajesErrorCampo(control: AbstractControl, nombreCampo: string) {
+  protected llenarMensajesErrorCampo(control: AbstractControl | any, nombreCampo: string) {
     let arregloErrores = [];
-    if ((control.dirty || control.touched) && control.errors) {
+    console.log('estes es el control', control.controls);
+    if (( control.controls || (control.dirty || control.touched)) && control.errors) {
       arregloErrores = Object.keys(control.errors).map(
         (llave) => {
           return this.mensajesErrores[nombreCampo][llave];
@@ -122,12 +121,13 @@ export class EzFormComponent implements OnInit {
     return arregloErrores;
   }
 
+
   escucharFormulario() {
     this.formulario
       .valueChanges
       .subscribe(
         (informacionFormulario) => {
-          console.log(informacionFormulario);
+          console.log(this.formulario);
           const formularioValido = !this.formulario.invalid;
           if (formularioValido) {
             if (this.toaster) {

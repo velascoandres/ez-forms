@@ -51,6 +51,9 @@ export class AppComponent {
         seleccionado: false,
       }],
       label: 'Ciudades',
+      mensajesError: {
+        required: 'Eliga por lo menos una ciudad',
+      }
     },
     /*
     {
