@@ -17,15 +17,18 @@
         <mat-form-field
           *ngIf="control.tipo.nombreTipo === 'select'"
           appearance="outline" class="filled">
-          <mat-select
+          <select matNativeControl
             formControlName={{control.nombre}}
-            placeholder="{{control.placeholder ? control.placeholder : ''}}">
-            <mat-option
+            placeholder="{{control.placeholder ? control.placeholder : ''}}"
+          >
+            <option
                         value={{opcion.valor}}
-                        *ngFor="let opcion of control.tipo.opciones">
+                        *ngFor="let opcion of control.tipo.opciones"
+                        [selected]="opcion.valor === control.valor"
+            >
               {{opcion.nombre}}
-            </mat-option>
-          </mat-select>
+            </option>
+          </select>
         </mat-form-field>
         <mat-radio-group *ngIf="control.tipo.nombreTipo === 'radio'"
                          formControlName="{{control.nombre}}"

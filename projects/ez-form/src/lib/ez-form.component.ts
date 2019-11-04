@@ -59,7 +59,11 @@ export class EzFormComponent implements OnInit {
       (itemConfiguracion) => {
         const nombreControl = itemConfiguracion.nombre ? itemConfiguracion.nombre : '';
         const valorDefecto = itemConfiguracion.valor;
-        const validadores = [...itemConfiguracion.validadores];
+        const tieneValidadores = itemConfiguracion.validadores !== undefined;
+        let validadores = [];
+        if (tieneValidadores) {
+          validadores = [...itemConfiguracion.validadores];
+        }
         if (itemConfiguracion.tipo.nombreTipo === 'check') {
           controles[nombreControl] = new FormArray(this.agregarSubControles(itemConfiguracion.tipo.opciones), validadores);
         } else {
@@ -111,7 +115,7 @@ export class EzFormComponent implements OnInit {
   protected llenarMensajesErrorCampo(control: AbstractControl | any, nombreCampo: string) {
     let arregloErrores = [];
     console.log('estes es el control', control.controls);
-    if (( control.controls || (control.dirty || control.touched)) && control.errors) {
+    if ((control.controls || (control.dirty || control.touched)) && control.errors) {
       arregloErrores = Object.keys(control.errors).map(
         (llave) => {
           return this.mensajesErrores[nombreCampo][llave];

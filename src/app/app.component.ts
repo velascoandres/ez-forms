@@ -11,22 +11,18 @@ export class AppComponent {
   controles = [
     {
       nombre: 'nombre',
-      validadores: [Validators.required],
       placeholder: 'Ingrese un nombre',
       tipo: {nombreTipo: 'input'},
-      mensajesError: {
-        required: 'El nombre es requerido',
-      }
     },
     {
-      nombre: 'apellido',
+      nombre: 'email',
       validadores: [Validators.required, Validators.email],
-      placeholder: 'Ingrese un apellido',
-      valor: 'juanito',
+      placeholder: 'Ingrese un email',
+      valor: 'pepe@correo.com',
       tipo: {nombreTipo: 'input'},
       mensajesError: {
-        required: 'El apellido es requerido',
-        email: 'El apellido debe ser un email',
+        required: 'El email es requerido',
+        email: 'Debe ser un email válido',
       }
     },
     {
@@ -35,9 +31,9 @@ export class AppComponent {
       validadores: [Validators.required],
       tipo: {
         nombreTipo: 'select',
-        opciones: [{valor: '', nombre: 'Selecione'}, {valor: 1, nombre: 'casado'}, {valor: 2, nombre: 'soltero'}]
+        opciones: [{valor: '', nombre: 'Selecione un estado civil'}, {valor: 1, nombre: 'casado'}, {valor: 2, nombre: 'soltero'}]
       },
-      valor: 0
+      valor: 1,
     },
     {
       nombre: 'ciudades',
