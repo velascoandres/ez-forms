@@ -7,7 +7,6 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatCheckboxModule, MatOptionModule, MatRadioModule, MatSelectModule} from '@angular/material';
-import {CheckboxModule} from 'primeng/checkbox';
 
 
 
@@ -23,7 +22,6 @@ import {CheckboxModule} from 'primeng/checkbox';
     MatInputModule,
     MatOptionModule,
     MatSelectModule,
-    CheckboxModule,
     MatCheckboxModule,
     MatRadioModule,
   ],

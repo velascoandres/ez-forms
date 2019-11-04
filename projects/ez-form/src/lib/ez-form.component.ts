@@ -160,7 +160,7 @@ export class EzFormComponent implements OnInit {
       );
   }
 
-  protected verificarMensajeError(nombreControl) {
+   verificarMensajeError(nombreControl) {
     const tieneMensajesError = this.objetoArreglosErrores[nombreControl] && this.objetoArreglosErrores[nombreControl].length > 0;
     return tieneMensajesError;
   }
