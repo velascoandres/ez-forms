@@ -44,12 +44,12 @@ export class AppComponent {
       validadores: [Validators.required],
       tipo: {
         nombreTipo: 'check',
+        opciones: [{valor: 3, nombre: 'Quito', seleccionado: true}, {valor: 1, nombre: 'Cuenca', seleccionado: false}, {
+          valor: 2,
+          nombre: 'Ambato',
+          seleccionado: false,
+        }],
       },
-      opciones: [{valor: 3, nombre: 'Quito', seleccionado: true}, {valor: 1, nombre: 'Cuenca', seleccionado: false}, {
-        valor: 2,
-        nombre: 'Ambato',
-        seleccionado: false,
-      }],
       label: 'Ciudades',
       mensajesError: {
         required: 'Eliga por lo menos una ciudad',
@@ -60,24 +60,23 @@ export class AppComponent {
       validadores: [Validators.required],
       tipo: {
         nombreTipo: 'check',
+        opciones: [{valor: 3, nombre: 'Futbol', seleccionado: true}, {valor: 1, nombre: 'Basquet', seleccionado: true}, {
+          valor: 2,
+          nombre: 'Tennis',
+          seleccionado: false,
+        }],
       },
-      opciones: [{valor: 3, nombre: 'Futbol', seleccionado: true}, {valor: 1, nombre: 'Basquet', seleccionado: true}, {
-        valor: 2,
-        nombre: 'Tennis',
-        seleccionado: false,
-      }],
       label: 'Deportes',
     },
-    /*
     {
       nombre: 'frutaFavorita',
       validadores: [Validators.required],
+      label: 'Fruta Favorita',
       tipo: {
         nombreTipo: 'radio',
-        label: 'Elige una fruta favorita',
-        opciones: [{valor: 3, nombre: 'Manzana'}, {valor: 1, nombre: 'Pera'}, {valor: 2, nombre: 'Piña'}]
+        opciones: [{valor: 3, nombre: 'Manzana'}, {valor: 1, nombre: 'Pera'}, {valor: 2, nombre: 'Piña'}],
       },
       valor: 1,
-    }*/
+    }
   ];
 }

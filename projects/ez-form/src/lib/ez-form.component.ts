@@ -61,7 +61,7 @@ export class EzFormComponent implements OnInit {
         const valorDefecto = itemConfiguracion.valor;
         const validadores = [...itemConfiguracion.validadores];
         if (itemConfiguracion.tipo.nombreTipo === 'check') {
-          controles[nombreControl] = new FormArray(this.agregarSubControles(itemConfiguracion.opciones), validadores);
+          controles[nombreControl] = new FormArray(this.agregarSubControles(itemConfiguracion.tipo.opciones), validadores);
         } else {
           controles[nombreControl] = [valorDefecto, validadores];
         }

@@ -21,9 +21,15 @@
             </mat-option>
           </mat-select>
         </mat-form-field>
+        <mat-radio-group *ngIf="control.tipo.nombreTipo === 'radio'" formControlName="{{control.nombre}}" class="radio-group">
+          <label>{{control.label}}</label>
+          <mat-radio-button *ngFor="let opcion of control.tipo.opciones" class="radio-button" value="{{opcion.valor}}">
+              {{opcion.nombre}}
+          </mat-radio-button>
+        </mat-radio-group>
         <div *ngIf="control.tipo.nombreTipo === 'check'">
           <h5>{{control.label}}</h5>
-          <p *ngFor="let opcion of control.opciones">
+          <p *ngFor="let opcion of control.tipo.opciones">
             <mat-checkbox
               formArrayName={{control.nombre}}
               [checked]="opcion.seleccionado"
