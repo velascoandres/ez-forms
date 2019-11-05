@@ -1,4 +1,3 @@
-
 <form [formGroup]="formulario" class="filled">
   <div class="d-flex justify-content-center">
     <div class="p-2 flex-fill">
@@ -11,19 +10,20 @@
             matInput *ngIf="control.tipo.nombreTipo === 'input'"
             type="text"
             formControlName={{control.nombre}}
-            placeholder="{{control.placeholder ? control.placeholder : ''}}">
+            placeholder="{{control.placeholder ? control.placeholder : ''}}"
+          >
         </mat-form-field>
         <mat-form-field
           *ngIf="control.tipo.nombreTipo === 'select'"
           appearance="outline" class="filled">
           <select matNativeControl
-            formControlName={{control.nombre}}
-            placeholder="{{control.placeholder ? control.placeholder : ''}}"
+                  formControlName={{control.nombre}}
+                  placeholder="{{control.placeholder ? control.placeholder : ''}}"
           >
             <option
-                        value={{opcion.valor}}
-                        *ngFor="let opcion of control.tipo.opciones"
-                        [selected]="opcion.valor === registro[control.nombre]"
+              value={{opcion.valor}}
+              *ngFor="let opcion of control.tipo.opciones"
+              [selected]="opcion.valor === registro[control.nombre]"
             >
               {{opcion.nombre}}
             </option>
@@ -34,7 +34,8 @@
                          class="radio-group"
         >
           <h5>{{control.label}}</h5>
-          <mat-radio-button *ngFor="let opcion of control.tipo.opciones" class="radio-button" value="{{opcion.valor}}" checked="{{opcion.valor === registro[control.nombre]}}">
+          <mat-radio-button *ngFor="let opcion of control.tipo.opciones" class="radio-button" value="{{opcion.valor}}"
+                            checked="{{opcion.valor === registro[control.nombre]}}">
             {{opcion.nombre}}
           </mat-radio-button>
         </mat-radio-group>

@@ -83,15 +83,19 @@ export class AppComponent {
   };*/
   controles = [
     {
+      nombre: 'uuid',
+      tipo: {nombreTipo: 'input'},
+      disabled: true,
+    },
+    {
       nombre: 'email',
       validadores: [Validators.required, Validators.email],
       placeholder: 'Ingrese un email',
-      valor: 'pepe@correo.com',
       tipo: {nombreTipo: 'input'},
       mensajesError: {
         required: 'El email es requerido',
         email: 'Debe ser un email válido',
-      }
+      },
     },
     {
       nombre: 'estadoCivil',
@@ -124,6 +128,7 @@ export class AppComponent {
     }
   ];
   usuario = {
+    uuid: 1234,
     email: 'juan.pecadoss@correo.com',
     estadoCivil: 1,
     frutaFavorita: 1,

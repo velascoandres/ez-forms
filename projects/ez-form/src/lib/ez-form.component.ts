@@ -66,7 +66,10 @@ export class EzFormComponent implements OnInit {
     configuracion.forEach(
       (itemConfiguracion) => {
         const nombreControl = itemConfiguracion.nombre ? itemConfiguracion.nombre : '';
-        const valorDefecto = itemConfiguracion.valor;
+        const valorDefecto = {
+          value: itemConfiguracion.valor ? itemConfiguracion.valor : '',
+          disabled: !!itemConfiguracion.disabled,
+        };
         const tieneValidadores = itemConfiguracion.validadores !== undefined;
         let validadores = [];
         if (tieneValidadores) {
@@ -77,6 +80,7 @@ export class EzFormComponent implements OnInit {
         } else {
           controles[nombreControl] = [valorDefecto, validadores];
         }
+        // controles[nombreControl]['disabled'] = desactivado;
         const tieneMensajesError = itemConfiguracion.mensajesError !== undefined;
         if (tieneMensajesError) {
           this.mensajesErrores[nombreControl] = itemConfiguracion.mensajesError;
@@ -92,7 +96,7 @@ export class EzFormComponent implements OnInit {
     const arregloControles = [];
     opciones.forEach(
       (opcion: any) => {
-        if (this.registro[nombreControl].includes(opcion.valor) ) {
+        if (this.registro[nombreControl].includes(opcion.valor)) {
           arregloControles.push(new FormControl(opcion.valor));
         }
       }
