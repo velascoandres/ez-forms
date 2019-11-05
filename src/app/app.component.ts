@@ -9,7 +9,7 @@ import {Validators} from '@angular/forms';
 export class AppComponent {
   title = 'formularios';
   datosUsuario;
-  controles = [
+  /*controles = [
     {
       nombre: 'nombre',
       placeholder: 'Ingrese un nombre',
@@ -80,8 +80,55 @@ export class AppComponent {
     deportes: [1, 2],
     frutaFavorita: 2,
     ciudades: [1]
+  };*/
+  controles = [
+    {
+      nombre: 'email',
+      validadores: [Validators.required, Validators.email],
+      placeholder: 'Ingrese un email',
+      valor: 'pepe@correo.com',
+      tipo: {nombreTipo: 'input'},
+      mensajesError: {
+        required: 'El email es requerido',
+        email: 'Debe ser un email válido',
+      }
+    },
+    {
+      nombre: 'estadoCivil',
+      placeholder: 'Ingrese un estado civil',
+      validadores: [Validators.required],
+      tipo: {
+        nombreTipo: 'select',
+        opciones: [{valor: '', nombre: 'Selecione un estado civil'}, {valor: 1, nombre: 'casado'}, {valor: 2, nombre: 'soltero'}]
+      },
+    },
+    {
+      nombre: 'ciudades',
+      validadores: [Validators.required],
+      tipo: {
+        nombreTipo: 'check',
+        opciones: [{valor: 3, nombre: 'Quito'}, {valor: 1, nombre: 'Cuenca'}, {nombre: 'Ambato', valor: 2}]},
+      label: 'Ciudades',
+      mensajesError: {
+        required: 'Eliga por lo menos una ciudad',
+      }
+    },
+    {
+      nombre: 'frutaFavorita',
+      validadores: [Validators.required],
+      label: 'Fruta Favorita',
+      tipo: {
+        nombreTipo: 'radio',
+        opciones: [{valor: 3, nombre: 'Manzana'}, {valor: 1, nombre: 'Pera'}, {valor: 2, nombre: 'Piña'}],
+      },
+    }
+  ];
+  usuario = {
+    email: 'juan.pecadoss@correo.com',
+    estadoCivil: 1,
+    frutaFavorita: 1,
+    ciudades: [1, 3]
   };
-
   escucharDatosDelFormulario(evento) {
     this.usuario = evento ? evento : undefined;
     if (this.usuario) {

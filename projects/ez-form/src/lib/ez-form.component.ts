@@ -73,7 +73,7 @@ export class EzFormComponent implements OnInit {
           validadores = [...itemConfiguracion.validadores];
         }
         if (itemConfiguracion.tipo.nombreTipo === 'check') {
-          controles[nombreControl] = new FormArray(this.agregarSubControles(itemConfiguracion.tipo.opciones), validadores);
+          controles[nombreControl] = new FormArray(this.agregarSubControles(itemConfiguracion.tipo.opciones, nombreControl), validadores);
         } else {
           controles[nombreControl] = [valorDefecto, validadores];
         }
@@ -88,11 +88,11 @@ export class EzFormComponent implements OnInit {
     return controles;
   }
 
-  agregarSubControles(opciones: []) {
+  agregarSubControles(opciones: [], nombreControl: string) {
     const arregloControles = [];
     opciones.forEach(
       (opcion: any) => {
-        if (opcion.seleccionado) {
+        if (this.registro[nombreControl].includes(opcion.valor) ) {
           arregloControles.push(new FormControl(opcion.valor));
         }
       }
