@@ -13,6 +13,8 @@ export class EzFormComponent implements OnInit {
   @Input()
   registro;
   @Input()
+  mostrarToast = true;
+  @Input()
   configuracion = [];
   mensajesErrores = {};
   objetoArreglosErrores = {};
@@ -115,7 +117,6 @@ export class EzFormComponent implements OnInit {
 
   protected llenarMensajesErrorCampo(control: AbstractControl | any, nombreCampo: string) {
     let arregloErrores = [];
-    console.log('estes es el control', control.controls);
     if ((control.controls || (control.dirty || control.touched)) && control.errors) {
       arregloErrores = Object.keys(control.errors).map(
         (llave) => {
@@ -135,10 +136,9 @@ export class EzFormComponent implements OnInit {
       )
       .subscribe(
         (informacionFormulario) => {
-          console.log(this.formulario);
           const formularioValido = !this.formulario.invalid;
           if (formularioValido) {
-            if (this.toaster) {
+            if (this.mostrarToast) {
               this.toaster.pop(
                 {
                   type: 'info',
@@ -149,7 +149,7 @@ export class EzFormComponent implements OnInit {
             }
             this.datosFormulario.emit(informacionFormulario);
           } else {
-            if (this.toaster) {
+            if (this.mostrarToast) {
               this.toaster.pop(
                 {
                   type: 'warning',
