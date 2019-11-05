@@ -1,6 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {ToasterConfig, ToasterService} from 'angular2-toaster';
+import {debounceTime} from 'rxjs/operators';
 
 @Component({
   selector: 'ez-form',
@@ -33,9 +34,9 @@ export class EzFormComponent implements OnInit {
 
   ngOnInit() {
     this.construirFormulario();
-    this.llenarFormulario();
     this.escucharFormulario();
     this.escucharCampos();
+    this.llenarFormulario();
   }
 
   protected llenarFormulario() {
@@ -129,6 +130,9 @@ export class EzFormComponent implements OnInit {
   escucharFormulario() {
     this.formulario
       .valueChanges
+      .pipe(
+        debounceTime(500)
+      )
       .subscribe(
         (informacionFormulario) => {
           console.log(this.formulario);

@@ -75,4 +75,13 @@ export class AppComponent {
       valor: 1,
     }
   ];
+  usuario = {
+    nombre: 'juanito pecados',
+    email: 'velasco.andrs@gmail.com',
+    'estado-civil': 1,
+    deportes: [1, 2],
+    frutaFavorita: 1,
+    ciudades: [1]
+  };
+
 }
