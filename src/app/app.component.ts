@@ -8,6 +8,7 @@ import {Validators} from '@angular/forms';
 })
 export class AppComponent {
   title = 'formularios';
+  datosUsuario;
   controles = [
     {
       nombre: 'nombre',
@@ -33,7 +34,6 @@ export class AppComponent {
         nombreTipo: 'select',
         opciones: [{valor: '', nombre: 'Selecione un estado civil'}, {valor: 1, nombre: 'casado'}, {valor: 2, nombre: 'soltero'}]
       },
-      valor: 1,
     },
     {
       nombre: 'ciudades',
@@ -59,7 +59,6 @@ export class AppComponent {
         opciones: [{valor: 3, nombre: 'Futbol', seleccionado: true}, {valor: 1, nombre: 'Basquet', seleccionado: true}, {
           valor: 2,
           nombre: 'Tennis',
-          seleccionado: false,
         }],
       },
       label: 'Deportes',
@@ -72,7 +71,6 @@ export class AppComponent {
         nombreTipo: 'radio',
         opciones: [{valor: 3, nombre: 'Manzana'}, {valor: 1, nombre: 'Pera'}, {valor: 2, nombre: 'Piña'}],
       },
-      valor: 1,
     }
   ];
   usuario = {
@@ -80,8 +78,17 @@ export class AppComponent {
     email: 'velasco.andrs@gmail.com',
     'estado-civil': 1,
     deportes: [1, 2],
-    frutaFavorita: 1,
+    frutaFavorita: 2,
     ciudades: [1]
   };
+
+  escucharDatosDelFormulario(evento) {
+    this.usuario = evento ? evento : undefined;
+    if (this.usuario) {
+      console.log('todo OK: ', this.usuario);
+    } else {
+      console.log('todo mal');
+    }
+  }
 
 }

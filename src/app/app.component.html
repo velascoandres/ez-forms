@@ -1,5 +1,10 @@
 <div class="container">
-      <ez-form [configuracion]="controles" [registro]="usuario" [mostrarToast]="false">
-        <button >Submit</button>
+      <ez-form
+        [configuracion]="controles"
+        [registro]="usuario"
+        [mostrarToast]="false"
+        (datosFormulario)="escucharDatosDelFormulario($event)"
+      >
+        <button [disabled]="!usuario" class="btn btn-block btn-info">Submit</button>
       </ez-form>
 </div>

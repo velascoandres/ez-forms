@@ -23,7 +23,7 @@
             <option
                         value={{opcion.valor}}
                         *ngFor="let opcion of control.tipo.opciones"
-                        [selected]="opcion.valor === control.valor"
+                        [selected]="opcion.valor === registro[control.nombre]"
             >
               {{opcion.nombre}}
             </option>
@@ -34,7 +34,7 @@
                          class="radio-group"
         >
           <h5>{{control.label}}</h5>
-          <mat-radio-button *ngFor="let opcion of control.tipo.opciones" class="radio-button" value="{{opcion.valor}}" checked="{{opcion.valor === control.valor}}">
+          <mat-radio-button *ngFor="let opcion of control.tipo.opciones" class="radio-button" value="{{opcion.valor}}" checked="{{opcion.valor === registro[control.nombre]}}">
             {{opcion.nombre}}
           </mat-radio-button>
         </mat-radio-group>
@@ -43,7 +43,7 @@
           <p *ngFor="let opcion of control.tipo.opciones">
             <mat-checkbox
               formArrayName={{control.nombre}}
-              [checked]="opcion.seleccionado"
+              [checked]="registro[control.nombre].includes(opcion.valor)"
               (change)="updateChkbxArray(opcion, $event.checked, control.nombre)"
             >
               {{opcion.nombre}}
