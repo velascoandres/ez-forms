@@ -99,11 +99,12 @@ export class AppComponent {
     },
     {
       nombre: 'estadoCivil',
-      placeholder: 'Ingrese un estado civil',
+      placeholder: 'Seleccione un estado civil',
+      label: 'Estado civil',
       validadores: [Validators.required],
       tipo: {
         nombreTipo: 'select',
-        opciones: [{valor: '', nombre: 'Selecione un estado civil'}, {valor: 1, nombre: 'casado'}, {valor: 2, nombre: 'soltero'}]
+        opciones: [{valor: 1, nombre: 'casado'}, {valor: 2, nombre: 'soltero'}]
       },
     },
     {
@@ -111,7 +112,7 @@ export class AppComponent {
       validadores: [Validators.required],
       tipo: {
         nombreTipo: 'check',
-        opciones: [{valor: 3, nombre: 'Quito'}, {valor: 1, nombre: 'Cuenca'}, {nombre: 'Ambato', valor: 2}]},
+        opciones: [{valor: 1, nombre: 'Quito'}, {valor: 2, nombre: 'Cuenca'}, {nombre: 'Ambato', valor: 3}]},
       label: 'Ciudades',
       mensajesError: {
         required: 'Eliga por lo menos una ciudad',
@@ -133,6 +134,19 @@ export class AppComponent {
     estadoCivil: 1,
     frutaFavorita: 1,
     ciudades: [1, 3]
+  };
+
+  myToasterConfig = {
+    success: {
+      type: 'info',
+      title: 'BIEN',
+      body: 'Todo anda bien!!'
+    },
+    fail: {
+      type: 'warning',
+      title: 'MAL',
+      body: 'Algo anda mal!!'
+    }
   };
   escucharDatosDelFormulario(evento) {
     this.usuario = evento ? evento : undefined;
