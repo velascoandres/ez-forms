@@ -147,7 +147,7 @@ Resultados:
   
 ## Toaster
 El toaster es el mensaje que se muestra en pantalla cuando el formulario es válido o no. 
-El despligue de estos mensaje puede ser opcional
+El despliegue de estos mensajes puede ser opcional
 ```html  
     <ez-form   
             [configuracion]="miConfiguracion"  
