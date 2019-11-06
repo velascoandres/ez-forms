@@ -45,48 +45,53 @@ dentro del componente padre.
   
 ### `componentePadre.ts`  
 ```typescript  
-      controles = [  
-        {  
-          nombre: 'email',  
-          validadores: [Validators.required, Validators.email],  
-          placeholder: 'Ingrese un email',  
-          valor: 'pepe@correo.com',  
-          tipo: {nombreTipo: 'input'},  
-          mensajesError: {  
-            required: 'El email es requerido',  
-            email: 'Debe ser un email válido',  
-          }  
-        },  
-        {  
-          nombre: 'estadoCivil',  
-          placeholder: 'Ingrese un estado civil',  
-          validadores: [Validators.required],  
-          tipo: {  
-            nombreTipo: 'select',  
-            opciones: [{valor: '', nombre: 'Selecione un estado civil'}, {valor: 1, nombre: 'casado'}, {valor: 2, nombre: 'soltero'}]  
-          },  
-        },  
-        {  
-          nombre: 'ciudades',  
-          validadores: [Validators.required],  
-          tipo: {  
-            nombreTipo: 'check',  
-            opciones: [{valor: 3, nombre: 'Quito'}, {valor: 1, nombre: 'Cuenca'}, {nombre: 'Ambato', valor: 2}]},  
-          label: 'Ciudades',  
-          mensajesError: {  
-            required: 'Eliga por lo menos una ciudad',  
-          }  
-        },  
-        {  
-          nombre: 'frutaFavorita',  
-          validadores: [Validators.required],  
-          label: 'Fruta Favorita',  
-          tipo: {  
-            nombreTipo: 'radio',  
-            opciones: [{valor: 3, nombre: 'Manzana'}, {valor: 1, nombre: 'Pera'}, {valor: 2, nombre: 'Piña'}],  
-          },  
-        }  
-      ];  
+      miConfiguracion = [
+          {
+            nombre: 'uuid',
+            tipo: {nombreTipo: 'input'},
+            disabled: true,
+          },
+          {
+            nombre: 'email',
+            validadores: [Validators.required, Validators.email],
+            placeholder: 'Ingrese un email',
+            tipo: {nombreTipo: 'input'},
+            mensajesError: {
+              required: 'El email es requerido',
+              email: 'Debe ser un email válido',
+            },
+          },
+          {
+            nombre: 'estadoCivil',
+            placeholder: 'Seleccione un estado civil',
+            label: 'Estado civil',
+            validadores: [Validators.required],
+            tipo: {
+              nombreTipo: 'select',
+              opciones: [{valor: 1, nombre: 'casado'}, {valor: 2, nombre: 'soltero'}]
+            },
+          },
+          {
+            nombre: 'ciudades',
+            validadores: [Validators.required],
+            tipo: {
+              nombreTipo: 'check',
+              opciones: [{valor: 1, nombre: 'Quito'}, {valor: 2, nombre: 'Cuenca'}, {nombre: 'Ambato', valor: 3}]},
+            label: 'Ciudades',
+            mensajesError: {
+              required: 'Eliga por lo menos una ciudad',
+            }
+          },
+          {
+            nombre: 'frutaFavorita',
+            validadores: [Validators.required],
+            label: 'Fruta Favorita',
+            tipo: {
+              nombreTipo: 'radio',
+              opciones: [{valor: 3, nombre: 'Manzana'}, {valor: 1, nombre: 'Pera'}, {valor: 2, nombre: 'Piña'}],
+            },
+          }
+        ];
   
 ```  
   
@@ -103,12 +108,13 @@ Si queremos que nuestro formulario este lleno desde un diccionario entonces hace
 Diccionario:   
   
 ```typescript  
-    usuario = {    
-       email: 'juan.pecadoss@correo.com',    
-       estadoCivil: 1,    
-       frutaFavorita: 1,    
-       ciudades: [1, 3]    
-   };  
+    usuario = {
+        uuid: 1234,
+        email: 'juan.pecadoss@correo.com',
+        estadoCivil: 1,
+        frutaFavorita: 1,
+        ciudades: [1, 3]
+      };
 ```  
   
 Componente `componentePadre.html`:  
@@ -137,7 +143,7 @@ si el formulario haya sido llenado correctamente.
 ```  
 Resultados:   
   
-![formulario](https://raw.githubusercontent.com/velascoandrs/repo-de-imagenes/master/formulario.PNG)  
+![formulario](https://github.com/velascoandrs/repo-de-imagenes/blob/master/formulario-2.1.PNG?raw=true)  
   
 ## Toaster
 El toaster es el mensaje que se muestra en pantalla cuando el formulario es válido o no. 
@@ -179,6 +185,9 @@ Tambien podemos configurar los mensajes que se mostraran de la siguiente forma:
      </ez-form>  
 ```
 Resultados: 
+
+![formulario](https://github.com/velascoandrs/repo-de-imagenes/blob/master/formulario-2.2.PNG?raw=true)
+
 ## Detalles  
   
 ### Sobre el objeto de configuración:  
@@ -187,7 +196,8 @@ Es un arreglo en donde cada elemento corresponde a un campo del formulario, este
 * nombre: Es el nombre de nuestro control `formControlName`.  
 * label: Es el texto que tendra el label del campo, es `opcional`.  
 * validadores: Recibe un arreglo con las validaciones que tendra el campo, es `opcional`.  
-* placeholder: Es el placeholder de nuestro campo. es `opcional`.  
+* placeholder: Es el placeholder de nuestro campo, es `opcional`.  
+* disabled: Permite desactivar un campo, es `opcional`
 * tipo: Es un objeto en donde especificamos el tipo de campo que será. Se lo declara de la siguiente forma:  
   * nombre: Nombre del tipo (input, select, radio, check).  
   * opciones: Solo para select, radio, check. Es un arreglo con las opciones que tendrán estos campos tienen el siguiente formato:  
