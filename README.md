@@ -2,11 +2,12 @@
 ## Indice  
 1. [Descripción](#descripción)  
 2. [Instalación](#instalación)  
-3. [Uso](#uso)  
+3. [Uso](#uso)
+4. [Toaster](#toaster)  
 4. [Detalles](#detalles)  
   
 ## Descripción  
-`ez-form` es un componente que permite crear formularios reactivos de manera fácil "ez".  
+`ez-form` es un componente que permite crear formularios reactivos de manera simple y facil.  
   
 ## Instalación  
 * Instalamos el paquete:   
@@ -146,6 +147,9 @@ Resultados:
 ![formulario](https://github.com/velascoandrs/repo-de-imagenes/blob/master/formulario-2.1.PNG?raw=true)  
   
 ## Toaster
+Esta libreria hace uso del paquete: [angular2-toaster](https://www.npmjs.com/package/angular2-toaster), no es necesario instalarlo ya
+viene instalado junto con la libreria.
+
 El toaster es el mensaje que se muestra en pantalla cuando el formulario es válido o no. 
 El despliegue de estos mensajes puede ser opcional
 ```html  
