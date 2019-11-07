@@ -7,7 +7,7 @@
 4. [Detalles](#detalles)  
   
 ## Descripción  
-`ez-form` es un componente que permite crear formularios reactivos de manera simple y facil.  
+`ez-form` es un componente que permite crear formularios reactivos para angular 2+ de manera simple y facil.  
   
 ## Instalación  
 * Instalamos el paquete:   
@@ -47,53 +47,73 @@ dentro del componente padre.
 ### `componentePadre.ts`  
 ```typescript  
       miConfiguracion = [
-          {
-            nombre: 'uuid',
-            tipo: {nombreTipo: 'input'},
-            disabled: true,
-          },
-          {
-            nombre: 'email',
-            validadores: [Validators.required, Validators.email],
-            placeholder: 'Ingrese un email',
-            tipo: {nombreTipo: 'input'},
-            mensajesError: {
-              required: 'El email es requerido',
-              email: 'Debe ser un email válido',
-            },
-          },
-          {
-            nombre: 'estadoCivil',
-            placeholder: 'Seleccione un estado civil',
-            label: 'Estado civil',
-            validadores: [Validators.required],
-            tipo: {
-              nombreTipo: 'select',
-              opciones: [{valor: 1, nombre: 'casado'}, {valor: 2, nombre: 'soltero'}]
-            },
-          },
-          {
-            nombre: 'ciudades',
-            validadores: [Validators.required],
-            tipo: {
-              nombreTipo: 'check',
-              opciones: [{valor: 1, nombre: 'Quito'}, {valor: 2, nombre: 'Cuenca'}, {nombre: 'Ambato', valor: 3}]},
-            label: 'Ciudades',
-            mensajesError: {
-              required: 'Eliga por lo menos una ciudad',
-            }
-          },
-          {
-            nombre: 'frutaFavorita',
-            validadores: [Validators.required],
-            label: 'Fruta Favorita',
-            tipo: {
-              nombreTipo: 'radio',
-              opciones: [{valor: 3, nombre: 'Manzana'}, {valor: 1, nombre: 'Pera'}, {valor: 2, nombre: 'Piña'}],
-            },
-          }
-        ];
-  
+                            {
+                              nombre: 'uuid',
+                              tipo: {nombreTipo: 'input'},
+                              disabled: true,
+                            },
+                            {
+                              nombre: 'contraseña',
+                              tipo: {nombreTipo: 'input', clase: 'password'},
+                              validadores: [Validators.required]
+                            },
+                            {
+                              nombre: 'fechaNacimiento',
+                              placeholder: 'Ingresa tu fecha de nacimiento',
+                              tipo: {nombreTipo: 'date', disabledInput: true},
+                              validadores: [Validators.required]
+                            },
+                            {
+                              nombre: 'otraFecha',
+                              placeholder: 'Ingresa una fecha',
+                              tipo: {nombreTipo: 'date'},
+                              validadores: [Validators.required],
+                              mensajesError: {
+                                required: 'El ingrese una fecha',
+                                date: 'Fecha no aceptable'
+                              },
+                            },
+                            {
+                              nombre: 'email',
+                              validadores: [Validators.required, Validators.email],
+                              placeholder: 'Ingrese un email',
+                              tipo: {nombreTipo: 'input'},
+                              mensajesError: {
+                                required: 'El email es requerido',
+                                email: 'Debe ser un email válido',
+                              },
+                            },
+                            {
+                              nombre: 'estadoCivil',
+                              placeholder: 'Seleccione un estado civil',
+                              label: 'Estado civil',
+                              validadores: [Validators.required],
+                              tipo: {
+                                nombreTipo: 'select',
+                                opciones: [{valor: 1, nombre: 'casado'}, {valor: 2, nombre: 'soltero'}]
+                              },
+                            },
+                            {
+                              nombre: 'ciudades',
+                              validadores: [Validators.required],
+                              tipo: {
+                                nombreTipo: 'check',
+                                opciones: [{valor: 1, nombre: 'Quito'}, {valor: 2, nombre: 'Cuenca'}, {nombre: 'Ambato', valor: 3}]},
+                              label: 'Ciudades',
+                              mensajesError: {
+                                required: 'Eliga por lo menos una ciudad',
+                              }
+                            },
+                            {
+                              nombre: 'frutaFavorita',
+                              validadores: [Validators.required],
+                              label: 'Fruta Favorita',
+                              tipo: {
+                                nombreTipo: 'radio',
+                                opciones: [{valor: 3, nombre: 'Manzana'}, {valor: 1, nombre: 'Pera'}, {valor: 2, nombre: 'Piña'}],
+                              },
+                            }
+                      ];
 ```  
   
 Entonces en nuesto `componentePadre.html` llamamos al componente.  
@@ -144,7 +164,7 @@ si el formulario haya sido llenado correctamente.
 ```  
 Resultados:   
   
-![formulario](https://github.com/velascoandrs/repo-de-imagenes/blob/master/formulario-2.1.PNG?raw=true)  
+![formulario](https://github.com/velascoandrs/repo-de-imagenes/blob/master/formulario-3,1.PNG?raw=true)  
   
 ## Toaster
 Esta libreria hace uso del paquete: [angular2-toaster](https://www.npmjs.com/package/angular2-toaster), no es necesario instalarlo ya
@@ -203,7 +223,7 @@ Es un arreglo en donde cada elemento corresponde a un campo del formulario, este
 * placeholder: Es el placeholder de nuestro campo, es `opcional`.  
 * disabled: Permite desactivar un campo, es `opcional`
 * tipo: Es un objeto en donde especificamos el tipo de campo que será. Se lo declara de la siguiente forma:  
-  * nombre: Nombre del tipo (input, select, radio, check).  
+  * nombre: Nombre del tipo (input, date,select, radio, check).  
   * opciones: Solo para select, radio, check. Es un arreglo con las opciones que tendrán estos campos tienen el siguiente formato:  
       * valor: Valor que recibira el campo internamente.  
       * nombre: Valor que se mostrara en pantalla.  

@@ -88,6 +88,27 @@ export class AppComponent {
       disabled: true,
     },
     {
+      nombre: 'contraseña',
+      tipo: {nombreTipo: 'input', clase: 'password'},
+      validadores: [Validators.required]
+    },
+    {
+      nombre: 'fechaNacimiento',
+      placeholder: 'Ingresa tu fecha de nacimiento',
+      tipo: {nombreTipo: 'date', disabledInput: true},
+      validadores: [Validators.required]
+    },
+    {
+      nombre: 'otraFecha',
+      placeholder: 'Ingresa una fecha',
+      tipo: {nombreTipo: 'date'},
+      validadores: [Validators.required],
+      mensajesError: {
+        required: 'El ingrese una fecha',
+        date: 'Fecha no aceptable'
+      },
+    },
+    {
       nombre: 'email',
       validadores: [Validators.required, Validators.email],
       placeholder: 'Ingrese un email',

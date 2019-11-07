@@ -5,13 +5,36 @@
         <mat-form-field *ngIf="control.tipo.nombreTipo === 'input'"
                         appearance="outline"
                         class="filled">
-          <mat-label *ngIf="control.tipo.nombreTipo === 'input'">{{control.nombre}}</mat-label>
+          <mat-label *ngIf="control.tipo.nombreTipo === 'input'">{{control.label ? control.label : control.placeholder? control.placeholder : control.nombre}}</mat-label>
           <input
-            matInput *ngIf="control.tipo.nombreTipo === 'input'"
+            *ngIf="control.tipo.clase !== 'password'"
+            matInput
             type="text"
             formControlName={{control.nombre}}
             placeholder="{{control.placeholder ? control.placeholder : ''}}"
           >
+          <input
+            *ngIf="control.tipo.clase === 'password'"
+            matInput
+            type="text"
+            formControlName={{control.nombre}}
+            placeholder="{{control.placeholder ? control.placeholder : ''}}"
+            [type]="esconderTexto ? 'password' : 'text'"
+          >
+          <button *ngIf="control.tipo.clase === 'password'" mat-icon-button matSuffix (click)="esconderTexto = !esconderTexto" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="esconderTexto">
+            <mat-icon>{{esconderTexto ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+        </mat-form-field>
+        <mat-form-field *ngIf="control.tipo.nombreTipo === 'date'"
+                        appearance="outline"
+                        class="filled">
+          <input matInput
+                 [matDatepicker]="dp3"
+                 placeholder="{{control.placeholder ? control.placeholder : ''}}"
+                 formControlName={{control.nombre}}
+          >
+          <mat-datepicker-toggle matSuffix [for]="dp3"></mat-datepicker-toggle>
+          <mat-datepicker #dp3 [disabled]="control.disabled"></mat-datepicker>
         </mat-form-field>
         <mat-form-field *ngIf="control.tipo.nombreTipo === 'select'"
           appearance="outline" class="filled">

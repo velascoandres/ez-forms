@@ -33,9 +33,10 @@ export class EzFormComponent implements OnInit {
   objetoArreglosErrores = {};
   @Output()
   datosFormulario: EventEmitter<object | boolean> = new EventEmitter<object | boolean>();
-
+  esconderTexto = true;
   mensajesErrorDefecto = {
     required: 'campo obligatorio',
+    date: 'fecha Inválida'
   };
 
   constructor(
@@ -68,7 +69,7 @@ export class EzFormComponent implements OnInit {
         const nombreControl = itemConfiguracion.nombre ? itemConfiguracion.nombre : '';
         const valorDefecto = {
           value: this.registro[nombreControl] ? this.registro[nombreControl] : '',
-          disabled: !!itemConfiguracion.disabled,
+          disabled: itemConfiguracion.disabled !== undefined  ||  itemConfiguracion.tipo.disabledInput !== undefined,
         };
         const tieneValidadores = itemConfiguracion.validadores !== undefined;
         let validadores = [];
@@ -127,6 +128,9 @@ export class EzFormComponent implements OnInit {
     if ((control.controls || (control.dirty || control.touched)) && control.errors) {
       arregloErrores = Object.keys(control.errors).map(
         (llave) => {
+          if (llave === 'matDatepickerParse') {
+            llave = 'date';
+          }
           return this.mensajesErrores[nombreCampo][llave];
         }
       );

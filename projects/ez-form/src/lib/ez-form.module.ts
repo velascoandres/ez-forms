@@ -6,7 +6,15 @@ import {ToasterModule} from 'angular2-toaster';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
-import {MatCheckboxModule, MatOptionModule, MatRadioModule, MatSelectModule} from '@angular/material';
+import {
+  MatButtonModule,
+  MatCheckboxModule,
+  MatDatepickerModule,
+  MatIconModule,
+  MatOptionModule,
+  MatRadioModule,
+  MatSelectModule
+} from '@angular/material';
 
 
 
@@ -24,6 +32,9 @@ import {MatCheckboxModule, MatOptionModule, MatRadioModule, MatSelectModule} fro
     MatSelectModule,
     MatCheckboxModule,
     MatRadioModule,
+    MatIconModule,
+    MatButtonModule,
+    MatDatepickerModule,
   ],
   exports: [EzFormComponent]
 })
