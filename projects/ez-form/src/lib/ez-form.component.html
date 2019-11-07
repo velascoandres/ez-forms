@@ -28,6 +28,7 @@
         <mat-form-field *ngIf="control.tipo.nombreTipo === 'date'"
                         appearance="outline"
                         class="filled">
+          <mat-label *ngIf="control.tipo.nombreTipo === 'date'">{{control.label ? control.label : control.placeholder? control.placeholder : control.nombre}}</mat-label>
           <input matInput
                  [matDatepicker]="dp3"
                  placeholder="{{control.placeholder ? control.placeholder : ''}}"

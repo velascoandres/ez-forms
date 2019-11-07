@@ -164,7 +164,7 @@ si el formulario haya sido llenado correctamente.
 ```  
 Resultados:   
   
-![formulario](https://github.com/velascoandrs/repo-de-imagenes/blob/master/formulario-3,1.PNG?raw=true)  
+![formulario](https://github.com/velascoandrs/repo-de-imagenes/blob/master/formulario-4.1.PNG?raw=true)  
   
 ## Toaster
 Esta libreria hace uso del paquete: [angular2-toaster](https://www.npmjs.com/package/angular2-toaster), no es necesario instalarlo ya
