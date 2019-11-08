@@ -1,6 +1,7 @@
 # ez-form  
 ## Indice  
 1. [Descripción](#descripción)  
+2. [Requisitos]()
 2. [Instalación](#instalación)  
 3. [Uso](#uso)
 4. [Toaster](#toaster)  
@@ -8,6 +9,13 @@
   
 ## Descripción  
 `ez-form` es un componente que permite crear formularios reactivos para angular 2+ de manera simple y facil.  
+ 
+## Requisitos
+* Angular Material [Pagina Oficial](https://material.angular.io/)
+```text
+    $ ng add @angular/material
+```
+* Angular 2 Toaster [Guía de instalación](https://www.npmjs.com/package/angular2-toaster)
   
 ## Instalación  
 * Instalamos el paquete:   
@@ -16,7 +24,7 @@
     $ npm i @gordon_freeman/ez-form  
 ```  
   
-* Importamos `EzFormModule` en el modulo en donde queremos usar el componente.  
+* Importamos `EzFormModule` en el modulo en donde queremos usar el componente
   
 ```typescript  
     @NgModule({  
@@ -32,6 +40,25 @@
       bootstrap: [AppComponent]  
     })  
 ```  
+  
+Si se va utilizar el `datepicker` de angular material:
+```typescript
+    @NgModule({
+      declarations: [
+        AppComponent
+      ],
+      imports: [
+        BrowserModule,
+        EzFormModule,
+        BrowserAnimationsModule,
+        MatNativeDateModule,
+      ],
+      providers: [
+        MatDatepickerModule,
+      ],
+      bootstrap: [AppComponent]
+    })
+```
   
 * Usamos el componente.  
   
