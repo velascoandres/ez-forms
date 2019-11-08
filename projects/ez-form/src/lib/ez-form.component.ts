@@ -55,6 +55,7 @@ export class EzFormComponent implements OnInit {
     this.escucharFormulario();
     this.escucharCampos();
   }
+
   protected construirFormulario() {
     const controlesFB = this.generarControles(this.configuracion);
     this.formulario = this.fb.group(
@@ -63,7 +64,6 @@ export class EzFormComponent implements OnInit {
       },
     );
   }
-
   protected generarControles(configuracion: any) {
     const controles = {};
     configuracion.forEach(
@@ -71,7 +71,7 @@ export class EzFormComponent implements OnInit {
         const nombreControl = itemConfiguracion.nombre ? itemConfiguracion.nombre : '';
         const valorDefecto = {
           value: this.registro[nombreControl] ? this.registro[nombreControl] : '',
-          disabled: itemConfiguracion.disabled !== undefined  ||  itemConfiguracion.tipo.disabledInput !== undefined,
+          disabled: itemConfiguracion.disabled !== undefined || itemConfiguracion.tipo.disabledInput !== undefined,
         };
         const tieneValidadores = itemConfiguracion.validadores !== undefined;
         let validadores = [];
