@@ -145,7 +145,6 @@
             id="{{control.nombre}}"
             class="form-control"
             formControlName={{control.nombre}}
-            placeholder="{{control.placeholder ? control.placeholder : ''}}"
           >
             <option *ngIf="control.placeholder" value=''>{{control.placeholder}}</option>
             <option
@@ -157,19 +156,16 @@
             </option>
           </select>
         </div>
-        <div class="form-check">
-          <radio-group *ngIf="control.tipo.nombreTipo === 'radio'"
-                       formControlName="{{control.nombre}}"
-                       class="radio-group"
-          >
+        <div class="form-check" *ngIf="control.tipo.nombreTipo === 'radio'">
             <h5>{{control.label}}</h5>
-            <mat-radio-button *ngFor="let opcion of control.tipo.opciones" class="radio-button"
-                              [value]="opcion.valor">
-              {{opcion.nombre}}
-            </mat-radio-button>
-          </radio-group>
+            <input
+                 *ngFor="let opcion of control.tipo.opciones" class="radio-button"
+                 type="radio"
+                              [value]="opcion.valor"
+                              formControlName="{{control.nombre}}"
+            >
         </div>
-        <div *ngIf="control.tipo.nombreTipo === 'check'">
+        <!--<div *ngIf="control.tipo.nombreTipo === 'check'">
           <h5>{{control.label}}</h5>
           <p *ngFor="let opcion of control.tipo.opciones; let i = index" formArrayName="{{control.nombre}}"
           >
@@ -184,7 +180,7 @@
           <ul>
             <li *ngFor="let error of obtenerMensajesError(control.nombre)">{{error}}</li>
           </ul>
-        </div>
+        </div> -->
       </div>
     </div>
   </div>
