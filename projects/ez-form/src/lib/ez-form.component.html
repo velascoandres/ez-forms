@@ -86,5 +86,110 @@
   <ng-content>
   </ng-content>
 </form>
+<form [formGroup]="formulario" class="filled" *ngIf="frameworkEstilos === 'boostrap'">
+  <div class="d-flex justify-content-center">
+    <div class="p-2 flex-fill">
+      <div *ngFor="let control of configuracion">
+        <div *ngIf="control.tipo.nombreTipo === 'input'"
+             class="form-group">
+          <label
+            *ngIf="control.tipo.nombreTipo === 'input'"
+            for="{{control.nombre}}"
+          >
+            {{control.label ? control.label : control.placeholder ? control.placeholder : control.nombre}}
+          </label>
+          <input
+            *ngIf="control.tipo.clase !== 'password'"
+            type="text"
+            class="form-control"
+            id="{{control.nombre}}"
+            formControlName={{control.nombre}}
+            placeholder="{{control.placeholder ? control.placeholder : ''}}"
+          >
+          <input
+            *ngIf="control.tipo.clase === 'password'"
+            class="form-control"
+            type="password"
+            id="{{control.nombre}}"
+            formControlName={{control.nombre}}
+            placeholder="{{control.placeholder ? control.placeholder : ''}}"
+          >
+        </div>
+        <div *ngIf="control.tipo.nombreTipo === 'date'"
+             class="form-group">
+          <label
+            *ngIf="control.tipo.nombreTipo === 'date'"
+            for="{{control.nombre}}"
+          >
+            {{control.label ? control.label : control.placeholder ? control.placeholder : control.nombre}}
+          </label>
+          <input
+            id="{{control.nombre}}"
+            class="form-control"
+            placeholder="{{control.placeholder ? control.placeholder : ''}}"
+            formControlName={{control.nombre}}
+            type="date"
+          >
+        </div>
+        <div
+          *ngIf="control.tipo.nombreTipo === 'select'"
+          class="form-group"
+        >
+          <label
+            *ngIf="control.label"
+            for="{{control.nombre}}"
+          >
+            {{control.label}}
+          </label>
+          <select
+            id="{{control.nombre}}"
+            class="form-control"
+            formControlName={{control.nombre}}
+            placeholder="{{control.placeholder ? control.placeholder : ''}}"
+          >
+            <option *ngIf="control.placeholder" value=''>{{control.placeholder}}</option>
+            <option
+              *ngFor="let opcion of control.tipo.opciones"
+              value="{{opcion.valor}}"
+
+            >
+              {{opcion.nombre}}
+            </option>
+          </select>
+        </div>
+        <div class="form-check">
+          <radio-group *ngIf="control.tipo.nombreTipo === 'radio'"
+                       formControlName="{{control.nombre}}"
+                       class="radio-group"
+          >
+            <h5>{{control.label}}</h5>
+            <mat-radio-button *ngFor="let opcion of control.tipo.opciones" class="radio-button"
+                              [value]="opcion.valor">
+              {{opcion.nombre}}
+            </mat-radio-button>
+          </radio-group>
+        </div>
+        <div *ngIf="control.tipo.nombreTipo === 'check'">
+          <h5>{{control.label}}</h5>
+          <p *ngFor="let opcion of control.tipo.opciones; let i = index" formArrayName="{{control.nombre}}"
+          >
+            <mat-checkbox
+              formControlName="{{i}}"
+            >
+              {{opcion.nombre}}
+            </mat-checkbox>
+          </p>
+        </div>
+        <div *ngIf="verificarMensajeError(control.nombre)" class="alert alert-primary" role="alert">
+          <ul>
+            <li *ngFor="let error of obtenerMensajesError(control.nombre)">{{error}}</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <ng-content>
+  </ng-content>
+</form>
 <toaster-container [toasterconfig]="config"></toaster-container>
 
