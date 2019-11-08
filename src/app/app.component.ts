@@ -95,7 +95,7 @@ export class AppComponent {
     {
       nombre: 'fechaNacimiento',
       placeholder: 'Ingresa tu fecha de nacimiento',
-      tipo: {nombreTipo: 'date', disabledInput: true},
+      tipo: {nombreTipo: 'date'},
       validadores: [Validators.required]
     },
     {

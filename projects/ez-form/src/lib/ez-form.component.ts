@@ -11,6 +11,8 @@ import {debounceTime} from 'rxjs/operators';
 export class EzFormComponent implements OnInit {
   formulario: FormGroup;
   @Input()
+  frameworkEstilos = 'material';
+  @Input()
   registro = {};
   @Input()
   mostrarToast = true;
