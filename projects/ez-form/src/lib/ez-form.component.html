@@ -1,4 +1,4 @@
-<form [formGroup]="formulario" class="filled">
+<form *ngIf="frameworkEstilos === 'material'" [formGroup]="formulario" class="filled">
   <div class="d-flex justify-content-center">
     <div class="p-2 flex-fill">
       <div *ngFor="let control of configuracion">
@@ -74,6 +74,125 @@
               {{opcion.nombre}}
             </mat-checkbox>
           </p>
+        </div>
+        <div *ngIf="verificarMensajeError(control.nombre)" class="alert alert-primary" role="alert">
+          <ul>
+            <li *ngFor="let error of obtenerMensajesError(control.nombre)">{{error}}</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <ng-content>
+  </ng-content>
+</form>
+<form *ngIf="frameworkEstilos === 'bootstrap'" [formGroup]="formulario" class="filled">
+  <div class="d-flex justify-content-center">
+    <div class="p-2 flex-fill">
+      <div *ngFor="let control of configuracion">
+        <div *ngIf="control.tipo.nombreTipo === 'input'"
+             class="form-group">
+          <label
+            *ngIf="control.tipo.nombreTipo === 'input'"
+            for="{{control.nombre}}"
+          >
+            {{control.label ? control.label : control.placeholder ? control.placeholder : control.nombre}}
+          </label>
+          <input
+            *ngIf="control.tipo.clase !== 'password'"
+            type="text"
+            class="form-control"
+            id="{{control.nombre}}"
+            formControlName={{control.nombre}}
+            placeholder="{{control.placeholder ? control.placeholder : ''}}"
+          >
+          <input
+            *ngIf="control.tipo.clase === 'password'"
+            class="form-control"
+            type="password"
+            id="{{control.nombre}}"
+            formControlName={{control.nombre}}
+            placeholder="{{control.placeholder ? control.placeholder : ''}}"
+          >
+        </div>
+        <div *ngIf="control.tipo.nombreTipo === 'date'"
+             class="form-group">
+          <label
+            *ngIf="control.tipo.nombreTipo === 'date'"
+            for="{{control.nombre}}"
+          >
+            {{control.label ? control.label : control.placeholder ? control.placeholder : control.nombre}}
+          </label>
+          <input
+            id="{{control.nombre}}"
+            class="form-control"
+            placeholder="{{control.placeholder ? control.placeholder : ''}}"
+            formControlName={{control.nombre}}
+            type="date"
+          >
+        </div>
+        <div
+          *ngIf="control.tipo.nombreTipo === 'select'"
+          class="form-group"
+        >
+          <label
+            *ngIf="control.label"
+            for="{{control.nombre}}"
+          >
+            {{control.label}}
+          </label>
+          <select
+            id="{{control.nombre}}"
+            class="form-control"
+            formControlName={{control.nombre}}
+          >
+            <option *ngIf="control.placeholder" value=''>{{control.placeholder}}</option>
+            <option
+              *ngFor="let opcion of control.tipo.opciones"
+              value="{{opcion.valor}}"
+
+            >
+              {{opcion.nombre}}
+            </option>
+          </select>
+        </div>
+        <label *ngIf="control.tipo.nombreTipo === 'radio'">{{control.label}}</label>
+        <div class="form-check" *ngIf="control.tipo.nombreTipo === 'radio'">
+          <div *ngFor="let opcion of control.tipo.opciones" >
+              <input
+                class="form-check-input"
+                id="{{opcion.nombre}}"
+                type="radio"
+                [value]="opcion.valor"
+                formControlName="{{control.nombre}}"
+              >
+              <label
+                for="{{opcion.nombre}}"
+                class="form-check-label"
+              >
+                {{opcion.nombre}}
+              </label>
+            </div>
+        </div>
+        <div *ngIf="control.tipo.nombreTipo === 'check'">
+          <h5>{{control.label}}</h5>
+          <div class="form-check">
+            <div *ngFor="let opcion of control.tipo.opciones; let i = index" formArrayName="{{control.nombre}}">
+              <input
+                class="form-check-input"
+                id="{{opcion.nombre}}"
+                type="checkbox"
+                [value]="opcion.valor"
+                formControlName="{{i}}"
+              >
+              <label
+                for="{{opcion.nombre}}"
+                class="form-check-label"
+              >
+                {{opcion.nombre}}
+              </label>
+            </div>
+          </div>
         </div>
         <div *ngIf="verificarMensajeError(control.nombre)" class="alert alert-primary" role="alert">
           <ul>
