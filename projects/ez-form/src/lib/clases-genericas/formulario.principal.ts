@@ -12,6 +12,8 @@ export class FormularioPrincipal {
   @Input()
   mostrarToast = true;
   @Input()
+  msgErrorAnimation = 'fadeIn';
+  @Input()
   toasterConfig = {
     success: {
       type: 'info',

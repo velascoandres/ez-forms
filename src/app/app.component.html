@@ -3,7 +3,8 @@
         [configuracion]="controles"
         [registro]="usuario"
         (datosFormulario)="escucharDatosDelFormulario($event)"
-        [frameworkEstilos]="'material'"
+        [frameworkEstilos]="'bootstrap'"
+        [msgErrorAnimation]="'fadeInLeft'"
       >
         <button [disabled]="!usuario" class="btn btn-block btn-info">Submit</button>
       </ez-form>

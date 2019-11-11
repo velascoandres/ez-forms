@@ -175,7 +175,7 @@
             </div>
         </div>
         <div *ngIf="control.tipo.nombreTipo === 'check'">
-          <h5>{{control.label}}</h5>
+          <label>{{control.label}}</label>
           <div class="form-check">
             <div *ngFor="let opcion of control.tipo.opciones; let i = index" formArrayName="{{control.nombre}}">
               <input
@@ -194,7 +194,9 @@
             </div>
           </div>
         </div>
-        <div *ngIf="verificarMensajeError(control.nombre)" class="alert alert-primary" role="alert">
+        <div *ngIf="verificarMensajeError(control.nombre)"
+             class="alert alert-danger animated {{msgErrorAnimation}}"
+             role="alert">
           <ul>
             <li *ngFor="let error of obtenerMensajesError(control.nombre)">{{error}}</li>
           </ul>

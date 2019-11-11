@@ -2,10 +2,16 @@
 ## Indice  
 1. [Descripción](#descripción)  
 2. [Requisitos]()
-2. [Instalación](#instalación)  
-3. [Uso](#uso)
-4. [Toaster](#toaster)  
-4. [Detalles](#detalles)  
+3. [Instalación](#instalación)  
+4. [Uso](#uso)
+
+     4.1  [Toaster](#toaster)  
+     
+     4.2  [Bootstrap](#bootstrap)
+     
+     4.3  [Animaciones](#animaciones)
+     
+5. [Detalles](#detalles)  
   
 ## Descripción  
 `ez-form` es un componente que permite crear formularios reactivos para angular 2+ de manera simple y facil.  
@@ -143,7 +149,8 @@ dentro del componente padre.
                       ];
 ```  
   
-Entonces en nuesto `componentePadre.html` llamamos al componente.  
+Entonces en nuesto `componentePadre.html` llamamos al componente y Usamos el Input : `configuracion`"
+
   
 ```html  
     <ez-form [configuracion]="miConfiguracion">  
@@ -166,6 +173,7 @@ Diccionario:
 ```  
   
 Componente `componentePadre.html`:  
+
   
 ```html  
     <ez-form   
@@ -178,8 +186,10 @@ Componente `componentePadre.html`:
   
 El formulario tiene un  `Output` donde devolvera los datos del formulario o un `undefined` dependiendo  
 si el formulario haya sido llenado correctamente.  
-  
-  
+
+Usamos el Output : `datosFormulario`"
+ 
+   
 ```html  
     <ez-form   
             [configuracion]="miConfiguracion"  
@@ -192,13 +202,18 @@ si el formulario haya sido llenado correctamente.
 Resultados:   
   
 ![formulario](https://github.com/velascoandrs/repo-de-imagenes/blob/master/formulario-4.1.PNG?raw=true)  
-  
+
+Si queremos usar los estilos de `bootstrap` para nuestros formularios  
 ## Toaster
 Esta libreria hace uso del paquete: [angular2-toaster](https://www.npmjs.com/package/angular2-toaster), no es necesario instalarlo ya
 viene instalado junto con la libreria.
 
 El toaster es el mensaje que se muestra en pantalla cuando el formulario es válido o no. 
 El despliegue de estos mensajes puede ser opcional
+
+Usamos el Input : `mostrarToast`"
+
+
 ```html  
     <ez-form   
             [configuracion]="miConfiguracion"  
@@ -224,6 +239,8 @@ Tambien podemos configurar los mensajes que se mostraran de la siguiente forma:
         }
       };
 ```    
+Usamos el Input : `toasterConfig`"
+
 
 ```html  
     <ez-form   
@@ -238,6 +255,44 @@ Tambien podemos configurar los mensajes que se mostraran de la siguiente forma:
 Resultados: 
 
 ![formulario](https://github.com/velascoandrs/repo-de-imagenes/blob/master/formulario-2.2.PNG?raw=true)
+
+### Bootstrap
+Por defecto el componente carga todos los compontes respectivos de `Angular Material`. si se desea usar los componentes de boostrap
+se hace lo siguiente:
+
+Usamos el Input : `frameworkEstilos`"
+
+```html
+    <ez-form
+        [configuracion]="miConfiguracion"
+        [registro]="usuario"
+        (datosFormulario)="algunaFuncion($event)" 
+        [frameworkEstilos]="'bootstrap'"
+      >
+         <button (click)="algunaFuncionClic()">Submit</button>  
+     </ez-form>
+```
+
+Resultados
+![resultadoBootstrap](https://github.com/velascoandrs/repo-de-imagenes/blob/master/formularioB.PNG?raw=true)
+
+### Animaciones
+La animación del mensaje de error de los campos del formulario se la puede modificar, para ello usamos las animaciones de [animate.css
+](https://www.npmjs.com/package/animate.css?activeTab=versions). 
+
+Usamos el Input : `msgErrorAnimation`:
+
+```html
+    <ez-form
+        [configuracion]="miConfiguracion"
+        [registro]="usuario"
+        (datosFormulario)="algunaFuncion($event)"
+        [msgErrorAnimation]="'fadeInLeft'
+      >
+         <button (click)="algunaFuncionClic()">Submit</button>  
+     </ez-form>
+```
+
 
 ## Detalles  
   
