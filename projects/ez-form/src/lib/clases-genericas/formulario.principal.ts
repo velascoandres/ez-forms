@@ -152,8 +152,8 @@ export class FormularioPrincipal {
           );
           const arreglo = arregloBoolean.reduce(
             (acumulador, item, index) => {
-              if (item) {
-                acumulador.push(this.configuracion[indice].tipo.opciones[index].valor);
+              if (item && this.configuracion[indice]) {
+                acumulador.push(this.configuracion[indice].type.options[index].value);
               }
               return acumulador;
             }, []

@@ -18,79 +18,136 @@ export class AppComponent {
       disabled: true,
     },
     {
-      controlName: 'contraseña',
+      controlName: 'password',
       type: {
         typeName: 'input',
-        clase: 'password',
+        class: 'password',
       },
       validators: [
         Validators.required,
       ]
     },
     {
-      controlName: 'fechaNacimiento',
-      placeholder: 'Ingresa tu fecha de nacimiento',
-      type: {typeName: 'date'},
-      validators: [Validators.required]
+      controlName: 'birthday',
+      placeholder: 'Enter your birthday date',
+      type: {
+        typeName: 'date'
+      },
+      validators: [
+        Validators.required,
+      ]
     },
     {
-      controlName: 'otraFecha',
-      placeholder: 'Ingresa una fecha',
-      type: {typeName: 'date'},
-      validators: [Validators.required],
+      controlName: 'otherDate',
+      placeholder: 'Enter a date',
+      type: {
+        typeName: 'date'
+      },
+      validators: [
+        Validators.required,
+      ],
       errorMessages: {
-        required: 'El ingrese una fecha',
-        date: 'Fecha no aceptable'
+        required: 'The date is required',
+        date: 'The date is not acceptable'
       },
     },
     {
       controlName: 'email',
-      validators: [Validators.required, Validators.email],
-      placeholder: 'Ingrese un email',
-      type: {typeName: 'input'},
+      validators: [
+        Validators.required,
+        Validators.email
+      ],
+      placeholder: 'Enter an email',
+      type: {
+        typeName: 'input'
+      },
       errorMessages: {
-        required: 'El email es requerido',
-        email: 'Debe ser un email válido',
+        required: 'The email is mandatory',
+        email: 'You must enter a valid email',
       },
     },
     {
-      controlName: 'estadoCivil',
-      placeholder: 'Seleccione un estado civil',
-      label: 'Estado civil',
-      validators: [Validators.required],
+      controlName: 'civilState',
+      placeholder: 'Choose a civil state',
+      label: 'Civil state',
+      validators: [
+        Validators.required
+      ],
       type: {
         typeName: 'select',
-        options: [{value: 1, label: 'casado'}, {value: 2, label: 'soltero'}]
+        options: [
+          {
+            value: 1,
+            label: 'Married'
+          },
+          {
+            value: 2,
+            label: 'Single'
+          }
+        ]
       },
     },
     {
-      controlName: 'ciudades',
-      validators: [Validators.required],
+      controlName: 'cities',
+      validators: [
+        Validators.required
+      ],
       type: {
         typeName: 'check',
-        options: [{value: 1, label: 'Quito'}, {value: 2, label: 'Cuenca'}, {label: 'Ambato', value: 3}]
+        options: [
+          {
+            value: 1,
+            label: 'Quito'
+          },
+          {
+            value: 2,
+            label: 'Cuenca'
+          },
+          {
+            value: 3,
+            label: 'Ambato'
+          }
+        ]
       },
-      label: 'Ciudades',
+      label: 'Cities',
       errorMessages: {
-        required: 'Eliga por lo menos una ciudad',
+        required: 'select a city at least',
       }
     },
     {
-      controlName: 'frutaFavorita',
-      validators: [Validators.required],
-      label: 'Fruta Favorita',
+      controlName: 'favoriteFruit',
+      validators: [
+        Validators.required
+      ],
+      label: 'Favorite Fruit',
       type: {
         typeName: 'radio',
-        options: [{valor: 3, nombre: 'Manzana'}, {valor: 1, nombre: 'Pera'}, {valor: 2, nombre: 'Piña'}],
+        options: [
+          {
+            value: 3,
+            label: 'Apple'
+          },
+          {
+            value: 1,
+            label: 'Pear'
+          },
+          {
+            value: 2,
+            label: 'Pineapple'
+          }
+        ],
       },
     }
   ];
   usuario = {
     uuid: 1234,
     email: 'juan.pecadoss@correo.com',
-    estadoCivil: 1,
-    frutaFavorita: 1,
-    ciudades: [1, 3]
+    civilState: 1,
+    otherDate: '2015-02-16',
+    birthday: '1999-02-16',
+    favoriteFruit: 1,
+    cities: [1, 3],
+    password: '12133',
   };
 
   myToasterConfig = {

@@ -1,12 +1,13 @@
 <form *ngIf="frameworkEstilos === 'material'" [formGroup]="formulario" class="filled">
   <div class="d-flex justify-content-center">
     <div class="p-2 flex-fill">
-      <div *ngFor="let control of configuracion">
+      <div *ngFor="let control of configuracion; let i = index">
         <mat-form-field *ngIf="control.type.typeName === 'input'"
                         appearance="outline"
                         class="filled">
           <mat-label *ngIf="control.type.typeName === 'input'">
-            {{control.label ? control.label : control.placeholder? control.placeholder : control.controlName}}</mat-label>
+            {{control.label ? control.label : control.placeholder ? control.placeholder : control.controlName}}
+          </mat-label>
           <input
             *ngIf="control.type.class !== 'password'"
             matInput
@@ -22,7 +23,9 @@
             placeholder="{{control.placeholder ? control.placeholder : ''}}"
             [type]="esconderTexto ? 'password' : 'text'"
           >
-          <button *ngIf="control.type.class === 'password'" mat-icon-button matSuffix (click)="esconderTexto = !esconderTexto" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="esconderTexto">
+          <button *ngIf="control.type.class === 'password'"
+                  mat-icon-button matSuffix (click)="esconderTexto = !esconderTexto" [attr.aria-label]="'Hide password'"
+                  [attr.aria-pressed]="esconderTexto">
             <mat-icon>{{esconderTexto ? 'visibility_off' : 'visibility'}}</mat-icon>
           </button>
         </mat-form-field>
@@ -30,7 +33,7 @@
                         appearance="outline"
                         class="filled">
           <mat-label *ngIf="control.type.typeName === 'date'">
-            {{control.label ? control.label : control.placeholder? control.placeholder : control.controlName}}</mat-label>
+            {{control.label ? control.label : control.placeholder ? control.placeholder : control.controlName}}</mat-label>
           <input matInput
                  [matDatepicker]="dp3"
                  placeholder="{{control.placeholder ? control.placeholder : ''}}"
@@ -39,9 +42,13 @@
           <mat-datepicker-toggle matSuffix [for]="dp3"></mat-datepicker-toggle>
           <mat-datepicker #dp3 [disabled]="control.disabled"></mat-datepicker>
         </mat-form-field>
-        <mat-form-field *ngIf="control.type.typeName === 'select'"
-          appearance="outline" class="filled">
-          <mat-label *ngIf="control.label">{{control.label}}</mat-label>
+        <mat-form-field
+          *ngIf="control.type.typeName === 'select'"
+          appearance="outline" class="filled"
+        >
+          <mat-label *ngIf="control.label">
+            {{control.label}}
+          </mat-label>
           <select matNativeControl
                   formControlName={{control.controlName}}
                   placeholder="{{control.placeholder ? control.placeholder : ''}}"
@@ -56,19 +63,24 @@
             </option>
           </select>
         </mat-form-field>
-        <mat-radio-group *ngIf="control.type.typeName === 'radio'"
-                         formControlName="{{control.controlName}}"
-                         class="radio-group"
+        <mat-radio-group
+          *ngIf="control.type.typeName === 'radio'"
+          formControlName="{{control.controlName}}"
+          class="radio-group"
         >
-          <h5>{{control.label}}</h5>
-          <mat-radio-button *ngFor="let opcion of control.type.options" class="radio-button"
-                            [value]="opcion.value">
+          <label>{{control.label}}</label>
+          <mat-radio-button
+            *ngFor="let opcion of control.type.options"
+            class="radio-button"
+            [value]="opcion.value"
+          >
             {{opcion.label}}
           </mat-radio-button>
         </mat-radio-group>
         <div *ngIf="control.type.typeName === 'check'">
           <label>{{control.label}}</label>
-          <p *ngFor="let opcion of control.type.options; let i = index" formArrayName="{{control.controlName}}"
+          <p *ngFor="let opcion of control.type.options; let i = index"
+             formArrayName="{{control.controlName}}"
           >
             <mat-checkbox
               formControlName="{{i}}"
@@ -91,7 +103,7 @@
 <form *ngIf="frameworkEstilos === 'bootstrap'" [formGroup]="formulario" class="filled">
   <div class="d-flex justify-content-center">
     <div class="p-2 flex-fill">
-      <div *ngFor="let control of configuracion">
+      <div *ngFor="let control of configuracion; let i = index">
         <div *ngIf="control.type.typeName === 'input'"
              class="form-group">
           <label
@@ -104,7 +116,7 @@
             *ngIf="control.type.class !== 'password'"
             type="text"
             class="form-control"
-            id="{{control.controlName}}"
+            id="{{i}}"
             formControlName={{control.controlName}}
             placeholder="{{control.placeholder ? control.placeholder : ''}}"
           >
@@ -112,8 +124,8 @@
             *ngIf="control.type.class === 'password'"
             class="form-control"
             type="password"
-            id="{{control.controlName}}"
-            formControlName={{control.nombre}}
+            id="{{i}}"
+            formControlName={{control.controlName}}
             placeholder="{{control.placeholder ? control.placeholder : ''}}"
           >
         </div>
@@ -126,7 +138,7 @@
             {{control.label ? control.label : control.placeholder ? control.placeholder : control.controlName}}
           </label>
           <input
-            id="{{control.controlName}}"
+            id="{{i}}"
             class="form-control"
             placeholder="{{control.placeholder ? control.placeholder : ''}}"
             formControlName={{control.controlName}}
@@ -139,12 +151,12 @@
         >
           <label
             *ngIf="control.label"
-            for="{{control.controlName}}"
+            for="{{i}}"
           >
             {{control.label}}
           </label>
           <select
-            id="{{control.controlName}}"
+            id="{{i}}"
             class="form-control"
             formControlName={{control.controlName}}
           >
@@ -160,21 +172,21 @@
         </div>
         <label *ngIf="control.type.typeName === 'radio'">{{control.label}}</label>
         <div class="form-check" *ngIf="control.type.typeName === 'radio'">
-          <div *ngFor="let opcion of control.tipo.opciones" >
-              <input
-                class="form-check-input"
-                id="{{opcion.controlName}}"
-                type="radio"
-                [value]="opcion.value"
-                formControlName="{{control.controlName}}"
-              >
-              <label
-                for="{{opcion.controlName}}"
-                class="form-check-label"
-              >
-                {{opcion.label}}
-              </label>
-            </div>
+          <div *ngFor="let opcion of control.type.options">
+            <input
+              class="form-check-input"
+              id="{{opcion.label}}"
+              type="radio"
+              [value]="opcion.value"
+              formControlName="{{control.controlName}}"
+            >
+            <label
+              for="{{opcion.value}}"
+              class="form-check-label"
+            >
+              {{opcion.label}}
+            </label>
+          </div>
         </div>
         <div *ngIf="control.type.typeName === 'check'">
           <label>{{control.label}}</label>
@@ -182,13 +194,13 @@
             <div *ngFor="let opcion of control.type.options; let i = index" formArrayName="{{control.controlName}}">
               <input
                 class="form-check-input"
-                id="{{opcion.value}}"
+                id="{{opcion.label}}"
                 type="checkbox"
                 [value]="opcion.value"
                 formControlName="{{i}}"
               >
               <label
-                for="{{opcion.value}}"
+                for="{{opcion.label}}"
                 class="form-check-label"
               >
                 {{opcion.label}}
