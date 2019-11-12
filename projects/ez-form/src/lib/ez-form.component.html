@@ -2,82 +2,84 @@
   <div class="d-flex justify-content-center">
     <div class="p-2 flex-fill">
       <div *ngFor="let control of configuracion">
-        <mat-form-field *ngIf="control.tipo.nombreTipo === 'input'"
+        <mat-form-field *ngIf="control.type.typeName === 'input'"
                         appearance="outline"
                         class="filled">
-          <mat-label *ngIf="control.tipo.nombreTipo === 'input'">{{control.label ? control.label : control.placeholder? control.placeholder : control.nombre}}</mat-label>
+          <mat-label *ngIf="control.type.typeName === 'input'">
+            {{control.label ? control.label : control.placeholder? control.placeholder : control.controlName}}</mat-label>
           <input
-            *ngIf="control.tipo.clase !== 'password'"
+            *ngIf="control.type.class !== 'password'"
             matInput
             type="text"
-            formControlName={{control.nombre}}
+            formControlName={{control.controlName}}
             placeholder="{{control.placeholder ? control.placeholder : ''}}"
           >
           <input
-            *ngIf="control.tipo.clase === 'password'"
+            *ngIf="control.type.class === 'password'"
             matInput
             type="text"
-            formControlName={{control.nombre}}
+            formControlName={{control.controlName}}
             placeholder="{{control.placeholder ? control.placeholder : ''}}"
             [type]="esconderTexto ? 'password' : 'text'"
           >
-          <button *ngIf="control.tipo.clase === 'password'" mat-icon-button matSuffix (click)="esconderTexto = !esconderTexto" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="esconderTexto">
+          <button *ngIf="control.type.class === 'password'" mat-icon-button matSuffix (click)="esconderTexto = !esconderTexto" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="esconderTexto">
             <mat-icon>{{esconderTexto ? 'visibility_off' : 'visibility'}}</mat-icon>
           </button>
         </mat-form-field>
-        <mat-form-field *ngIf="control.tipo.nombreTipo === 'date'"
+        <mat-form-field *ngIf="control.type.typeName === 'date'"
                         appearance="outline"
                         class="filled">
-          <mat-label *ngIf="control.tipo.nombreTipo === 'date'">{{control.label ? control.label : control.placeholder? control.placeholder : control.nombre}}</mat-label>
+          <mat-label *ngIf="control.type.typeName === 'date'">
+            {{control.label ? control.label : control.placeholder? control.placeholder : control.controlName}}</mat-label>
           <input matInput
                  [matDatepicker]="dp3"
                  placeholder="{{control.placeholder ? control.placeholder : ''}}"
-                 formControlName={{control.nombre}}
+                 formControlName={{control.controlName}}
           >
           <mat-datepicker-toggle matSuffix [for]="dp3"></mat-datepicker-toggle>
           <mat-datepicker #dp3 [disabled]="control.disabled"></mat-datepicker>
         </mat-form-field>
-        <mat-form-field *ngIf="control.tipo.nombreTipo === 'select'"
+        <mat-form-field *ngIf="control.type.typeName === 'select'"
           appearance="outline" class="filled">
           <mat-label *ngIf="control.label">{{control.label}}</mat-label>
           <select matNativeControl
-                  formControlName={{control.nombre}}
+                  formControlName={{control.controlName}}
                   placeholder="{{control.placeholder ? control.placeholder : ''}}"
           >
             <option *ngIf="control.placeholder" value=''>{{control.placeholder}}</option>
             <option
-              *ngFor="let opcion of control.tipo.opciones"
-              value="{{opcion.valor}}"
+              *ngFor="let opcion of control.type.options"
+              value="{{opcion.value}}"
 
             >
-              {{opcion.nombre}}
+              {{opcion.label}}
             </option>
           </select>
         </mat-form-field>
-        <mat-radio-group *ngIf="control.tipo.nombreTipo === 'radio'"
-                         formControlName="{{control.nombre}}"
+        <mat-radio-group *ngIf="control.type.typeName === 'radio'"
+                         formControlName="{{control.controlName}}"
                          class="radio-group"
         >
           <h5>{{control.label}}</h5>
-          <mat-radio-button *ngFor="let opcion of control.tipo.opciones" class="radio-button"
-                            [value]="opcion.valor">
-            {{opcion.nombre}}
+          <mat-radio-button *ngFor="let opcion of control.type.options" class="radio-button"
+                            [value]="opcion.value">
+            {{opcion.label}}
           </mat-radio-button>
         </mat-radio-group>
-        <div *ngIf="control.tipo.nombreTipo === 'check'">
-          <h5>{{control.label}}</h5>
-          <p *ngFor="let opcion of control.tipo.opciones; let i = index" formArrayName="{{control.nombre}}"
+        <div *ngIf="control.type.typeName === 'check'">
+          <label>{{control.label}}</label>
+          <p *ngFor="let opcion of control.type.options; let i = index" formArrayName="{{control.controlName}}"
           >
             <mat-checkbox
               formControlName="{{i}}"
             >
-              {{opcion.nombre}}
+              {{opcion.label}}
             </mat-checkbox>
           </p>
         </div>
-        <div *ngIf="verificarMensajeError(control.nombre)" class="alert alert-primary" role="alert">
+        <div *ngIf="verificarMensajeError(control.controlName)" class="alert alert-primary" role="alert">
           <ul>
-            <li *ngFor="let error of obtenerMensajesError(control.nombre)">{{error}}</li>
+            <li *ngFor="let error of obtenerMensajesError(control.controlName)">{{error}}</li>
           </ul>
         </div>
       </div>
@@ -90,115 +92,115 @@
   <div class="d-flex justify-content-center">
     <div class="p-2 flex-fill">
       <div *ngFor="let control of configuracion">
-        <div *ngIf="control.tipo.nombreTipo === 'input'"
+        <div *ngIf="control.type.typeName === 'input'"
              class="form-group">
           <label
-            *ngIf="control.tipo.nombreTipo === 'input'"
-            for="{{control.nombre}}"
+            *ngIf="control.type.typeName === 'input'"
+            for="{{control.controlName}}"
           >
-            {{control.label ? control.label : control.placeholder ? control.placeholder : control.nombre}}
+            {{control.label ? control.label : control.placeholder ? control.placeholder : control.controlName}}
           </label>
           <input
-            *ngIf="control.tipo.clase !== 'password'"
+            *ngIf="control.type.class !== 'password'"
             type="text"
             class="form-control"
-            id="{{control.nombre}}"
-            formControlName={{control.nombre}}
+            id="{{control.controlName}}"
+            formControlName={{control.controlName}}
             placeholder="{{control.placeholder ? control.placeholder : ''}}"
           >
           <input
-            *ngIf="control.tipo.clase === 'password'"
+            *ngIf="control.type.class === 'password'"
             class="form-control"
             type="password"
-            id="{{control.nombre}}"
+            id="{{control.controlName}}"
             formControlName={{control.nombre}}
             placeholder="{{control.placeholder ? control.placeholder : ''}}"
           >
         </div>
-        <div *ngIf="control.tipo.nombreTipo === 'date'"
+        <div *ngIf="control.type.typeName === 'date'"
              class="form-group">
           <label
-            *ngIf="control.tipo.nombreTipo === 'date'"
-            for="{{control.nombre}}"
+            *ngIf="control.type.typeName === 'date'"
+            for="{{control.controlName}}"
           >
-            {{control.label ? control.label : control.placeholder ? control.placeholder : control.nombre}}
+            {{control.label ? control.label : control.placeholder ? control.placeholder : control.controlName}}
           </label>
           <input
-            id="{{control.nombre}}"
+            id="{{control.controlName}}"
             class="form-control"
             placeholder="{{control.placeholder ? control.placeholder : ''}}"
-            formControlName={{control.nombre}}
+            formControlName={{control.controlName}}
             type="date"
           >
         </div>
         <div
-          *ngIf="control.tipo.nombreTipo === 'select'"
+          *ngIf="control.type.typeName === 'select'"
           class="form-group"
         >
           <label
             *ngIf="control.label"
-            for="{{control.nombre}}"
+            for="{{control.controlName}}"
           >
             {{control.label}}
           </label>
           <select
-            id="{{control.nombre}}"
+            id="{{control.controlName}}"
             class="form-control"
-            formControlName={{control.nombre}}
+            formControlName={{control.controlName}}
           >
             <option *ngIf="control.placeholder" value=''>{{control.placeholder}}</option>
             <option
-              *ngFor="let opcion of control.tipo.opciones"
-              value="{{opcion.valor}}"
+              *ngFor="let opcion of control.type.options"
+              value="{{opcion.value}}"
 
             >
-              {{opcion.nombre}}
+              {{opcion.label}}
             </option>
           </select>
         </div>
-        <label *ngIf="control.tipo.nombreTipo === 'radio'">{{control.label}}</label>
-        <div class="form-check" *ngIf="control.tipo.nombreTipo === 'radio'">
+        <label *ngIf="control.type.typeName === 'radio'">{{control.label}}</label>
+        <div class="form-check" *ngIf="control.type.typeName === 'radio'">
           <div *ngFor="let opcion of control.tipo.opciones" >
               <input
                 class="form-check-input"
-                id="{{opcion.nombre}}"
+                id="{{opcion.controlName}}"
                 type="radio"
-                [value]="opcion.valor"
-                formControlName="{{control.nombre}}"
+                [value]="opcion.value"
+                formControlName="{{control.controlName}}"
               >
               <label
-                for="{{opcion.nombre}}"
+                for="{{opcion.controlName}}"
                 class="form-check-label"
               >
-                {{opcion.nombre}}
+                {{opcion.label}}
               </label>
             </div>
         </div>
-        <div *ngIf="control.tipo.nombreTipo === 'check'">
+        <div *ngIf="control.type.typeName === 'check'">
           <label>{{control.label}}</label>
           <div class="form-check">
-            <div *ngFor="let opcion of control.tipo.opciones; let i = index" formArrayName="{{control.nombre}}">
+            <div *ngFor="let opcion of control.type.options; let i = index" formArrayName="{{control.controlName}}">
               <input
                 class="form-check-input"
-                id="{{opcion.nombre}}"
+                id="{{opcion.value}}"
                 type="checkbox"
-                [value]="opcion.valor"
+                [value]="opcion.value"
                 formControlName="{{i}}"
               >
               <label
-                for="{{opcion.nombre}}"
+                for="{{opcion.value}}"
                 class="form-check-label"
               >
-                {{opcion.nombre}}
+                {{opcion.label}}
               </label>
             </div>
           </div>
         </div>
-        <div *ngIf="verificarMensajeError(control.nombre)"
+        <div *ngIf="verificarMensajeError(control.controlName)"
              class="alert alert-danger animated {{msgErrorAnimation}}"
              role="alert">
           <ul>
-            <li *ngFor="let error of obtenerMensajesError(control.nombre)">{{error}}</li>
+            <li *ngFor="let error of obtenerMensajesError(control.controlName)">{{error}}</li>
           </ul>
         </div>
       </div>

@@ -67,25 +67,25 @@ export class FormularioPrincipal {
     const controles = {};
     configuracion.forEach(
       (itemConfiguracion) => {
-        const nombreControl = itemConfiguracion.nombre ? itemConfiguracion.nombre : '';
+        const nombreControl = itemConfiguracion.controlName ? itemConfiguracion.controlName : '';
         const valorDefecto = {
           value: this.registro[nombreControl] ? this.registro[nombreControl] : '',
-          disabled: itemConfiguracion.disabled !== undefined || itemConfiguracion.tipo.disabledInput !== undefined,
+          disabled: itemConfiguracion.disabled !== undefined || itemConfiguracion.type.disabledInput !== undefined,
         };
-        const tieneValidadores = itemConfiguracion.validadores !== undefined;
+        const tieneValidadores = itemConfiguracion.validators !== undefined;
         let validadores = [];
         if (tieneValidadores) {
-          validadores = [...itemConfiguracion.validadores];
+          validadores = [...itemConfiguracion.validators];
         }
-        if (itemConfiguracion.tipo.nombreTipo === 'check') {
-          controles[nombreControl] = new FormArray(this.agregarSubControles(itemConfiguracion.tipo.opciones, nombreControl), validadores);
+        if (itemConfiguracion.type.typeName === 'check') {
+          controles[nombreControl] = new FormArray(this.agregarSubControles(itemConfiguracion.type.options, nombreControl), validadores);
         } else {
           controles[nombreControl] = [valorDefecto, validadores];
         }
         // controles[nombreControl]['disabled'] = desactivado;
-        const tieneMensajesError = itemConfiguracion.mensajesError !== undefined;
+        const tieneMensajesError = itemConfiguracion.errorMessages !== undefined;
         if (tieneMensajesError) {
-          this.mensajesErrores[nombreControl] = itemConfiguracion.mensajesError;
+          this.mensajesErrores[nombreControl] = itemConfiguracion.errorMessages;
         } else {
           this.mensajesErrores[nombreControl] = this.mensajesErrorDefecto;
         }
@@ -98,7 +98,7 @@ export class FormularioPrincipal {
     const arregloControles = [];
     opciones.forEach(
       (opcion: any) => {
-        arregloControles.push(new FormControl(this.registro[nombreControl] && this.registro[nombreControl].includes(opcion.valor)));
+        arregloControles.push(new FormControl(this.registro[nombreControl] && this.registro[nombreControl].includes(opcion.value)));
       }
     );
     return arregloControles;

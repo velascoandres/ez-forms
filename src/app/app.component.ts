@@ -9,143 +9,79 @@ import {Validators} from '@angular/forms';
 export class AppComponent {
   title = 'formularios';
   datosUsuario;
-  /*controles = [
-    {
-      nombre: 'nombre',
-      placeholder: 'Ingrese un nombre',
-      tipo: {nombreTipo: 'input'},
-    },
-    {
-      nombre: 'email',
-      validadores: [Validators.required, Validators.email],
-      placeholder: 'Ingrese un email',
-      valor: 'pepe@correo.com',
-      tipo: {nombreTipo: 'input'},
-      mensajesError: {
-        required: 'El email es requerido',
-        email: 'Debe ser un email válido',
-      }
-    },
-    {
-      nombre: 'estado-civil',
-      placeholder: 'Ingrese un estado civil',
-      validadores: [Validators.required],
-      tipo: {
-        nombreTipo: 'select',
-        opciones: [{valor: '', nombre: 'Selecione un estado civil'}, {valor: 1, nombre: 'casado'}, {valor: 2, nombre: 'soltero'}]
-      },
-    },
-    {
-      nombre: 'ciudades',
-      validadores: [Validators.required],
-      tipo: {
-        nombreTipo: 'check',
-        opciones: [{valor: 3, nombre: 'Quito', seleccionado: true}, {valor: 1, nombre: 'Cuenca', seleccionado: false}, {
-          valor: 2,
-          nombre: 'Ambato',
-          seleccionado: false,
-        }],
-      },
-      label: 'Ciudades',
-      mensajesError: {
-        required: 'Eliga por lo menos una ciudad',
-      }
-    },
-    {
-      nombre: 'deportes',
-      validadores: [Validators.required],
-      tipo: {
-        nombreTipo: 'check',
-        opciones: [{valor: 3, nombre: 'Futbol', seleccionado: true}, {valor: 1, nombre: 'Basquet', seleccionado: true}, {
-          valor: 2,
-          nombre: 'Tennis',
-        }],
-      },
-      label: 'Deportes',
-    },
-    {
-      nombre: 'frutaFavorita',
-      validadores: [Validators.required],
-      label: 'Fruta Favorita',
-      tipo: {
-        nombreTipo: 'radio',
-        opciones: [{valor: 3, nombre: 'Manzana'}, {valor: 1, nombre: 'Pera'}, {valor: 2, nombre: 'Piña'}],
-      },
-    }
-  ];
-  usuario = {
-    nombre: 'juanito pecados',
-    email: 'velasco.andrs@gmail.com',
-    'estado-civil': 1,
-    deportes: [1, 2],
-    frutaFavorita: 2,
-    ciudades: [1]
-  };*/
   controles = [
     {
-      nombre: 'uuid',
-      tipo: {nombreTipo: 'input'},
+      controlName: 'uuid',
+      type: {
+        typeName: 'input'
+      },
       disabled: true,
     },
     {
-      nombre: 'contraseña',
-      tipo: {nombreTipo: 'input', clase: 'password'},
-      validadores: [Validators.required]
+      controlName: 'contraseña',
+      type: {
+        typeName: 'input',
+        clase: 'password',
+      },
+      validators: [
+        Validators.required,
+      ]
     },
     {
-      nombre: 'fechaNacimiento',
+      controlName: 'fechaNacimiento',
       placeholder: 'Ingresa tu fecha de nacimiento',
-      tipo: {nombreTipo: 'date'},
-      validadores: [Validators.required]
+      type: {typeName: 'date'},
+      validators: [Validators.required]
     },
     {
-      nombre: 'otraFecha',
+      controlName: 'otraFecha',
       placeholder: 'Ingresa una fecha',
-      tipo: {nombreTipo: 'date'},
-      validadores: [Validators.required],
-      mensajesError: {
+      type: {typeName: 'date'},
+      validators: [Validators.required],
+      errorMessages: {
         required: 'El ingrese una fecha',
         date: 'Fecha no aceptable'
       },
     },
     {
-      nombre: 'email',
-      validadores: [Validators.required, Validators.email],
+      controlName: 'email',
+      validators: [Validators.required, Validators.email],
       placeholder: 'Ingrese un email',
-      tipo: {nombreTipo: 'input'},
-      mensajesError: {
+      type: {typeName: 'input'},
+      errorMessages: {
         required: 'El email es requerido',
         email: 'Debe ser un email válido',
       },
     },
     {
-      nombre: 'estadoCivil',
+      controlName: 'estadoCivil',
       placeholder: 'Seleccione un estado civil',
       label: 'Estado civil',
-      validadores: [Validators.required],
-      tipo: {
-        nombreTipo: 'select',
-        opciones: [{valor: 1, nombre: 'casado'}, {valor: 2, nombre: 'soltero'}]
+      validators: [Validators.required],
+      type: {
+        typeName: 'select',
+        options: [{value: 1, label: 'casado'}, {value: 2, label: 'soltero'}]
       },
     },
     {
-      nombre: 'ciudades',
-      validadores: [Validators.required],
-      tipo: {
-        nombreTipo: 'check',
-        opciones: [{valor: 1, nombre: 'Quito'}, {valor: 2, nombre: 'Cuenca'}, {nombre: 'Ambato', valor: 3}]},
+      controlName: 'ciudades',
+      validators: [Validators.required],
+      type: {
+        typeName: 'check',
+        options: [{value: 1, label: 'Quito'}, {value: 2, label: 'Cuenca'}, {label: 'Ambato', value: 3}]
+      },
       label: 'Ciudades',
-      mensajesError: {
+      errorMessages: {
         required: 'Eliga por lo menos una ciudad',
       }
     },
     {
-      nombre: 'frutaFavorita',
-      validadores: [Validators.required],
+      controlName: 'frutaFavorita',
+      validators: [Validators.required],
       label: 'Fruta Favorita',
-      tipo: {
-        nombreTipo: 'radio',
-        opciones: [{valor: 3, nombre: 'Manzana'}, {valor: 1, nombre: 'Pera'}, {valor: 2, nombre: 'Piña'}],
+      type: {
+        typeName: 'radio',
+        options: [{valor: 3, nombre: 'Manzana'}, {valor: 1, nombre: 'Pera'}, {valor: 2, nombre: 'Piña'}],
       },
     }
   ];
@@ -169,6 +105,7 @@ export class AppComponent {
       body: 'Algo anda mal!!'
     }
   };
+
   escucharDatosDelFormulario(evento) {
     this.usuario = evento ? evento : undefined;
     if (this.usuario) {
