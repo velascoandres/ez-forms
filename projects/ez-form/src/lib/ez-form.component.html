@@ -1,7 +1,9 @@
-<form *ngIf="frameworkEstilos === 'material'" [formGroup]="formulario" class="filled">
-  <div class="d-flex justify-content-center">
+<toaster-container [toasterconfig]="config"></toaster-container>
+
+<form  [formGroup]="formulario" class="filled">
+  <div *ngIf="styleFramework === 'material'" class="d-flex justify-content-center">
     <div class="p-2 flex-fill">
-      <div *ngFor="let control of configuracion; let i = index">
+      <div *ngFor="let control of formConfig; let i = index">
         <mat-form-field *ngIf="control.type.typeName === 'input'"
                         appearance="outline"
                         class="filled">
@@ -89,7 +91,7 @@
             </mat-checkbox>
           </p>
         </div>
-        <div *ngIf="verificarMensajeError(control.controlName)" class="alert alert-primary" role="alert">
+        <div *ngIf="verificarMensajeError(control.controlName)" class="alert alert-danger animated {{msgErrorAnimation}}" role="alert">
           <ul>
             <li *ngFor="let error of obtenerMensajesError(control.controlName)">{{error}}</li>
           </ul>
@@ -97,13 +99,9 @@
       </div>
     </div>
   </div>
-  <ng-content>
-  </ng-content>
-</form>
-<form *ngIf="frameworkEstilos === 'bootstrap'" [formGroup]="formulario" class="filled">
-  <div class="d-flex justify-content-center">
+  <div *ngIf="styleFramework === 'bootstrap'" class="d-flex justify-content-center" >
     <div class="p-2 flex-fill">
-      <div *ngFor="let control of configuracion; let i = index">
+      <div *ngFor="let control of formConfig; let i = index">
         <div *ngIf="control.type.typeName === 'input'"
              class="form-group">
           <label
@@ -221,5 +219,4 @@
   <ng-content>
   </ng-content>
 </form>
-<toaster-container [toasterconfig]="config"></toaster-container>
 

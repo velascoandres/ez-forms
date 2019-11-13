@@ -8,8 +8,7 @@ import {Validators} from '@angular/forms';
 })
 export class AppComponent {
   title = 'formularios';
-  datosUsuario;
-  controles = [
+  myConfiguration = [
     {
       controlName: 'uuid',
       type: {
@@ -141,7 +140,7 @@ export class AppComponent {
   ];
   usuario = {
     uuid: 1234,
-    email: 'juan.pecadoss@correo.com',
+    email: 'juan.pecados@mail.com',
     civilState: 1,
     otherDate: '2015-02-16',
     birthday: '1999-02-16',
@@ -153,13 +152,13 @@ export class AppComponent {
   myToasterConfig = {
     success: {
       type: 'info',
-      title: 'BIEN',
-      body: 'Todo anda bien!!'
+      title: 'GOOD',
+      body: 'All right!!'
     },
     fail: {
       type: 'warning',
-      title: 'MAL',
-      body: 'Algo anda mal!!'
+      title: 'BAD',
+      body: 'Someting was wrong!!'
     }
   };
 
