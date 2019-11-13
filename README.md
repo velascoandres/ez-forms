@@ -1,36 +1,35 @@
 # ez-form  
-## Indice  
-1. [Descripción](#descripción)  
-2. [Requisitos]()
-3. [Instalación](#instalación)  
-4. [Uso](#uso)
+## Index  
+1. [Description](#description)  
+2. [Requirements](#requirements)
+3. [Install](#install)  
+4. [Usage](#usage)
 
      4.1  [Toaster](#toaster)  
      
      4.2  [Bootstrap](#bootstrap)
      
-     4.3  [Animaciones](#animaciones)
+     4.3  [Animations](#animations)
      
-5. [Detalles](#detalles)  
   
-## Descripción  
-`ez-form` es un componente que permite crear formularios reactivos para angular 2+ de manera simple y facil.  
+## Description  
+`ez-form` is a componente that allows create reactive forms for angular 2+.  
  
-## Requisitos
-* Angular Material [Pagina Oficial](https://material.angular.io/)
+## Requirements
+* Angular Material see: [Documentation](https://material.angular.io/)
 ```text
     $ ng add @angular/material
 ```
-* Angular 2 Toaster [Guía de instalación](https://www.npmjs.com/package/angular2-toaster)
+* Angular 2 Toaster see: [Docuemntation](https://www.npmjs.com/package/angular2-toaster)
   
-## Instalación  
-* Instalamos el paquete:   
+## Install  
+* Install the package:   
   
 ```shell script  
     $ npm i @gordon_freeman/ez-form  
 ```  
   
-* Importamos `EzFormModule` en el modulo en donde queremos usar el componente
+* Import `EzFormModule`
   
 ```typescript  
     @NgModule({  
@@ -47,7 +46,8 @@
     })  
 ```  
   
-Si se va utilizar el `datepicker` de angular material:
+If you want use  `datepicker` from angular material:
+
 ```typescript
     @NgModule({
       declarations: [
@@ -65,177 +65,231 @@ Si se va utilizar el `datepicker` de angular material:
       bootstrap: [AppComponent]
     })
 ```
+
+## Usage  
+First we need a config object inside of parent component.
   
-* Usamos el componente.  
-  
-```html  
-    <ez-form [configuracion]="miConfiguracion">  
-            <button>Submit</button>  
-     </ez-form>  
-```  
-## Uso  
-Antes que nada primero necesitamos declarar un objeto de configuración   
-dentro del componente padre.  
-  
-### `componentePadre.ts`  
+### `parentComponent.ts`  
 ```typescript  
-      miConfiguracion = [
-                            {
-                              nombre: 'uuid',
-                              tipo: {nombreTipo: 'input'},
-                              disabled: true,
-                            },
-                            {
-                              nombre: 'contraseña',
-                              tipo: {nombreTipo: 'input', clase: 'password'},
-                              validadores: [Validators.required]
-                            },
-                            {
-                              nombre: 'fechaNacimiento',
-                              placeholder: 'Ingresa tu fecha de nacimiento',
-                              tipo: {nombreTipo: 'date', disabledInput: true},
-                              validadores: [Validators.required]
-                            },
-                            {
-                              nombre: 'otraFecha',
-                              placeholder: 'Ingresa una fecha',
-                              tipo: {nombreTipo: 'date'},
-                              validadores: [Validators.required],
-                              mensajesError: {
-                                required: 'El ingrese una fecha',
-                                date: 'Fecha no aceptable'
-                              },
-                            },
-                            {
-                              nombre: 'email',
-                              validadores: [Validators.required, Validators.email],
-                              placeholder: 'Ingrese un email',
-                              tipo: {nombreTipo: 'input'},
-                              mensajesError: {
-                                required: 'El email es requerido',
-                                email: 'Debe ser un email válido',
-                              },
-                            },
-                            {
-                              nombre: 'estadoCivil',
-                              placeholder: 'Seleccione un estado civil',
-                              label: 'Estado civil',
-                              validadores: [Validators.required],
-                              tipo: {
-                                nombreTipo: 'select',
-                                opciones: [{valor: 1, nombre: 'casado'}, {valor: 2, nombre: 'soltero'}]
-                              },
-                            },
-                            {
-                              nombre: 'ciudades',
-                              validadores: [Validators.required],
-                              tipo: {
-                                nombreTipo: 'check',
-                                opciones: [{valor: 1, nombre: 'Quito'}, {valor: 2, nombre: 'Cuenca'}, {nombre: 'Ambato', valor: 3}]},
-                              label: 'Ciudades',
-                              mensajesError: {
-                                required: 'Eliga por lo menos una ciudad',
-                              }
-                            },
-                            {
-                              nombre: 'frutaFavorita',
-                              validadores: [Validators.required],
-                              label: 'Fruta Favorita',
-                              tipo: {
-                                nombreTipo: 'radio',
-                                opciones: [{valor: 3, nombre: 'Manzana'}, {valor: 1, nombre: 'Pera'}, {valor: 2, nombre: 'Piña'}],
-                              },
-                            }
-                      ];
+  myConfiguration = [
+    {
+      controlName: 'uuid',
+      type: {
+        typeName: 'input'
+      },
+      disabled: true,
+    },
+    {
+      controlName: 'password',
+      type: {
+        typeName: 'input',
+        class: 'password',
+      },
+      validators: [
+        Validators.required,
+      ]
+    },
+    {
+      controlName: 'birthday',
+      placeholder: 'Enter your birthday date',
+      type: {
+        typeName: 'date'
+      },
+      validators: [
+        Validators.required,
+      ]
+    },
+    {
+      controlName: 'otherDate',
+      placeholder: 'Enter a date',
+      type: {
+        typeName: 'date'
+      },
+      validators: [
+        Validators.required,
+      ],
+      errorMessages: {
+        required: 'The date is required',
+        date: 'The date is not acceptable'
+      },
+    },
+    {
+      controlName: 'email',
+      validators: [
+        Validators.required,
+        Validators.email
+      ],
+      placeholder: 'Enter an email',
+      type: {
+        typeName: 'input'
+      },
+      errorMessages: {
+        required: 'The email is mandatory',
+        email: 'You must enter a valid email',
+      },
+    },
+    {
+      controlName: 'civilState',
+      placeholder: 'Choose a civil state',
+      label: 'Civil state',
+      validators: [
+        Validators.required
+      ],
+      type: {
+        typeName: 'select',
+        options: [
+          {
+            value: 1,
+            label: 'Married'
+          },
+          {
+            value: 2,
+            label: 'Single'
+          }
+        ]
+      },
+    },
+    {
+      controlName: 'cities',
+      validators: [
+        Validators.required
+      ],
+      type: {
+        typeName: 'check',
+        options: [
+          {
+            value: 1,
+            label: 'Quito'
+          },
+          {
+            value: 2,
+            label: 'Cuenca'
+          },
+          {
+            value: 3,
+            label: 'Ambato'
+          }
+        ]
+      },
+      label: 'Cities',
+      errorMessages: {
+        required: 'select a city at least',
+      }
+    },
+    {
+      controlName: 'favoriteFruit',
+      validators: [
+        Validators.required
+      ],
+      label: 'Favorite Fruit',
+      type: {
+        typeName: 'radio',
+        options: [
+          {
+            value: 3,
+            label: 'Apple'
+          },
+          {
+            value: 1,
+            label: 'Pear'
+          },
+          {
+            value: 2,
+            label: 'Pineapple'
+          }
+        ],
+      },
+    }
+  ];
+
 ```  
   
-Entonces en nuesto `componentePadre.html` llamamos al componente y Usamos el Input : `configuracion`"
+So in our `parentComponent.html` call the component.
 
   
 ```html  
-    <ez-form [configuracion]="miConfiguracion">  
-         <button (click)="algunaFuncionClic()">Submit</button>  
-     </ez-form>  
+    <ez-form
+            [formConfig]="myConfiguration"
+          >
+          <button [disabled]="!usuario" class="btn btn-block btn-info">Submit</button>
+    </ez-form>
 ```  
   
-Si queremos que nuestro formulario este lleno desde un diccionario entonces hacemos lo siguiente:  
   
-Diccionario:   
-  
+If we want our form to be filled with default values. We need to declare a object with the controls name as keys example:  
+
 ```typescript  
-    usuario = {
+    userData = {
         uuid: 1234,
-        email: 'juan.pecadoss@correo.com',
-        estadoCivil: 1,
-        frutaFavorita: 1,
-        ciudades: [1, 3]
+        email: 'juan.pecados@mail.com',
+        civilState: 1,
+        otherDate: '2015-02-16',
+        birthday: '1999-02-16',
+        favoriteFruit: 1,
+        cities: [1, 3],
+        password: '12133',
       };
 ```  
   
-Componente `componentePadre.html`:  
+Template `parentComponent.html`:  
 
   
 ```html  
-    <ez-form   
-            [configuracion]="miConfiguracion"  
-            [registro]="usuario"  
-            >  
-         <button (click)="algunaFuncionClic()">Submit</button>  
-     </ez-form>  
+    <ez-form
+            [formConfig]="myConfiguration"
+            [inputData]="userData"
+          >
+          <button [disabled]="!usuario" class="btn btn-block btn-info">Submit</button>
+    </ez-form>
 ```  
   
-El formulario tiene un  `Output` donde devolvera los datos del formulario o un `undefined` dependiendo  
-si el formulario haya sido llenado correctamente.  
 
-Usamos el Output : `datosFormulario`"
- 
-   
+The form has an `Output` where you will return the form data or an` undefined` depending
+If the form has been filled out correctly.
+
+So we need to make use of the Output : `dataFromForm`"
+    
 ```html  
     <ez-form   
-            [configuracion]="miConfiguracion"  
-            [registro]="usuario"  
-            (datosFormulario)="algunaFuncion($event)"  
+            [formConfig]="myConfiguration"  
+            [inputData]="userData"  
+            (dataFromForm)="someFunction($event)"  
             >  
-         <button (click)="algunaFuncionClic()">Submit</button>  
+         <button (click)="someFunction()">Submit</button>  
      </ez-form>  
 ```  
-Resultados:   
+Results:   
   
-![formulario](https://github.com/velascoandrs/repo-de-imagenes/blob/master/formulario-4.1.PNG?raw=true)  
+![formulario](https://github.com/velascoandrs/repo-de-imagenes/blob/master/version-en/form-valid-mat.PNG?raw=true)  
 
-Si queremos usar los estilos de `bootstrap` para nuestros formularios  
+
 ## Toaster
-Esta libreria hace uso del paquete: [angular2-toaster](https://www.npmjs.com/package/angular2-toaster), no es necesario instalarlo ya
-viene instalado junto con la libreria.
+This library make use of [angular2-toaster](https://www.npmjs.com/package/angular2-toaster)
+* The toaster is the message which shows on screen when the form has been filled correctly or not.
+* The display of this messages could be optional
 
-El toaster es el mensaje que se muestra en pantalla cuando el formulario es válido o no. 
-El despliegue de estos mensajes puede ser opcional
-
-Usamos el Input : `mostrarToast`"
+We need to make use of the following Input : `showToaster`"
 
 
-```html  
-    <ez-form   
-            [configuracion]="miConfiguracion"  
-            [registro]="usuario"  
-            (datosFormulario)="algunaFuncion($event)" 
-            [mostrarToast]="false" 
-            >  
-         <button (click)="algunaFuncionClic()">Submit</button>  
-     </ez-form>  
+```html
+<ez-form
+        [formConfig]="myConfiguration"
+        [inputData]="userData"
+        [showToaster]="false"
+      > ... 
 ```
-Tambien podemos configurar los mensajes que se mostraran de la siguiente forma:
+Also we could config the messages that will show on the toaster:
 ```typescript
-    const myToasterConfig = {
+    myToasterConfig = {
         success: {
           type: 'info',
-          title: 'BIEN',
-          body: 'Todo anda bien!!'
+          title: 'GOOD',
+          body: 'All right!!'
         },
         fail: {
           type: 'warning',
-          title: 'MAL',
-          body: 'Algo anda mal!!'
+          title: 'BAD',
+          body: 'Someting was wrong!!'
         }
       };
 ```    
@@ -243,73 +297,57 @@ Usamos el Input : `toasterConfig`"
 
 
 ```html  
-    <ez-form   
-            [configuracion]="miConfiguracion"  
-            [registro]="usuario"  
-            (datosFormulario)="algunaFuncion($event)" 
+    <ez-form
+            [formConfig]="myConfiguration"
+            [inputData]="userData"
             [toasterConfig]="myToasterConfig"
-            >  
-         <button (click)="algunaFuncionClic()">Submit</button>  
-     </ez-form>  
+          >...
 ```
-Resultados: 
+Results: 
 
-![formulario](https://github.com/velascoandrs/repo-de-imagenes/blob/master/formulario-2.2.PNG?raw=true)
+![formulario](https://github.com/velascoandrs/repo-de-imagenes/blob/master/version-en/form-invalid-mat-ctoat.PNG?raw=true)
 
 ### Bootstrap
-Por defecto el componente carga todos los compontes respectivos de `Angular Material`. si se desea usar los componentes de boostrap
-se hace lo siguiente:
+By Deault the ez-form component loads its internal components from `Angular Material`.
+* If you want make use of bootstrap components:
 
-Usamos el Input : `frameworkEstilos`"
+Use the Input : `styleFramework`"
 
 ```html
     <ez-form
-        [configuracion]="miConfiguracion"
-        [registro]="usuario"
-        (datosFormulario)="algunaFuncion($event)" 
-        [frameworkEstilos]="'bootstrap'"
-      >
-         <button (click)="algunaFuncionClic()">Submit</button>  
-     </ez-form>
+            [formConfig]="myConfiguration"
+            [inputData]="userData"
+            [styleFramework]="'material'"
+          >..
 ```
 
 Resultados
-![resultadoBootstrap](https://github.com/velascoandrs/repo-de-imagenes/blob/master/formularioB.PNG?raw=true)
+![resultadoBootstrap](https://github.com/velascoandrs/repo-de-imagenes/blob/master/version-en/form-invalid-bs.PNG?raw=true)
 
-### Animaciones
-La animación del mensaje de error de los campos del formulario se la puede modificar, para ello usamos las animaciones de [animate.css
+### Animations
+The error messages animations for every form field could be modify, so we need to make use of [animate.css
 ](https://www.npmjs.com/package/animate.css?activeTab=versions). 
 
-Usamos el Input : `msgErrorAnimation`:
+Use the Input : `msgErrorAnimation`:
 
 ```html
-    <ez-form
-        [configuracion]="miConfiguracion"
-        [registro]="usuario"
-        (datosFormulario)="algunaFuncion($event)"
-        [msgErrorAnimation]="'fadeInLeft'
+<ez-form
+        [formConfig]="myConfiguration"
+        [inputData]="userData"
+        [msgErrorAnimation]="'fadeInLeft'"
       >
-         <button (click)="algunaFuncionClic()">Submit</button>  
-     </ez-form>
 ```
 
-
-## Detalles  
-  
-### Sobre el objeto de configuración:  
-  
-Es un arreglo en donde cada elemento corresponde a un campo del formulario, este campo tiene la siguiente configuracion:  
-* nombre: Es el nombre de nuestro control `formControlName`.  
-* label: Es el texto que tendra el label del campo, es `opcional`.  
-* validadores: Recibe un arreglo con las validaciones que tendra el campo, es `opcional`.  
-* placeholder: Es el placeholder de nuestro campo, es `opcional`.  
-* disabled: Permite desactivar un campo, es `opcional`
-* tipo: Es un objeto en donde especificamos el tipo de campo que será. Se lo declara de la siguiente forma:  
-  * nombre: Nombre del tipo (input, date,select, radio, check).  
-  * opciones: Solo para select, radio, check. Es un arreglo con las opciones que tendrán estos campos tienen el siguiente formato:  
-      * valor: Valor que recibira el campo internamente.  
-      * nombre: Valor que se mostrara en pantalla.  
-       
-  
-### Nota  
-> `ez-form` usa los componentes de Angular Material unicamente. En las siguientes versiones se incorporarán los componentes tanto para Bootstrap y PrimeNg.
+Complete example form component:
+```html
+    <ez-form
+            [formConfig]="myConfiguration"
+            [inputData]="userData"
+            (dataFromForm)="someFunction($event)"
+            [styleFramework]="'material'"
+            [msgErrorAnimation]="'fadeInLeft'"
+            [toasterConfig]="myToasterConfig"
+          >
+            <button [disabled]="!userData" class="btn btn-block btn-info">Submit</button>
+          </ez-form>
+```

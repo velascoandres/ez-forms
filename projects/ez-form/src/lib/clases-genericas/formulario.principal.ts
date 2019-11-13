@@ -6,36 +6,38 @@ import {debounceTime} from 'rxjs/operators';
 export class FormularioPrincipal {
   formulario: FormGroup;
   @Input()
-  frameworkEstilos = 'material';
+  styleFramework = 'material';
   @Input()
-  registro = {};
+  inputData = {};
   @Input()
-  mostrarToast = true;
+  showToaster = true;
   @Input()
   msgErrorAnimation = 'fadeIn';
   @Input()
   toasterConfig = {
     success: {
       type: 'info',
-      title: 'Correcto',
-      body: 'Formulario Válido'
+      title: 'Correct',
+      body: 'Valid Form'
     },
     fail: {
       type: 'warning',
-      title: 'Incorrecto',
-      body: 'Formulario Invalido'
+      title: 'Incorrect',
+      body: 'Invalid Form'
     }
   };
   @Input()
-  configuracion = [];
+  formConfig = [];
+
   mensajesErrores = {};
   objetoArreglosErrores = {};
   @Output()
-  datosFormulario: EventEmitter<object | boolean> = new EventEmitter<object | boolean>();
+  dataFromForm: EventEmitter<object | boolean> = new EventEmitter<object | boolean>();
+
   esconderTexto = true;
   mensajesErrorDefecto = {
-    required: 'campo obligatorio',
-    date: 'fecha Inválida'
+    required: 'mandatory field',
+    date: 'invalid date'
   };
 
   constructor(
@@ -44,8 +46,7 @@ export class FormularioPrincipal {
   ) {
   }
 
-  public config: ToasterConfig =
-    new ToasterConfig({animation: 'fade', limit: 1});
+  public config: ToasterConfig = new ToasterConfig({animation: 'fade', limit: 1});
 
 
   iniciarFormulario() {
@@ -55,7 +56,7 @@ export class FormularioPrincipal {
   }
 
   protected construirFormulario() {
-    const controlesFB = this.generarControles(this.configuracion);
+    const controlesFB = this.generarControles(this.formConfig);
     this.formulario = this.fb.group(
       {
         ...controlesFB
@@ -63,29 +64,43 @@ export class FormularioPrincipal {
     );
   }
 
+  protected llenarFormulario() {
+    const nombreControles = Object.keys(this.formulario.controls);
+    nombreControles.forEach(
+      (nombreControl) => {
+        const datoEntrada = this.inputData[nombreControl];
+        const existeDatoEntrada = datoEntrada !== undefined;
+        if (existeDatoEntrada) {
+          this.formulario.get(nombreControl).patchValue(datoEntrada);
+        } else {
+        }
+      }
+    );
+  }
+
   protected generarControles(configuracion: any) {
     const controles = {};
     configuracion.forEach(
       (itemConfiguracion) => {
-        const nombreControl = itemConfiguracion.nombre ? itemConfiguracion.nombre : '';
+        const nombreControl = itemConfiguracion.controlName ? itemConfiguracion.controlName : '';
         const valorDefecto = {
-          value: this.registro[nombreControl] ? this.registro[nombreControl] : '',
-          disabled: itemConfiguracion.disabled !== undefined || itemConfiguracion.tipo.disabledInput !== undefined,
+          value: this.inputData[nombreControl] ? this.inputData[nombreControl] : '',
+          disabled: itemConfiguracion.disabled !== undefined || itemConfiguracion.type.disabledInput !== undefined,
         };
-        const tieneValidadores = itemConfiguracion.validadores !== undefined;
+        const tieneValidadores = itemConfiguracion.validators !== undefined;
         let validadores = [];
         if (tieneValidadores) {
-          validadores = [...itemConfiguracion.validadores];
+          validadores = [...itemConfiguracion.validators];
         }
-        if (itemConfiguracion.tipo.nombreTipo === 'check') {
-          controles[nombreControl] = new FormArray(this.agregarSubControles(itemConfiguracion.tipo.opciones, nombreControl), validadores);
+        if (itemConfiguracion.type.typeName === 'check') {
+          controles[nombreControl] = new FormArray(this.agregarSubControles(itemConfiguracion.type.options, nombreControl), validadores);
         } else {
           controles[nombreControl] = [valorDefecto, validadores];
         }
         // controles[nombreControl]['disabled'] = desactivado;
-        const tieneMensajesError = itemConfiguracion.mensajesError !== undefined;
+        const tieneMensajesError = itemConfiguracion.errorMessages !== undefined;
         if (tieneMensajesError) {
-          this.mensajesErrores[nombreControl] = itemConfiguracion.mensajesError;
+          this.mensajesErrores[nombreControl] = itemConfiguracion.errorMessages;
         } else {
           this.mensajesErrores[nombreControl] = this.mensajesErrorDefecto;
         }
@@ -98,7 +113,7 @@ export class FormularioPrincipal {
     const arregloControles = [];
     opciones.forEach(
       (opcion: any) => {
-        arregloControles.push(new FormControl(this.registro[nombreControl] && this.registro[nombreControl].includes(opcion.valor)));
+        arregloControles.push(new FormControl(this.inputData[nombreControl] && this.inputData[nombreControl].includes(opcion.value)));
       }
     );
     return arregloControles;
@@ -145,15 +160,15 @@ export class FormularioPrincipal {
       (llave) => {
         if (typeof datos[llave] === 'object' && datos[llave].length > 0) {
           const arregloBoolean = datos[llave];
-          const indice = this.configuracion.findIndex(
+          const indice = this.formConfig.findIndex(
             (control) => {
               return control.nombre === llave;
             }
           );
           const arreglo = arregloBoolean.reduce(
             (acumulador, item, index) => {
-              if (item) {
-                acumulador.push(this.configuracion[indice].tipo.opciones[index].valor);
+              if (item && this.formConfig[indice]) {
+                acumulador.push(this.formConfig[indice].type.options[index].value);
               }
               return acumulador;
             }, []
@@ -174,20 +189,20 @@ export class FormularioPrincipal {
         (informacionFormulario) => {
           const formularioValido = !this.formulario.invalid;
           if (formularioValido) {
-            if (this.mostrarToast) {
+            if (this.showToaster) {
               this.toaster.pop(
                 this.toasterConfig.success
               );
             }
             this.transformarControlesConArreglosBoolean(informacionFormulario);
-            this.datosFormulario.emit(informacionFormulario);
+            this.dataFromForm.emit(informacionFormulario);
           } else {
-            if (this.mostrarToast) {
+            if (this.showToaster) {
               this.toaster.pop(
                 this.toasterConfig.fail
               );
             }
-            this.datosFormulario.emit(undefined);
+            this.dataFromForm.emit(undefined);
           }
         }
       );

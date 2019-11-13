@@ -1,10 +1,12 @@
 <div class="container">
       <ez-form
-        [configuracion]="controles"
-        [registro]="usuario"
-        (datosFormulario)="escucharDatosDelFormulario($event)"
-        [frameworkEstilos]="'bootstrap'"
+        [formConfig]="myConfiguration"
+        [inputData]="usuario"
+        (dataFromForm)="escucharDatosDelFormulario($event)"
+        [styleFramework]="'material'"
         [msgErrorAnimation]="'fadeInLeft'"
+        [toasterConfig]="myToasterConfig"
+        [showToaster]="false"
       >
         <button [disabled]="!usuario" class="btn btn-block btn-info">Submit</button>
       </ez-form>
