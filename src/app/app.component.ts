@@ -29,6 +29,7 @@ export class AppComponent {
     {
       controlName: 'birthday',
       placeholder: 'Enter your birthday date',
+      hint: 'Enter a valid date',
       type: {
         typeName: 'date'
       },
@@ -62,11 +63,13 @@ export class AppComponent {
         required: 'The email is mandatory',
         email: 'You must enter a valid email',
       },
+      hint: 'Enter a valid email'
     },
     {
       controlName: 'civilState',
       placeholder: 'Choose a civil state',
       label: 'Civil state',
+      hint: 'Please pick a Civil State',
       validators: [
         Validators.required
       ],
