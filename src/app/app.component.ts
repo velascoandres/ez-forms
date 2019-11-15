@@ -37,18 +37,15 @@ export class AppComponent {
       ]
     },
     {
-      controlName: 'otherDate',
-      placeholder: 'Enter a date',
+      controlName: 'address',
+      placeholder: 'Enter a complete address',
       type: {
-        typeName: 'date'
+        typeName: 'textarea',
+        maxLength: 20,
       },
       validators: [
         Validators.required,
       ],
-      errorMessages: {
-        required: 'The date is required',
-        date: 'The date is not acceptable'
-      },
     },
     {
       controlName: 'email',
@@ -58,7 +55,8 @@ export class AppComponent {
       ],
       placeholder: 'Enter an email',
       type: {
-        typeName: 'input'
+        typeName: 'input',
+        maxLength: 30,
       },
       errorMessages: {
         required: 'The email is mandatory',
