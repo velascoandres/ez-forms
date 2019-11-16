@@ -53,6 +53,7 @@ export class FormularioPrincipal {
     this.construirFormulario();
     this.escucharFormulario();
     this.escucharCampos();
+    this.llenarFormulario();
   }
 
   protected construirFormulario() {
@@ -71,8 +72,13 @@ export class FormularioPrincipal {
         const datoEntrada = this.inputData[nombreControl];
         const existeDatoEntrada = datoEntrada !== undefined;
         if (existeDatoEntrada) {
-          this.formulario.get(nombreControl).patchValue(datoEntrada);
+          if (typeof datoEntrada !== 'object') {
+            this.formulario.get(nombreControl).patchValue(datoEntrada);
+          }
         } else {
+          if (typeof datoEntrada !== 'object') {
+            this.formulario.get(nombreControl).patchValue('');
+          }
         }
       }
     );
@@ -141,7 +147,8 @@ export class FormularioPrincipal {
 
   protected llenarMensajesErrorCampo(control: AbstractControl | any, nombreCampo: string) {
     let arregloErrores = [];
-    if ((control.controls || (control.dirty || control.touched)) && control.errors) {
+    const tieneDatosPorDefecto = this.inputData !== undefined && Object.keys(this.inputData).length > 0;
+    if ((control.controls || (control.dirty || control.touched) || tieneDatosPorDefecto) && control.errors) {
       arregloErrores = Object.keys(control.errors).map(
         (llave) => {
           if (llave === 'matDatepickerParse') {
