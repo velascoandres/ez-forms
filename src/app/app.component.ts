@@ -89,11 +89,9 @@ export class AppComponent {
     },
     {
       controlName: 'cities',
-      validators: [
-        Validators.required
-      ],
       type: {
         typeName: 'check',
+        minRequired : 2,
         options: [
           {
             value: 1,
@@ -111,7 +109,7 @@ export class AppComponent {
       },
       label: 'Cities',
       errorMessages: {
-        required: 'select a city at least',
+        required: 'select two cities at least',
       }
     },
     {
@@ -146,7 +144,6 @@ export class AppComponent {
     otherDate: '2015-02-16',
     birthday: '1999-02-16',
     favoriteFruit: 1,
-    cities: [1, 3],
     password: '12133',
   };
 
