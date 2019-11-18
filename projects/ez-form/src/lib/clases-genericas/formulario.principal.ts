@@ -2,6 +2,7 @@ import {AbstractControl, FormArray, FormBuilder, FormControl, FormGroup} from '@
 import {EventEmitter, Input, Output} from '@angular/core';
 import {ToasterConfig, ToasterService} from 'angular2-toaster';
 import {debounceTime} from 'rxjs/operators';
+import {validarMinimoCheckBox} from './validadores_especiales';
 
 export class FormularioPrincipal {
   formulario: FormGroup;
@@ -37,7 +38,7 @@ export class FormularioPrincipal {
   esconderTexto = true;
   mensajesErrorDefecto = {
     required: 'mandatory field',
-    date: 'invalid date'
+    date: 'invalid date',
   };
 
   constructor(
@@ -53,6 +54,7 @@ export class FormularioPrincipal {
     this.construirFormulario();
     this.escucharFormulario();
     this.escucharCampos();
+    this.llenarFormulario();
   }
 
   protected construirFormulario() {
@@ -71,8 +73,11 @@ export class FormularioPrincipal {
         const datoEntrada = this.inputData[nombreControl];
         const existeDatoEntrada = datoEntrada !== undefined;
         if (existeDatoEntrada) {
-          this.formulario.get(nombreControl).patchValue(datoEntrada);
-        } else {
+          if (typeof datoEntrada !== 'object') {
+            this.formulario.get(nombreControl).patchValue(datoEntrada);
+          } else {
+            this.formulario.get(nombreControl).setValue([]);
+          }
         }
       }
     );
@@ -93,7 +98,12 @@ export class FormularioPrincipal {
           validadores = [...itemConfiguracion.validators];
         }
         if (itemConfiguracion.type.typeName === 'check') {
-          controles[nombreControl] = new FormArray(this.agregarSubControles(itemConfiguracion.type.options, nombreControl), validadores);
+          const esObligatorio = itemConfiguracion.type.minRequired !== undefined && typeof +itemConfiguracion.type.minRequired === 'number';
+          controles[nombreControl] = new FormArray(
+            this.agregarSubControles(
+              itemConfiguracion.type.options, nombreControl),
+            validarMinimoCheckBox(esObligatorio ? +itemConfiguracion.type.minRequired : 0)
+          );
         } else {
           controles[nombreControl] = [valorDefecto, validadores];
         }
@@ -139,9 +149,11 @@ export class FormularioPrincipal {
     );
   }
 
+
   protected llenarMensajesErrorCampo(control: AbstractControl | any, nombreCampo: string) {
     let arregloErrores = [];
-    if ((control.controls || (control.dirty || control.touched)) && control.errors) {
+    const tieneDatosPorDefecto = this.inputData !== undefined && Object.keys(this.inputData).length > 0;
+    if ((control.controls || (control.dirty || control.touched) || tieneDatosPorDefecto) && control.errors) {
       arregloErrores = Object.keys(control.errors).map(
         (llave) => {
           if (llave === 'matDatepickerParse') {
@@ -162,7 +174,7 @@ export class FormularioPrincipal {
           const arregloBoolean = datos[llave];
           const indice = this.formConfig.findIndex(
             (control) => {
-              return control.nombre === llave;
+              return control.controlName === llave;
             }
           );
           const arreglo = arregloBoolean.reduce(
@@ -173,7 +185,11 @@ export class FormularioPrincipal {
               return acumulador;
             }, []
           );
-          datos[llave] = arreglo;
+          if (!arreglo.length) {
+            datos[llave] = '';
+          } else {
+            datos[llave] = arreglo;
+          }
         }
       }
     );
@@ -187,6 +203,7 @@ export class FormularioPrincipal {
       )
       .subscribe(
         (informacionFormulario) => {
+          this.transformarControlesConArreglosBoolean(informacionFormulario);
           const formularioValido = !this.formulario.invalid;
           if (formularioValido) {
             if (this.showToaster) {
@@ -194,7 +211,6 @@ export class FormularioPrincipal {
                 this.toasterConfig.success
               );
             }
-            this.transformarControlesConArreglosBoolean(informacionFormulario);
             this.dataFromForm.emit(informacionFormulario);
           } else {
             if (this.showToaster) {
