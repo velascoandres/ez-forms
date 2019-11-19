@@ -10,17 +10,17 @@
      4.2  [Bootstrap](#bootstrap)
      
      4.3  [Animations](#animations)
-     
+5. [Summary](#summary)     
   
 ## Description  
 `ez-form` is a componente that allows create reactive forms for angular 2+.  
  
 ## Requirements
-* Angular Material see: [Documentation](https://material.angular.io/)
+* Angular Material check [Documentation](https://material.angular.io/)
 ```text
     $ ng add @angular/material
 ```
-* Angular 2 Toaster see: [Docuemntation](https://www.npmjs.com/package/angular2-toaster)
+* Angular 2 Toaster check [Documentation](https://www.npmjs.com/package/angular2-toaster)
   
 ## Install  
 * Install the package:   
@@ -72,136 +72,134 @@ First we need a config object inside of parent component.
 ### `parentComponent.ts`  
 ```typescript  
   myConfiguration = [
-    {
-      controlName: 'uuid',
-      type: {
-        typeName: 'input'
+      {
+        controlName: 'uuid',
+        type: {
+          typeName: 'input'
+        },
+        disabled: true,
       },
-      disabled: true,
-    },
-    {
-      controlName: 'password',
-      type: {
-        typeName: 'input',
-        class: 'password',
-      },
-      validators: [
-        Validators.required,
-      ]
-    },
-    {
-      controlName: 'birthday',
-      placeholder: 'Enter your birthday date',
-      type: {
-        typeName: 'date'
-      },
-      validators: [
-        Validators.required,
-      ]
-    },
-    {
-      controlName: 'otherDate',
-      placeholder: 'Enter a date',
-      type: {
-        typeName: 'date'
-      },
-      validators: [
-        Validators.required,
-      ],
-      errorMessages: {
-        required: 'The date is required',
-        date: 'The date is not acceptable'
-      },
-    },
-    {
-      controlName: 'email',
-      validators: [
-        Validators.required,
-        Validators.email
-      ],
-      placeholder: 'Enter an email',
-      type: {
-        typeName: 'input'
-      },
-      errorMessages: {
-        required: 'The email is mandatory',
-        email: 'You must enter a valid email',
-      },
-    },
-    {
-      controlName: 'civilState',
-      placeholder: 'Choose a civil state',
-      label: 'Civil state',
-      validators: [
-        Validators.required
-      ],
-      type: {
-        typeName: 'select',
-        options: [
-          {
-            value: 1,
-            label: 'Married'
-          },
-          {
-            value: 2,
-            label: 'Single'
-          }
+      {
+        controlName: 'password',
+        type: {
+          typeName: 'input',
+          class: 'password',
+        },
+        validators: [
+          Validators.required,
         ]
       },
-    },
-    {
-      controlName: 'cities',
-      validators: [
-        Validators.required
-      ],
-      type: {
-        typeName: 'check',
-        options: [
-          {
-            value: 1,
-            label: 'Quito'
-          },
-          {
-            value: 2,
-            label: 'Cuenca'
-          },
-          {
-            value: 3,
-            label: 'Ambato'
-          }
+      {
+        controlName: 'birthday',
+        placeholder: 'Enter your birthday date',
+        hint: 'Enter a valid date',
+        type: {
+          typeName: 'date'
+        },
+        validators: [
+          Validators.required,
         ]
       },
-      label: 'Cities',
-      errorMessages: {
-        required: 'select a city at least',
-      }
-    },
-    {
-      controlName: 'favoriteFruit',
-      validators: [
-        Validators.required
-      ],
-      label: 'Favorite Fruit',
-      type: {
-        typeName: 'radio',
-        options: [
-          {
-            value: 3,
-            label: 'Apple'
-          },
-          {
-            value: 1,
-            label: 'Pear'
-          },
-          {
-            value: 2,
-            label: 'Pineapple'
-          }
+      {
+        controlName: 'address',
+        placeholder: 'Enter a complete address',
+        type: {
+          typeName: 'textarea',
+          maxLength: 20,
+        },
+        validators: [
+          Validators.required,
         ],
       },
-    }
-  ];
-
+      {
+        controlName: 'email',
+        validators: [
+          Validators.required,
+          Validators.email
+        ],
+        placeholder: 'Enter an email',
+        type: {
+          typeName: 'input',
+          maxLength: 30,
+        },
+        errorMessages: {
+          required: 'The email is mandatory',
+          email: 'You must enter a valid email',
+        },
+        hint: 'Enter a valid email'
+      },
+      {
+        controlName: 'civilState',
+        placeholder: 'Choose a civil state',
+        label: 'Civil state',
+        hint: 'Please pick a Civil State',
+        validators: [
+          Validators.required
+        ],
+        type: {
+          typeName: 'select',
+          options: [
+            {
+              value: 1,
+              label: 'Married'
+            },
+            {
+              value: 2,
+              label: 'Single'
+            }
+          ]
+        },
+      },
+      {
+        controlName: 'cities',
+        type: {
+          typeName: 'check',
+          minRequired : 2,
+          options: [
+            {
+              value: 1,
+              label: 'Quito'
+            },
+            {
+              value: 2,
+              label: 'Cuenca'
+            },
+            {
+              value: 3,
+              label: 'Ambato'
+            }
+          ]
+        },
+        label: 'Cities',
+        errorMessages: {
+          required: 'select two cities at least',
+        }
+      },
+      {
+        controlName: 'favoriteFruit',
+        validators: [
+          Validators.required
+        ],
+        label: 'Favorite Fruit',
+        type: {
+          typeName: 'radio',
+          options: [
+            {
+              value: 3,
+              label: 'Apple'
+            },
+            {
+              value: 1,
+              label: 'Pear'
+            },
+            {
+              value: 2,
+              label: 'Pineapple'
+            }
+          ],
+        },
+      }
+    ];
 ```  
   
 So in our `parentComponent.html` call the component.
@@ -351,3 +349,42 @@ Complete example form component:
             <button [disabled]="!userData" class="btn btn-block btn-info">Submit</button>
           </ez-form>
 ```
+
+## Summary
+#### Component
+
+|Attribute  | Type | Description | Required |
+| --- | --- | ---| --- |
+| formConfig | Input | Form config object | YES |
+| inputData | Input | Form default values object | OPTIONAL
+| dataFromForm | OutPut | Data returned from form | YES
+| styleFramework | Input | Form style | OPTIONAL
+| msgErrorAnimation | Input | Error message animation | OPTIONAL
+| toasterConfig | Input | Toaster message configuration object | OPTIONAL
+| showToaster | Input | Show Toaster message | OPTIONAL
+
+### Control Object
+|Attribute  | Description | Required |
+| --- | ---| --- |
+| controlName | Form Control name | YES
+| placeholder | Describes the expected value of an input field  | OPTIONAL
+| hint | Hint displayed in the input field before the user enters a value | OPTIONAL
+| label | Hint displayed in the input field before the user enters a value | OPTIONAL
+| type | Input type object: select, input.. | YES
+| validators | Array with angular form validators, it doesn't work with check type | OPTIONAL
+
+### Type Attribute Object: 'input'
+
+
+|Attribute | Description |
+| --- | ---|
+| input | Input field for text and numbers |
+| typename | type name: input, select, radio, check, textarea, date |
+| class | Uniquely for input type. Defines the character type for example a `password` field
+| options | Uniquely for select, radio, check
+| minRequired | Uniquely for check. Defines how many checks fields are mandatory
+| maxLength | Uniquely for input, textarea and date. Defines how many characters are allowed
+
+
+### Example Full Code
+If you are looking for a full example of this library please check the following [github repository](https://github.com/velascoandrs/ez-form-example)

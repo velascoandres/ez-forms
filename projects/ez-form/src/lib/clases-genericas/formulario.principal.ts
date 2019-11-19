@@ -1,11 +1,13 @@
 import {AbstractControl, FormArray, FormBuilder, FormControl, FormGroup} from '@angular/forms';
-import {EventEmitter, Input, Output} from '@angular/core';
+import {ChangeDetectorRef, EventEmitter, Input, Output} from '@angular/core';
 import {ToasterConfig, ToasterService} from 'angular2-toaster';
 import {debounceTime} from 'rxjs/operators';
 import {validarMinimoCheckBox} from './validadores_especiales';
 
 export class FormularioPrincipal {
   formulario: FormGroup;
+  cd: ChangeDetectorRef;
+  hideFile = true;
   @Input()
   styleFramework = 'material';
   @Input()
@@ -75,8 +77,6 @@ export class FormularioPrincipal {
         if (existeDatoEntrada) {
           if (typeof datoEntrada !== 'object') {
             this.formulario.get(nombreControl).patchValue(datoEntrada);
-          } else {
-            this.formulario.get(nombreControl).setValue([]);
           }
         }
       }
@@ -96,6 +96,9 @@ export class FormularioPrincipal {
         let validadores = [];
         if (tieneValidadores) {
           validadores = [...itemConfiguracion.validators];
+        }
+        if (itemConfiguracion.type.typeName === 'file') {
+          // this.obtenerArchivo(this.inputData[nombreControl], nombreControl);
         }
         if (itemConfiguracion.type.typeName === 'check') {
           const esObligatorio = itemConfiguracion.type.minRequired !== undefined && typeof +itemConfiguracion.type.minRequired === 'number';
@@ -170,7 +173,7 @@ export class FormularioPrincipal {
     const llaves = Object.keys(datos);
     llaves.map(
       (llave) => {
-        if (typeof datos[llave] === 'object' && datos[llave].length > 0) {
+        if (typeof datos[llave] === 'object' && datos[llave] !== null && datos[llave].length > 0) {
           const arregloBoolean = datos[llave];
           const indice = this.formConfig.findIndex(
             (control) => {
@@ -231,5 +234,33 @@ export class FormularioPrincipal {
 
   obtenerMensajesError(nombreControl) {
     return this.objetoArreglosErrores[nombreControl];
+  }
+
+  protected obtenerArchivo(url, controlName) {
+    const archivo = new File(url, controlName);
+    console.log(archivo);
+  }
+
+  previewFile(event) {
+    this.hideFile = false;
+    const preview = document.querySelector('img');
+    const file: any = event.target.files[0];
+    const reader = new FileReader();
+
+    reader.onloadend = () => {
+      if (typeof reader.result === 'string') {
+        if (file.type.match('image/*')) {
+          preview.src = reader.result;
+        } else {
+          this.hideFile = true;
+        }
+      }
+    };
+
+    if (file) {
+      reader.readAsDataURL(file);
+    } else {
+      preview.src = '';
+    }
   }
 }
