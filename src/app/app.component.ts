@@ -135,9 +135,19 @@ export class AppComponent {
           }
         ],
       },
-    }
+    },
+    {
+      controlName: 'imageProfile',
+      label: 'Picture',
+      hint: 'Please upload your profile picture',
+      placeholder: 'Add your profile picture',
+      type: {
+        typeName: 'file'
+      }
+    },
   ];
   usuario = {
+    imageProfile: 'https://i.pinimg.com/736x/18/0e/fc/180efc3227b70e92b88fd3e71826fbad.jpg',
     uuid: 1234,
     email: 'juan.pecados@mail.com',
     civilState: 1,
@@ -145,6 +155,8 @@ export class AppComponent {
     birthday: '1999-02-16',
     favoriteFruit: 1,
     password: '12133',
+    address: 'Av. 1231',
+    cities: [1, 2]
   };
 
   myToasterConfig = {

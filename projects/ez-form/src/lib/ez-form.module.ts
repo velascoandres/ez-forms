@@ -6,6 +6,8 @@ import {ToasterModule} from 'angular2-toaster';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
+import { MaterialFileInputModule } from 'ngx-material-file-input';
+
 import {
   MatButtonModule,
   MatCheckboxModule,
@@ -35,6 +37,7 @@ import {
     MatIconModule,
     MatButtonModule,
     MatDatepickerModule,
+    MaterialFileInputModule,
   ],
   exports: [EzFormComponent]
 })
