@@ -161,6 +161,23 @@
   <div *ngIf="styleFramework === 'bootstrap'" class="d-flex justify-content-center">
     <div class="p-2 flex-fill">
       <div *ngFor="let control of formConfig; let i = index">
+        <div *ngIf="control.type.typeName === 'file'"
+             class="form-group">
+          <label
+            for="{{control.controlName}}">
+            {{control.label ? control.label : control.placeholder ? control.placeholder : control.controlName}}
+          </label>
+          <input type="file"
+                 class="form-control-file"
+                 id="{{control.controlName}}"
+                 formControlName={{control.controlName}}
+                 placeholder="{{control.placeholder ? control.placeholder : ''}}"
+                 (change)="previewFile($event)"
+          >
+          <div class="filled" [hidden]="hideFile">
+            <img src="" alt={{control.controlName}} class="img-fluid">
+          </div>
+        </div>
         <div *ngIf="control.type.typeName === 'textarea'"
              class="form-group">
           <label
