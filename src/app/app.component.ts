@@ -137,8 +137,8 @@ export class AppComponent {
       },
     },
     {
-      controlName: 'imageProfile',
-      label: 'Picture',
+      controlName: 'profilePicture',
+      label: 'Profile Picture',
       hint: 'Please upload your profile picture',
       placeholder: 'Add your profile picture',
       type: {
@@ -147,7 +147,6 @@ export class AppComponent {
     },
   ];
   usuario = {
-    imageProfile: 'https://i.pinimg.com/736x/18/0e/fc/180efc3227b70e92b88fd3e71826fbad.jpg',
     uuid: 1234,
     email: 'juan.pecados@mail.com',
     civilState: 1,
