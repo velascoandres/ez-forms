@@ -21,6 +21,8 @@
     $ ng add @angular/material
 ```
 * Angular 2 Toaster check [Documentation](https://www.npmjs.com/package/angular2-toaster)
+
+* ngx-material-file-input check [Documentation](https://www.npmjs.com/package/ngx-material-file-input)
   
 ## Install  
 * Install the package:   
@@ -68,10 +70,10 @@ If you want use  `datepicker` from angular material:
 
 ## Usage  
 First we need a config object inside of parent component.
-  
-### `parentComponent.ts`  
-```typescript  
-  myConfiguration = [
+
+For example: we need to create a form with the following fields:
+* UUID: `Disabled` input (Optional)
+```typescript
       {
         controlName: 'uuid',
         type: {
@@ -79,6 +81,9 @@ First we need a config object inside of parent component.
         },
         disabled: true,
       },
+```
+* Password: `Password` input (Required)
+```typescript
       {
         controlName: 'password',
         type: {
@@ -89,7 +94,10 @@ First we need a config object inside of parent component.
           Validators.required,
         ]
       },
-      {
+```
+* Brithday: `Date` input (Required)
+```typescript
+       {
         controlName: 'birthday',
         placeholder: 'Enter your birthday date',
         hint: 'Enter a valid date',
@@ -100,7 +108,10 @@ First we need a config object inside of parent component.
           Validators.required,
         ]
       },
-      {
+```
+* Address: `Long text` input (Required)
+```typescript
+       {
         controlName: 'address',
         placeholder: 'Enter a complete address',
         type: {
@@ -111,7 +122,10 @@ First we need a config object inside of parent component.
           Validators.required,
         ],
       },
-      {
+```
+* Email: `Text` input (Required, Email Validation)
+```typescript
+       {
         controlName: 'email',
         validators: [
           Validators.required,
@@ -128,7 +142,10 @@ First we need a config object inside of parent component.
         },
         hint: 'Enter a valid email'
       },
-      {
+```
+* Civil State: `Select` input (Required)
+```typescript
+    {
         controlName: 'civilState',
         placeholder: 'Choose a civil state',
         label: 'Civil state',
@@ -150,6 +167,9 @@ First we need a config object inside of parent component.
           ]
         },
       },
+```
+* Cities: `Multiple Select` input  (Required, minimum 2)
+```typescript
       {
         controlName: 'cities',
         type: {
@@ -174,31 +194,71 @@ First we need a config object inside of parent component.
         errorMessages: {
           required: 'select two cities at least',
         }
+      },    
+```
+* Favorite Fruit: `Radio Button` input  (Required)
+```typescript
+        {
+          controlName: 'favoriteFruit',
+          validators: [
+            Validators.required
+          ],
+          label: 'Favorite Fruit',
+          type: {
+            typeName: 'radio',
+            options: [
+              {
+                value: 3,
+                label: 'Apple'
+              },
+              {
+                value: 1,
+                label: 'Pear'
+              },
+              {
+                value: 2,
+                label: 'Pineapple'
+              }
+            ],
+          },
+        }
+```
+* Profile Picture: `File` input
+```typescript
+    {
+      controlName: 'profilePicture',
+      label: 'Profile Picture',
+      hint: 'Please upload your profile picture',
+      placeholder: 'Add your profile picture',
+      type: {
+        typeName: 'file'
+      }
+    }
+```
+All fields must be at a config array like this in our parent component, for example: 
+
+### `parentComponent.ts`
+
+```typescript  
+  myConfiguration = [
+      {
+        controlName: 'uuid',
+        type: {
+          typeName: 'input'
+        },
+        disabled: true,
       },
       {
-        controlName: 'favoriteFruit',
-        validators: [
-          Validators.required
-        ],
-        label: 'Favorite Fruit',
+        controlName: 'password',
         type: {
-          typeName: 'radio',
-          options: [
-            {
-              value: 3,
-              label: 'Apple'
-            },
-            {
-              value: 1,
-              label: 'Pear'
-            },
-            {
-              value: 2,
-              label: 'Pineapple'
-            }
-          ],
+          typeName: 'input',
+          class: 'password',
         },
-      }
+        validators: [
+          Validators.required,
+        ]
+      },
+       .... you could add more fields as you wish  ... 
     ];
 ```  
   
@@ -260,9 +320,13 @@ Results:
   
 ![formulario](https://github.com/velascoandrs/repo-de-imagenes/blob/master/version-en/form-valid-mat.PNG?raw=true)  
 
+## File
+For angular material this library makes use of [ngx-material-file-input](https://www.npmjs.com/package/ngx-material-file-input)
+Demonstration from the configuration example
+![fileinput](https://github.com/velascoandrs/repo-de-imagenes/blob/master/fileds/file-mat.PNG?raw=true)
 
 ## Toaster
-This library make use of [angular2-toaster](https://www.npmjs.com/package/angular2-toaster)
+This library makes use of [angular2-toaster](https://www.npmjs.com/package/angular2-toaster)
 * The toaster is the message which shows on screen when the form has been filled correctly or not.
 * The display of this messages could be optional
 
@@ -370,10 +434,10 @@ Complete example form component:
 | placeholder | Describes the expected value of an input field  | OPTIONAL
 | hint | Hint displayed in the input field before the user enters a value | OPTIONAL
 | label | Hint displayed in the input field before the user enters a value | OPTIONAL
-| type | Input type object: select, input.. | YES
+| type | Input type object: select, input, file, check.. | YES
 | validators | Array with angular form validators, it doesn't work with check type | OPTIONAL
 
-### Type Attribute Object: 'input'
+### Type Attribute Object
 
 
 |Attribute | Description |
