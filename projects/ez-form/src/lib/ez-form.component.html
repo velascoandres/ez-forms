@@ -15,6 +15,7 @@
             <ngx-mat-file-input
               formControlName={{control.controlName}}
               placeholder="{{control.placeholder ? control.placeholder : ''}}"
+              multiple
               (change)="previewFile($event)"
             >
             </ngx-mat-file-input>
@@ -25,8 +26,10 @@
               {{control.hint}}  {{control.type.maxLength ? +formulario.get(control.controlName).value.length + '/' : '' }}  {{control.type.maxLength ? control.type.maxLength : ''}}
             </mat-hint>
           </mat-form-field>
-          <div class="filled" [hidden]="hideFile">
-            <img src="" alt={{control.controlName}} class="img-fluid">
+          <div *ngFor="let archivo of listaArchivos; let indice = index" class="d-flex" [hidden]="esconderArchivos">
+            <div class="p-2">
+              <img [src]='archivo'  class="img-fluid" id="{{indice}}img">
+            </div>
           </div>
 
         </div>
@@ -174,7 +177,7 @@
                  placeholder="{{control.placeholder ? control.placeholder : ''}}"
                  (change)="previewFile($event)"
           >
-          <div class="filled" [hidden]="hideFile">
+          <div class="filled" [hidden]="esconderArchivos">
             <img src="" alt={{control.controlName}} class="img-fluid">
           </div>
         </div>

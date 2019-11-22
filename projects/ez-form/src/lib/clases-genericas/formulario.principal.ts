@@ -7,7 +7,9 @@ import {validarMinimoCheckBox} from './validadores_especiales';
 export class FormularioPrincipal {
   formulario: FormGroup;
   cd: ChangeDetectorRef;
-  hideFile = true;
+  arregloUtilitario: Array<number>;
+  listaArchivos = [];
+  esconderArchivos = true;
   @Input()
   styleFramework = 'material';
   @Input()
@@ -38,6 +40,7 @@ export class FormularioPrincipal {
   dataFromForm: EventEmitter<object | boolean> = new EventEmitter<object | boolean>();
 
   esconderTexto = true;
+  totalArchivos = 0;
   mensajesErrorDefecto = {
     required: 'mandatory field',
     date: 'invalid date',
@@ -103,7 +106,7 @@ export class FormularioPrincipal {
         if (itemConfiguracion.type.typeName === 'check') {
           const esObligatorio = itemConfiguracion.type.minRequired !== undefined && typeof +itemConfiguracion.type.minRequired === 'number';
           controles[nombreControl] = new FormArray(
-            this.agregarSubControles(
+            this.agregarSubControlesCheck(
               itemConfiguracion.type.options, nombreControl),
             validarMinimoCheckBox(esObligatorio ? +itemConfiguracion.type.minRequired : 0)
           );
@@ -122,7 +125,7 @@ export class FormularioPrincipal {
     return controles;
   }
 
-  agregarSubControles(opciones: [], nombreControl: string) {
+  agregarSubControlesCheck(opciones: [], nombreControl: string) {
     const arregloControles = [];
     opciones.forEach(
       (opcion: any) => {
@@ -242,25 +245,29 @@ export class FormularioPrincipal {
   }
 
   previewFile(event) {
-    this.hideFile = false;
-    const preview = document.querySelector('img');
-    const file: any = event.target.files[0];
-    const reader = new FileReader();
-
-    reader.onloadend = () => {
-      if (typeof reader.result === 'string') {
-        if (file.type.match('image/*')) {
-          preview.src = reader.result;
-        } else {
-          this.hideFile = true;
+    this.esconderArchivos = false;
+    const archivos = event.target.files;
+    const objetoArchivos = Object.values(archivos);
+    this.totalArchivos = objetoArchivos.length ? objetoArchivos.length : 0;
+    objetoArchivos.forEach(
+      (archivo: File, indice) => {
+        const reader = new FileReader();
+        // const vistaPrevia: any = document.getElementById(`${indice}img`);
+        reader.onloadend = () => {
+          if (typeof reader.result === 'string') {
+            if (archivo.type.match('image/*')) {
+              // vistaPrevia.src = reader.result;
+              this.listaArchivos.push(reader.result);
+            } else {
+              this.esconderArchivos = true;
+            }
+          }
+        };
+        console.log(archivo);
+        if (archivo) {
+          reader.readAsDataURL(archivo);
         }
       }
-    };
-
-    if (file) {
-      reader.readAsDataURL(file);
-    } else {
-      preview.src = '';
-    }
+    );
   }
 }
