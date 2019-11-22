@@ -244,7 +244,8 @@ export class FormularioPrincipal {
     console.log(archivo);
   }
 
-  previewFile(event) {
+  previewFile(event, control) {
+    console.log(control);
     this.esconderArchivos = false;
     const archivos = event.target.files;
     const objetoArchivos = Object.values(archivos);
@@ -252,11 +253,10 @@ export class FormularioPrincipal {
     objetoArchivos.forEach(
       (archivo: File, indice) => {
         const reader = new FileReader();
-        // const vistaPrevia: any = document.getElementById(`${indice}img`);
         reader.onloadend = () => {
           if (typeof reader.result === 'string') {
-            if (archivo.type.match('image/*')) {
-              // vistaPrevia.src = reader.result;
+            const formatoAcceptado = control.type.accept;
+            if (formatoAcceptado && archivo.type.match(formatoAcceptado)) {
               this.listaArchivos.push(reader.result);
             } else {
               this.esconderArchivos = true;

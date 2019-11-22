@@ -142,7 +142,9 @@ export class AppComponent {
       hint: 'Please upload your profile picture',
       placeholder: 'Add your profile picture',
       type: {
-        typeName: 'file'
+        typeName: 'file',
+        multiple: false,
+        accept: 'image/*',
       }
     },
   ];

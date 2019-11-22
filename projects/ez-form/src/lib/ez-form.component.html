@@ -15,8 +15,9 @@
             <ngx-mat-file-input
               formControlName={{control.controlName}}
               placeholder="{{control.placeholder ? control.placeholder : ''}}"
-              multiple
-              (change)="previewFile($event)"
+              [multiple] = 'control.type.multiple'
+              [accept]='control.type.accept? control.type.accept : "*/*"'
+              (change)="previewFile($event, control)"
             >
             </ngx-mat-file-input>
             <mat-icon matSuffix>folder</mat-icon>
@@ -26,10 +27,10 @@
               {{control.hint}}  {{control.type.maxLength ? +formulario.get(control.controlName).value.length + '/' : '' }}  {{control.type.maxLength ? control.type.maxLength : ''}}
             </mat-hint>
           </mat-form-field>
-          <div *ngFor="let archivo of listaArchivos; let indice = index" class="d-flex" [hidden]="esconderArchivos">
-            <div class="p-2">
-              <img [src]='archivo'  class="img-fluid" id="{{indice}}img">
-            </div>
+          <div class="d-flex"   [hidden]="esconderArchivos">
+              <img
+                *ngFor="let archivo of listaArchivos; let indice = index"
+                [src]='archivo'  class="img-fluid p-2" id="{{indice}}img">
           </div>
 
         </div>
@@ -175,10 +176,13 @@
                  id="{{control.controlName}}"
                  formControlName={{control.controlName}}
                  placeholder="{{control.placeholder ? control.placeholder : ''}}"
-                 (change)="previewFile($event)"
+                 [accept]='control.type.accept? control.type.accept : "*/*"'
+                 (change)="previewFile($event, control)"
           >
-          <div class="filled" [hidden]="esconderArchivos">
-            <img src="" alt={{control.controlName}} class="img-fluid">
+          <div class="d-flex"   [hidden]="esconderArchivos">
+            <img
+              *ngFor="let archivo of listaArchivos; let indice = index"
+              [src]='archivo'  class="img-fluid p-2" id="{{indice}}imgbs">
           </div>
         </div>
         <div *ngIf="control.type.typeName === 'textarea'"
