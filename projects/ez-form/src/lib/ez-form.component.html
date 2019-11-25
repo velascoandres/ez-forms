@@ -27,10 +27,12 @@
               {{control.hint}}  {{control.type.maxLength ? +formulario.get(control.controlName).value.length + '/' : '' }}  {{control.type.maxLength ? control.type.maxLength : ''}}
             </mat-hint>
           </mat-form-field>
-          <div class="d-flex"   [hidden]="esconderArchivos">
+          <div class="d-flex"
+               *ngIf="filtrarArchivosPorControl(control.controlName).length > 0"
+               [hidden]="esconderArchivos">
               <img
-                *ngFor="let archivo of listaArchivos; let indice = index"
-                [src]='archivo'  class="img-fluid p-2" id="{{indice}}img">
+                *ngFor="let archivo of filtrarArchivosPorControl(control.controlName); let indice = index"
+                [src]='archivo.datos'  class="img-fluid p-2" id="{{indice}}{{control.controlName}}">
           </div>
 
         </div>
@@ -48,7 +50,7 @@
             placeholder="{{control.placeholder ? control.placeholder : ''}}"
             [rows]="control.type.rows? control.type.rows : 3"
             [maxlength]="control.type.maxLength ? control.type.maxLength : ''"
-            id={{control.controlName}}
+            id="txtArea{{control.controlName}}"
           >
           </textarea>
           <mat-hint *ngIf="control.type.maxLength || control.hint" [id]="control.controlName"
@@ -173,16 +175,23 @@
           </label>
           <input type="file"
                  class="form-control-file"
-                 id="{{control.controlName}}"
+                 id="file{{control.controlName}}"
                  formControlName={{control.controlName}}
                  placeholder="{{control.placeholder ? control.placeholder : ''}}"
                  [accept]='control.type.accept? control.type.accept : "*/*"'
                  (change)="previewFile($event, control)"
+                 [multiple]="control.type.multiple"
           >
-          <div class="d-flex"   [hidden]="esconderArchivos">
+          <div class="d-flex"
+               [hidden]="esconderArchivos"
+               *ngIf="filtrarArchivosPorControl(control.controlName).length > 0"
+          >
             <img
-              *ngFor="let archivo of listaArchivos; let indice = index"
-              [src]='archivo'  class="img-fluid p-2" id="{{indice}}imgbs">
+              *ngFor="let archivo of filtrarArchivosPorControl(control.controlName); let indice = index"
+              [src]='archivo.datos'
+              class="img-fluid p-2"
+              id="{{indice}}imgbs"
+            >
           </div>
         </div>
         <div *ngIf="control.type.typeName === 'textarea'"
@@ -194,7 +203,7 @@
           </label>
           <textarea
             class="form-control"
-            id="{{i}}"
+            id="txtAreaBs{{control.controlName}}"
             formControlName={{control.controlName}}
             placeholder="{{control.placeholder ? control.placeholder : ''}}"
             [rows]="control.type.rows? control.type.rows : 3"
@@ -217,7 +226,7 @@
           <input
             [type]="control.type.class !== 'password'? 'text' : 'password'"
             class="form-control"
-            id={{i}}
+            id="inputBs{{control.controlName}}"
             formControlName={{control.controlName}}
             [attr.aria-describedby]="control.controlName"
             placeholder="{{control.placeholder ? control.placeholder : ''}}"
@@ -236,7 +245,7 @@
             {{control.label ? control.label : control.placeholder ? control.placeholder : control.controlName}}
           </label>
           <input
-            id="{{i}}"
+            id="dateBs{{control.controlName}}"
             class="form-control"
             placeholder="{{control.placeholder ? control.placeholder : ''}}"
             formControlName={{control.controlName}}
@@ -281,13 +290,13 @@
           <div *ngFor="let opcion of control.type.options">
             <input
               class="form-check-input"
-              id="{{opcion.label}}"
+              id="checkBs{{control.controlName}}"
               type="radio"
               [value]="opcion.value"
               formControlName="{{control.controlName}}"
             >
             <label
-              for="{{opcion.value}}"
+              for="checkBs{{control.controlName}}"
               class="form-check-label"
             >
               {{opcion.label}}

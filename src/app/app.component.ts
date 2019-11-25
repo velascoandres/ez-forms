@@ -145,8 +145,20 @@ export class AppComponent {
         typeName: 'file',
         multiple: false,
         accept: 'image/*',
-      }
+      },
     },
+    {
+      controlName: 'favoritePictures',
+      label: 'Favorites Pictures',
+      hint: 'Please upload your favorite pictures',
+      placeholder: 'Add pictures',
+      type: {
+        typeName: 'file',
+        multiple: true,
+        accept: 'image/*',
+      },
+
+    }
   ];
   usuario = {
     uuid: 1234,

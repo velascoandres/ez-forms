@@ -3,6 +3,7 @@ import {ChangeDetectorRef, EventEmitter, Input, Output} from '@angular/core';
 import {ToasterConfig, ToasterService} from 'angular2-toaster';
 import {debounceTime} from 'rxjs/operators';
 import {validarMinimoCheckBox} from './validadores_especiales';
+import {NewEntryPointFileWriter} from '@angular/compiler-cli/ngcc/src/writing/new_entry_point_file_writer';
 
 export class FormularioPrincipal {
   formulario: FormGroup;
@@ -100,9 +101,6 @@ export class FormularioPrincipal {
         if (tieneValidadores) {
           validadores = [...itemConfiguracion.validators];
         }
-        if (itemConfiguracion.type.typeName === 'file') {
-          // this.obtenerArchivo(this.inputData[nombreControl], nombreControl);
-        }
         if (itemConfiguracion.type.typeName === 'check') {
           const esObligatorio = itemConfiguracion.type.minRequired !== undefined && typeof +itemConfiguracion.type.minRequired === 'number';
           controles[nombreControl] = new FormArray(
@@ -111,7 +109,7 @@ export class FormularioPrincipal {
             validarMinimoCheckBox(esObligatorio ? +itemConfiguracion.type.minRequired : 0)
           );
         } else {
-          controles[nombreControl] = [valorDefecto, validadores];
+            controles[nombreControl] = [valorDefecto, validadores];
         }
         // controles[nombreControl]['disabled'] = desactivado;
         const tieneMensajesError = itemConfiguracion.errorMessages !== undefined;
@@ -239,17 +237,30 @@ export class FormularioPrincipal {
     return this.objetoArreglosErrores[nombreControl];
   }
 
-  protected obtenerArchivo(url, controlName) {
-    const archivo = new File(url, controlName);
-    console.log(archivo);
+  protected agregarSubControlesArchivo(archivos: File[], nombreControl: string): void {
+    this.formulario.removeControl(nombreControl);
+    this.formulario.setControl(nombreControl, new FormControl(archivos));
+    /*const reader = new FileReader();
+    reader.readAsDataURL(archivos[0]);
+    reader.onload = () => {
+      if (typeof reader.result === 'string') {
+        this.formulario.get(nombreControl).patchValue({
+          filename: archivos[0].name,
+          filetype: archivos[0].type,
+          value: reader.result
+        });
+      }
+    };*/
   }
 
   previewFile(event, control) {
-    console.log(control);
     this.esconderArchivos = false;
     const archivos = event.target.files;
-    const objetoArchivos = Object.values(archivos);
+    const objetoArchivos: File[] = Object.values(archivos);
     this.totalArchivos = objetoArchivos.length ? objetoArchivos.length : 0;
+    if (this.styleFramework === 'bootstrap') {
+      /// this.agregarSubControlesArchivo(objetoArchivos, control.controlName);
+    }
     objetoArchivos.forEach(
       (archivo: File, indice) => {
         const reader = new FileReader();
@@ -257,16 +268,27 @@ export class FormularioPrincipal {
           if (typeof reader.result === 'string') {
             const formatoAcceptado = control.type.accept;
             if (formatoAcceptado && archivo.type.match(formatoAcceptado)) {
-              this.listaArchivos.push(reader.result);
+              const objetoArchivo = {
+                propietario: control.controlName,
+                datos: reader.result,
+              };
+              this.listaArchivos.push(objetoArchivo);
             } else {
               this.esconderArchivos = true;
             }
           }
         };
-        console.log(archivo);
         if (archivo) {
           reader.readAsDataURL(archivo);
         }
+      }
+    );
+  }
+
+  filtrarArchivosPorControl(nombreControl: string) {
+    return this.listaArchivos.filter(
+      (archivo) => {
+        return archivo.propietario === nombreControl;
       }
     );
   }
