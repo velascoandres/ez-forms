@@ -7,7 +7,8 @@ import {validarMinimoCheckBox} from './validadores_especiales';
 export class FormularioPrincipal {
   formulario: FormGroup;
   cd: ChangeDetectorRef;
-  hideFile = true;
+  listaArchivos = [];
+  esconderArchivos = true;
   @Input()
   styleFramework = 'material';
   @Input()
@@ -38,6 +39,7 @@ export class FormularioPrincipal {
   dataFromForm: EventEmitter<object | boolean> = new EventEmitter<object | boolean>();
 
   esconderTexto = true;
+  totalArchivos = 0;
   mensajesErrorDefecto = {
     required: 'mandatory field',
     date: 'invalid date',
@@ -56,7 +58,7 @@ export class FormularioPrincipal {
     this.construirFormulario();
     this.escucharFormulario();
     this.escucharCampos();
-    this.llenarFormulario();
+    // this.llenarFormulario();
   }
 
   protected construirFormulario() {
@@ -97,13 +99,10 @@ export class FormularioPrincipal {
         if (tieneValidadores) {
           validadores = [...itemConfiguracion.validators];
         }
-        if (itemConfiguracion.type.typeName === 'file') {
-          // this.obtenerArchivo(this.inputData[nombreControl], nombreControl);
-        }
         if (itemConfiguracion.type.typeName === 'check') {
           const esObligatorio = itemConfiguracion.type.minRequired !== undefined && typeof +itemConfiguracion.type.minRequired === 'number';
           controles[nombreControl] = new FormArray(
-            this.agregarSubControles(
+            this.agregarSubControlesCheck(
               itemConfiguracion.type.options, nombreControl),
             validarMinimoCheckBox(esObligatorio ? +itemConfiguracion.type.minRequired : 0)
           );
@@ -122,7 +121,7 @@ export class FormularioPrincipal {
     return controles;
   }
 
-  agregarSubControles(opciones: [], nombreControl: string) {
+  agregarSubControlesCheck(opciones: [], nombreControl: string) {
     const arregloControles = [];
     opciones.forEach(
       (opcion: any) => {
@@ -180,19 +179,22 @@ export class FormularioPrincipal {
               return control.controlName === llave;
             }
           );
-          const arreglo = arregloBoolean.reduce(
-            (acumulador, item, index) => {
-              if (item && this.formConfig[indice]) {
-                acumulador.push(this.formConfig[indice].type.options[index].value);
-              }
-              return acumulador;
-            }, []
-          );
-          if (!arreglo.length) {
-            datos[llave] = '';
-          } else {
-            datos[llave] = arreglo;
+          if (indice !== -1 && this.formConfig[indice].type.options) {
+            const arreglo = arregloBoolean.reduce(
+              (acumulador, item, index) => {
+                if (item && this.formConfig[indice]) {
+                  acumulador.push(this.formConfig[indice].type.options[index].value);
+                }
+                return acumulador;
+              }, []
+            );
+            if (!arreglo.length) {
+              datos[llave] = '';
+            } else {
+              datos[llave] = arreglo;
+            }
           }
+
         }
       }
     );
@@ -236,31 +238,49 @@ export class FormularioPrincipal {
     return this.objetoArreglosErrores[nombreControl];
   }
 
-  protected obtenerArchivo(url, controlName) {
-    const archivo = new File(url, controlName);
-    console.log(archivo);
-  }
-
-  previewFile(event) {
-    this.hideFile = false;
-    const preview = document.querySelector('img');
-    const file: any = event.target.files[0];
-    const reader = new FileReader();
-
-    reader.onloadend = () => {
-      if (typeof reader.result === 'string') {
-        if (file.type.match('image/*')) {
-          preview.src = reader.result;
-        } else {
-          this.hideFile = true;
+  previewFile(event, control) {
+    this.esconderArchivos = false;
+    const archivos = event.target.files;
+    this.quitarArchivosPorControl(control.controlName);
+    const objetoArchivos: File[] = Object.values(archivos);
+    this.totalArchivos = objetoArchivos.length ? objetoArchivos.length : 0;
+    objetoArchivos.forEach(
+      (archivo: File) => {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          if (typeof reader.result === 'string') {
+            const formatoAcceptado = control.type.accept;
+            if (formatoAcceptado && archivo.type.match(formatoAcceptado)) {
+              const objetoArchivo = {
+                propietario: control.controlName,
+                datos: reader.result,
+              };
+              this.listaArchivos.push(objetoArchivo);
+            } else {
+              this.esconderArchivos = true;
+            }
+          }
+        };
+        if (archivo) {
+          reader.readAsDataURL(archivo);
         }
       }
-    };
+    );
+  }
 
-    if (file) {
-      reader.readAsDataURL(file);
-    } else {
-      preview.src = '';
-    }
+  quitarArchivosPorControl(nombreControl: string) {
+    this.listaArchivos = this.listaArchivos.filter(
+      (archivo) => {
+        return  archivo.propietario !== nombreControl;
+      }
+    );
+  }
+
+  filtrarArchivosPorControl(nombreControl: string) {
+    return this.listaArchivos.filter(
+      (archivo) => {
+        return archivo.propietario === nombreControl;
+      }
+    );
   }
 }

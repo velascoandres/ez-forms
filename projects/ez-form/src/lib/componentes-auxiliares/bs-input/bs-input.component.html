@@ -1,0 +1,24 @@
+<div class="form-group">
+  <label
+    for="file{{controlName}}">
+    {{label ? label : placeholder ? placeholder : controlName}}
+  </label>
+  <input
+    type="file"
+    class="form-control-file"
+    id="file{{controlName}}"
+    placeholder="{{placeholder ? placeholder : ''}}"
+    [accept]='accept? accept : "*/*"'
+    (input)="onInput($event.target.files)"
+    [multiple]="multiple"
+  >
+  <div class="d-flex"
+  >
+    <img
+      *ngFor="let archivo of obtenerArchivos(); let indice = index"
+      [src]='archivo.datos'
+      class="img-fluid p-2"
+      id="{{indice}}imgbs"
+    >
+  </div>
+</div>

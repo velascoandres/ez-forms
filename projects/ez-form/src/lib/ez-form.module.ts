@@ -7,7 +7,6 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import { MaterialFileInputModule } from 'ngx-material-file-input';
-
 import {
   MatButtonModule,
   MatCheckboxModule,
@@ -17,11 +16,12 @@ import {
   MatRadioModule,
   MatSelectModule
 } from '@angular/material';
+import { BsInputComponent } from './componentes-auxiliares/bs-input/bs-input.component';
 
 
 
 @NgModule({
-  declarations: [EzFormComponent],
+  declarations: [EzFormComponent, BsInputComponent],
   imports: [
     CommonModule,
     FormsModule,
@@ -39,6 +39,6 @@ import {
     MatDatepickerModule,
     MaterialFileInputModule,
   ],
-  exports: [EzFormComponent]
+  exports: [EzFormComponent],
 })
 export class EzFormModule { }

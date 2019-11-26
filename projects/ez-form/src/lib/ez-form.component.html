@@ -15,7 +15,9 @@
             <ngx-mat-file-input
               formControlName={{control.controlName}}
               placeholder="{{control.placeholder ? control.placeholder : ''}}"
-              (change)="previewFile($event)"
+              [multiple] = 'control.type.multiple'
+              [accept]='control.type.accept? control.type.accept : "*/*"'
+              (change)="previewFile($event, control)"
             >
             </ngx-mat-file-input>
             <mat-icon matSuffix>folder</mat-icon>
@@ -25,8 +27,12 @@
               {{control.hint}}  {{control.type.maxLength ? +formulario.get(control.controlName).value.length + '/' : '' }}  {{control.type.maxLength ? control.type.maxLength : ''}}
             </mat-hint>
           </mat-form-field>
-          <div class="filled" [hidden]="hideFile">
-            <img src="" alt={{control.controlName}} class="img-fluid">
+          <div class="d-flex"
+               *ngIf="filtrarArchivosPorControl(control.controlName).length > 0"
+               [hidden]="esconderArchivos">
+              <img
+                *ngFor="let archivo of filtrarArchivosPorControl(control.controlName); let indice = index"
+                [src]='archivo.datos'  class="img-fluid p-2" id="{{indice}}{{control.controlName}}">
           </div>
 
         </div>
@@ -44,7 +50,7 @@
             placeholder="{{control.placeholder ? control.placeholder : ''}}"
             [rows]="control.type.rows? control.type.rows : 3"
             [maxlength]="control.type.maxLength ? control.type.maxLength : ''"
-            id={{control.controlName}}
+            id="txtArea{{control.controlName}}"
           >
           </textarea>
           <mat-hint *ngIf="control.type.maxLength || control.hint" [id]="control.controlName"
@@ -163,20 +169,39 @@
       <div *ngFor="let control of formConfig; let i = index">
         <div *ngIf="control.type.typeName === 'file'"
              class="form-group">
-          <label
+          <ez-bs-input
+            formControlName="{{control.controlName}}"
+            [label]=control.label
+            [placeholder]=control.placeholder
+            [multiple]="control.type.multiple"
+            [accept]="control.type.accept"
+          >
+          </ez-bs-input>
+          <!--<label
             for="{{control.controlName}}">
             {{control.label ? control.label : control.placeholder ? control.placeholder : control.controlName}}
           </label>
-          <input type="file"
+          <input
+                 type="file"
                  class="form-control-file"
-                 id="{{control.controlName}}"
+                 id="file{{control.controlName}}"
                  formControlName={{control.controlName}}
                  placeholder="{{control.placeholder ? control.placeholder : ''}}"
-                 (change)="previewFile($event)"
+                 [accept]='control.type.accept? control.type.accept : "*/*"'
+                 (change)="previewFile(, control)"
+                 [multiple]="control.type.multiple"$event
           >
-          <div class="filled" [hidden]="hideFile">
-            <img src="" alt={{control.controlName}} class="img-fluid">
-          </div>
+          <div class="d-flex"
+               [hidden]="esconderArchivos"
+               *ngIf="filtrarArchivosPorControl(control.controlName).length > 0"
+          >
+            <img
+              *ngFor="let archivo of filtrarArchivosPorControl(control.controlName); let indice = index"
+              [src]='archivo.datos'
+              class="img-fluid p-2"
+              id="{{indice}}imgbs"
+            >
+          </div> -->
         </div>
         <div *ngIf="control.type.typeName === 'textarea'"
              class="form-group">
@@ -187,7 +212,7 @@
           </label>
           <textarea
             class="form-control"
-            id="{{i}}"
+            id="txtAreaBs{{control.controlName}}"
             formControlName={{control.controlName}}
             placeholder="{{control.placeholder ? control.placeholder : ''}}"
             [rows]="control.type.rows? control.type.rows : 3"
@@ -210,7 +235,7 @@
           <input
             [type]="control.type.class !== 'password'? 'text' : 'password'"
             class="form-control"
-            id={{i}}
+            id="inputBs{{control.controlName}}"
             formControlName={{control.controlName}}
             [attr.aria-describedby]="control.controlName"
             placeholder="{{control.placeholder ? control.placeholder : ''}}"
@@ -229,7 +254,7 @@
             {{control.label ? control.label : control.placeholder ? control.placeholder : control.controlName}}
           </label>
           <input
-            id="{{i}}"
+            id="dateBs{{control.controlName}}"
             class="form-control"
             placeholder="{{control.placeholder ? control.placeholder : ''}}"
             formControlName={{control.controlName}}
@@ -274,13 +299,13 @@
           <div *ngFor="let opcion of control.type.options">
             <input
               class="form-check-input"
-              id="{{opcion.label}}"
+              id="checkBs{{control.controlName}}"
               type="radio"
               [value]="opcion.value"
               formControlName="{{control.controlName}}"
             >
             <label
-              for="{{opcion.value}}"
+              for="checkBs{{control.controlName}}"
               class="form-check-label"
             >
               {{opcion.label}}
