@@ -14,11 +14,17 @@
   >
   <div class="d-flex"
   >
-    <img
-      *ngFor="let archivo of obtenerArchivos(); let indice = index"
-      [src]='archivo.datos'
-      class="img-fluid p-2"
-      id="{{indice}}imgbs"
-    >
+    <div *ngFor="let archivo of obtenerArchivos(); let indice = index" class="contenedor">
+      <div class="p-2 image">
+        <img
+          [src]='archivo.datos'
+          class="img-fluid img"
+          id="{{indice}}imgbs"
+        >
+        <div class="overlay">
+          Editar asdad
+        </div>
+      </div>
+    </div>
   </div>
 </div>
