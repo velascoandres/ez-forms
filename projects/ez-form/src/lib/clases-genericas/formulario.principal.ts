@@ -3,12 +3,10 @@ import {ChangeDetectorRef, EventEmitter, Input, Output} from '@angular/core';
 import {ToasterConfig, ToasterService} from 'angular2-toaster';
 import {debounceTime} from 'rxjs/operators';
 import {validarMinimoCheckBox} from './validadores_especiales';
-import {NewEntryPointFileWriter} from '@angular/compiler-cli/ngcc/src/writing/new_entry_point_file_writer';
 
 export class FormularioPrincipal {
   formulario: FormGroup;
   cd: ChangeDetectorRef;
-  arregloUtilitario: Array<number>;
   listaArchivos = [];
   esconderArchivos = true;
   @Input()
@@ -60,7 +58,7 @@ export class FormularioPrincipal {
     this.construirFormulario();
     this.escucharFormulario();
     this.escucharCampos();
-    this.llenarFormulario();
+    // this.llenarFormulario();
   }
 
   protected construirFormulario() {
@@ -109,7 +107,7 @@ export class FormularioPrincipal {
             validarMinimoCheckBox(esObligatorio ? +itemConfiguracion.type.minRequired : 0)
           );
         } else {
-            controles[nombreControl] = [valorDefecto, validadores];
+          controles[nombreControl] = [valorDefecto, validadores];
         }
         // controles[nombreControl]['disabled'] = desactivado;
         const tieneMensajesError = itemConfiguracion.errorMessages !== undefined;
@@ -181,19 +179,22 @@ export class FormularioPrincipal {
               return control.controlName === llave;
             }
           );
-          const arreglo = arregloBoolean.reduce(
-            (acumulador, item, index) => {
-              if (item && this.formConfig[indice]) {
-                acumulador.push(this.formConfig[indice].type.options[index].value);
-              }
-              return acumulador;
-            }, []
-          );
-          if (!arreglo.length) {
-            datos[llave] = '';
-          } else {
-            datos[llave] = arreglo;
+          if (indice !== -1 && this.formConfig[indice].type.options) {
+            const arreglo = arregloBoolean.reduce(
+              (acumulador, item, index) => {
+                if (item && this.formConfig[indice]) {
+                  acumulador.push(this.formConfig[indice].type.options[index].value);
+                }
+                return acumulador;
+              }, []
+            );
+            if (!arreglo.length) {
+              datos[llave] = '';
+            } else {
+              datos[llave] = arreglo;
+            }
           }
+
         }
       }
     );
@@ -237,32 +238,14 @@ export class FormularioPrincipal {
     return this.objetoArreglosErrores[nombreControl];
   }
 
-  protected agregarSubControlesArchivo(archivos: File[], nombreControl: string): void {
-    this.formulario.removeControl(nombreControl);
-    this.formulario.setControl(nombreControl, new FormControl(archivos));
-    /*const reader = new FileReader();
-    reader.readAsDataURL(archivos[0]);
-    reader.onload = () => {
-      if (typeof reader.result === 'string') {
-        this.formulario.get(nombreControl).patchValue({
-          filename: archivos[0].name,
-          filetype: archivos[0].type,
-          value: reader.result
-        });
-      }
-    };*/
-  }
-
   previewFile(event, control) {
     this.esconderArchivos = false;
     const archivos = event.target.files;
+    this.quitarArchivosPorControl(control.controlName);
     const objetoArchivos: File[] = Object.values(archivos);
     this.totalArchivos = objetoArchivos.length ? objetoArchivos.length : 0;
-    if (this.styleFramework === 'bootstrap') {
-      /// this.agregarSubControlesArchivo(objetoArchivos, control.controlName);
-    }
     objetoArchivos.forEach(
-      (archivo: File, indice) => {
+      (archivo: File) => {
         const reader = new FileReader();
         reader.onloadend = () => {
           if (typeof reader.result === 'string') {
@@ -281,6 +264,14 @@ export class FormularioPrincipal {
         if (archivo) {
           reader.readAsDataURL(archivo);
         }
+      }
+    );
+  }
+
+  quitarArchivosPorControl(nombreControl: string) {
+    this.listaArchivos = this.listaArchivos.filter(
+      (archivo) => {
+        return  archivo.propietario !== nombreControl;
       }
     );
   }

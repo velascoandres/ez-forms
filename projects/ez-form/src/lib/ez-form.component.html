@@ -169,18 +169,27 @@
       <div *ngFor="let control of formConfig; let i = index">
         <div *ngIf="control.type.typeName === 'file'"
              class="form-group">
-          <label
+          <ez-bs-input
+            formControlName="{{control.controlName}}"
+            [label]=control.label
+            [placeholder]=control.placeholder
+            [multiple]="control.type.multiple"
+            [accept]="control.type.accept"
+          >
+          </ez-bs-input>
+          <!--<label
             for="{{control.controlName}}">
             {{control.label ? control.label : control.placeholder ? control.placeholder : control.controlName}}
           </label>
-          <input type="file"
+          <input
+                 type="file"
                  class="form-control-file"
                  id="file{{control.controlName}}"
                  formControlName={{control.controlName}}
                  placeholder="{{control.placeholder ? control.placeholder : ''}}"
                  [accept]='control.type.accept? control.type.accept : "*/*"'
-                 (change)="previewFile($event, control)"
-                 [multiple]="control.type.multiple"
+                 (change)="previewFile(, control)"
+                 [multiple]="control.type.multiple"$event
           >
           <div class="d-flex"
                [hidden]="esconderArchivos"
@@ -192,7 +201,7 @@
               class="img-fluid p-2"
               id="{{indice}}imgbs"
             >
-          </div>
+          </div> -->
         </div>
         <div *ngIf="control.type.typeName === 'textarea'"
              class="form-group">
