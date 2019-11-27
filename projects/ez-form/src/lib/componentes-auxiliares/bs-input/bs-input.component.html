@@ -12,13 +12,12 @@
     (input)="onInput($event.target.files)"
     [multiple]="multiple"
   >
-  <div class="d-flex"
-  >
-    <img
-      *ngFor="let archivo of obtenerArchivos(); let indice = index"
-      [src]='archivo.datos'
-      class="img-fluid p-2"
-      id="{{indice}}imgbs"
+  <div class="container">
+    <div class="row"
     >
+      <div class="col-3" *ngFor="let archivo of obtenerArchivos(); let indice = index">
+        <ez-file-item [objetoArchivo]="archivo"></ez-file-item>
+      </div>
+    </div>
   </div>
 </div>

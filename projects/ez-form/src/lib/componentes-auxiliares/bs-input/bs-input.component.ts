@@ -1,5 +1,7 @@
 import {Component, forwardRef, Input, OnInit} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
+import {ObjetoArchivoInterface} from '../../interfaces/objeto.archivo.interface';
+import {llenarGaleria} from '../../clases-genericas/funciones-archivos';
 
 @Component({
   selector: 'ez-bs-input',
@@ -28,20 +30,19 @@ export class BsInputComponent implements OnInit, ControlValueAccessor {
   listaObjetosArchivos = [];
   isDisabled: boolean;
   esconderArchivos = true;
-
+  totalArchivos = 0;
   constructor() {
   }
 
   onChange = (_) => {
     console.log('asdasd');
-  };
+  }
   onTouch = () => {
-  };
-
+  }
   onInput(value) {
     this.value.pop();
     this.value.push(value);
-    this.llenarGaleria(value);
+    llenarGaleria(this, value);
     this.onTouch();
     this.onChange(this.value);
   }
@@ -65,37 +66,8 @@ export class BsInputComponent implements OnInit, ControlValueAccessor {
     if (obj) {
       this.value.pop();
       this.value.push(obj);
-      this.llenarGaleria(obj);
+      llenarGaleria(this, obj);
     }
-  }
-
-  llenarGaleria(event) {
-    const objetoArchivos: File[] = Object.values(event);
-    this.listaObjetosArchivos = [];
-    objetoArchivos.forEach(
-      (archivo: File) => {
-        console.log(archivo);
-        const reader = new FileReader();
-        reader.onloadend = () => {
-          if (typeof reader.result === 'string') {
-            const formatoAcceptado = this.accept;
-            if (formatoAcceptado && archivo.type.match(formatoAcceptado)) {
-              const objetoArchivo = {
-                propietario: this.controlName,
-                datos: reader.result,
-              };
-              this.listaObjetosArchivos.push(objetoArchivo);
-              this.esconderArchivos = false;
-            } else {
-              this.esconderArchivos = true;
-            }
-          }
-        };
-        if (archivo) {
-          reader.readAsDataURL(archivo);
-        }
-      }
-    );
   }
 
   obtenerArchivos() {
