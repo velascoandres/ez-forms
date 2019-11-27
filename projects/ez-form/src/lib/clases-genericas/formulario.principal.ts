@@ -8,7 +8,7 @@ import {ObjetoArchivoInterface} from '../interfaces/objeto.archivo.interface';
 export class FormularioPrincipal {
   formulario: FormGroup;
   cd: ChangeDetectorRef;
-  listaArchivos = [];
+  listaObjetosArchivos = [];
   esconderArchivos = true;
   @Input()
   styleFramework = 'material';
@@ -239,7 +239,7 @@ export class FormularioPrincipal {
     return this.objetoArreglosErrores[nombreControl];
   }
 
-  previewFile(event, control) {
+  llenarGaleriaMaterial(event, control) {
     this.esconderArchivos = false;
     const archivos = event.target.files;
     this.quitarArchivosPorControl(control.controlName);
@@ -257,7 +257,7 @@ export class FormularioPrincipal {
                 datos: reader.result,
                 nombreArchivo: archivo.name,
               };
-              this.listaArchivos.push(objetoArchivo);
+              this.listaObjetosArchivos.push(objetoArchivo);
             } else {
               this.esconderArchivos = true;
             }
@@ -271,7 +271,7 @@ export class FormularioPrincipal {
   }
 
   quitarArchivosPorControl(nombreControl: string) {
-    this.listaArchivos = this.listaArchivos.filter(
+    this.listaObjetosArchivos = this.listaObjetosArchivos.filter(
       (archivo) => {
         return  archivo.propietario !== nombreControl;
       }
@@ -279,7 +279,7 @@ export class FormularioPrincipal {
   }
 
   filtrarArchivosPorControl(nombreControl: string) {
-    return this.listaArchivos.filter(
+    return this.listaObjetosArchivos.filter(
       (archivo) => {
         return archivo.propietario === nombreControl;
       }

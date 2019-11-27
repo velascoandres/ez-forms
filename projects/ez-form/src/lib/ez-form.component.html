@@ -17,7 +17,7 @@
               placeholder="{{control.placeholder ? control.placeholder : ''}}"
               [multiple] = 'control.type.multiple'
               [accept]='control.type.accept? control.type.accept : "*/*"'
-              (change)="previewFile($event, control)"
+              (change)="llenarGaleriaMaterial($event, control)"
             >
             </ngx-mat-file-input>
             <mat-icon matSuffix>folder</mat-icon>
