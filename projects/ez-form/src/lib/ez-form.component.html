@@ -27,12 +27,12 @@
               {{control.hint}}  {{control.type.maxLength ? +formulario.get(control.controlName).value.length + '/' : '' }}  {{control.type.maxLength ? control.type.maxLength : ''}}
             </mat-hint>
           </mat-form-field>
-          <div class="d-flex"
+          <div class="row"
                *ngIf="filtrarArchivosPorControl(control.controlName).length > 0"
                [hidden]="esconderArchivos">
-              <img
-                *ngFor="let archivo of filtrarArchivosPorControl(control.controlName); let indice = index"
-                [src]='archivo.datos'  class="img-fluid p-2" id="{{indice}}{{control.controlName}}">
+              <div class="col-3" *ngFor="let archivo of filtrarArchivosPorControl(control.controlName)">
+                <ez-file-item [objetoArchivo]="archivo"></ez-file-item>
+              </div>
           </div>
 
         </div>
@@ -177,31 +177,6 @@
             [accept]="control.type.accept"
           >
           </ez-bs-input>
-          <!--<label
-            for="{{control.controlName}}">
-            {{control.label ? control.label : control.placeholder ? control.placeholder : control.controlName}}
-          </label>
-          <input
-                 type="file"
-                 class="form-control-file"
-                 id="file{{control.controlName}}"
-                 formControlName={{control.controlName}}
-                 placeholder="{{control.placeholder ? control.placeholder : ''}}"
-                 [accept]='control.type.accept? control.type.accept : "*/*"'
-                 (change)="previewFile(, control)"
-                 [multiple]="control.type.multiple"$event
-          >
-          <div class="d-flex"
-               [hidden]="esconderArchivos"
-               *ngIf="filtrarArchivosPorControl(control.controlName).length > 0"
-          >
-            <img
-              *ngFor="let archivo of filtrarArchivosPorControl(control.controlName); let indice = index"
-              [src]='archivo.datos'
-              class="img-fluid p-2"
-              id="{{indice}}imgbs"
-            >
-          </div> -->
         </div>
         <div *ngIf="control.type.typeName === 'textarea'"
              class="form-group">

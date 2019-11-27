@@ -3,6 +3,7 @@ import {ChangeDetectorRef, EventEmitter, Input, Output} from '@angular/core';
 import {ToasterConfig, ToasterService} from 'angular2-toaster';
 import {debounceTime} from 'rxjs/operators';
 import {validarMinimoCheckBox} from './validadores_especiales';
+import {ObjetoArchivoInterface} from '../interfaces/objeto.archivo.interface';
 
 export class FormularioPrincipal {
   formulario: FormGroup;
@@ -251,9 +252,10 @@ export class FormularioPrincipal {
           if (typeof reader.result === 'string') {
             const formatoAcceptado = control.type.accept;
             if (formatoAcceptado && archivo.type.match(formatoAcceptado)) {
-              const objetoArchivo = {
+              const objetoArchivo: ObjetoArchivoInterface = {
                 propietario: control.controlName,
                 datos: reader.result,
+                nombreArchivo: archivo.name,
               };
               this.listaArchivos.push(objetoArchivo);
             } else {

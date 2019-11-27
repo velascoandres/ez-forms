@@ -1,5 +1,6 @@
 import {Component, forwardRef, Input, OnInit} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
+import {ObjetoArchivoInterface} from '../../interfaces/objeto.archivo.interface';
 
 @Component({
   selector: 'ez-bs-input',
@@ -80,9 +81,10 @@ export class BsInputComponent implements OnInit, ControlValueAccessor {
           if (typeof reader.result === 'string') {
             const formatoAcceptado = this.accept;
             if (formatoAcceptado && archivo.type.match(formatoAcceptado)) {
-              const objetoArchivo = {
+              const objetoArchivo: ObjetoArchivoInterface = {
                 propietario: this.controlName,
                 datos: reader.result,
+                nombreArchivo: archivo.name,
               };
               this.listaObjetosArchivos.push(objetoArchivo);
               this.esconderArchivos = false;
