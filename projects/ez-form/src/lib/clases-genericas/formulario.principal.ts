@@ -9,7 +9,7 @@ export class FormularioPrincipal {
   formulario: FormGroup;
   cd: ChangeDetectorRef;
   listaObjetosArchivos = [];
-  esconderArchivos = true;
+  esconderArchivos = false;
   @Input()
   styleFramework = 'material';
   @Input()
@@ -240,7 +240,6 @@ export class FormularioPrincipal {
   }
 
   llenarGaleriaMaterial(event, control) {
-    this.esconderArchivos = false;
     const archivos = event.target.files;
     this.quitarArchivosPorControl(control.controlName);
     const objetoArchivos: File[] = Object.values(archivos);
@@ -250,17 +249,14 @@ export class FormularioPrincipal {
         const reader = new FileReader();
         reader.onloadend = () => {
           if (typeof reader.result === 'string') {
-            const formatoAcceptado = control.type.accept;
-            if (formatoAcceptado && archivo.type.match(formatoAcceptado)) {
-              const objetoArchivo: ObjetoArchivoInterface = {
-                propietario: control.controlName,
-                datos: reader.result,
-                nombreArchivo: archivo.name,
-              };
-              this.listaObjetosArchivos.push(objetoArchivo);
-            } else {
-              this.esconderArchivos = true;
-            }
+            const formato = archivo.type;
+            const objetoArchivo: ObjetoArchivoInterface = {
+              propietario: control.controlName,
+              datos: reader.result,
+              nombreArchivo: archivo.name,
+              formato,
+            };
+            this.listaObjetosArchivos.push(objetoArchivo);
           }
         };
         if (archivo) {
@@ -273,7 +269,7 @@ export class FormularioPrincipal {
   quitarArchivosPorControl(nombreControl: string) {
     this.listaObjetosArchivos = this.listaObjetosArchivos.filter(
       (archivo) => {
-        return  archivo.propietario !== nombreControl;
+        return archivo.propietario !== nombreControl;
       }
     );
   }

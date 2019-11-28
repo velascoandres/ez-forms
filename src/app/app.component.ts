@@ -155,7 +155,7 @@ export class AppComponent {
       type: {
         typeName: 'file',
         multiple: true,
-        accept: 'image/*',
+        accept: '*/*',
       },
 
     }

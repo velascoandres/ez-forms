@@ -1,5 +1,6 @@
 .overlay {
   display:none;
+  word-wrap: break-word;
 }
 .contenedor-img {
   position:relative;
@@ -22,11 +23,7 @@
   justify-content: center;
   color:white;
   padding:12px;
-}
-@media (max-width: 300px) {
-  .overlay {
-    display:none;
-  }
+  transition: 1s;
 }
 
 img {

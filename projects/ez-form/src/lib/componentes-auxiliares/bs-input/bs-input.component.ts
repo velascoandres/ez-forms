@@ -29,7 +29,6 @@ export class BsInputComponent implements OnInit, ControlValueAccessor {
   value: File[] = [];
   listaObjetosArchivos = [];
   isDisabled: boolean;
-  esconderArchivos = true;
   totalArchivos = 0;
   constructor() {
   }

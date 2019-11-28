@@ -9,18 +9,14 @@ export function llenarGaleria(palabraThis, event) {
       const reader = new FileReader();
       reader.onloadend = () => {
         if (typeof reader.result === 'string') {
-          const formatoAcceptado = palabraThis.accept;
-          if (formatoAcceptado && archivo.type.match(formatoAcceptado)) {
-            const objetoArchivo: ObjetoArchivoInterface = {
-              propietario: palabraThis.controlName,
-              datos: reader.result,
-              nombreArchivo: archivo.name,
-            };
-            palabraThis.listaObjetosArchivos.push(objetoArchivo);
-            palabraThis.esconderArchivos = false;
-          } else {
-            palabraThis.esconderArchivos = true;
-          }
+          const formato = archivo.type;
+          const objetoArchivo: ObjetoArchivoInterface = {
+            propietario: palabraThis.controlName,
+            datos: reader.result,
+            nombreArchivo: archivo.name,
+            formato
+          };
+          palabraThis.listaObjetosArchivos.push(objetoArchivo);
         }
       };
       if (archivo) {
@@ -29,3 +25,4 @@ export function llenarGaleria(palabraThis, event) {
     }
   );
 }
+
