@@ -15,7 +15,7 @@
   <div class="container">
     <div class="row"
     >
-      <div class="col-3" *ngFor="let archivo of obtenerArchivos(); let indice = index">
+      <div class="col-3 item" *ngFor="let archivo of obtenerArchivos();">
         <ez-file-item [objetoArchivo]="archivo"></ez-file-item>
       </div>
     </div>

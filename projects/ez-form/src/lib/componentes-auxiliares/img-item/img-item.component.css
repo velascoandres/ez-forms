@@ -8,8 +8,8 @@
   margin: 10px;
 }
 .contenedor-img:hover .overlay {
-  width: 20%;
-  height: 20%;
+  width: 100%;
+  height: 100%;
   background:rgba(0,0,0,.5);
   position:absolute;
   top:0;

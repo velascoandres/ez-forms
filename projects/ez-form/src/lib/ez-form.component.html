@@ -30,7 +30,7 @@
           <div class="row"
                *ngIf="filtrarArchivosPorControl(control.controlName).length > 0"
                [hidden]="esconderArchivos">
-              <div class="col-3" *ngFor="let archivo of filtrarArchivosPorControl(control.controlName)">
+              <div class="col-3 item" *ngFor="let archivo of filtrarArchivosPorControl(control.controlName)">
                 <ez-file-item [objetoArchivo]="archivo"></ez-file-item>
               </div>
           </div>

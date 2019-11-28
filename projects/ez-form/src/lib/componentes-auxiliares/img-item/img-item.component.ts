@@ -14,7 +14,6 @@ export class ImgItemComponent implements OnInit {
   ngOnInit() {
   }
   validarExtension(nombreTipo: string, extension: string): boolean {
-    console.log(extension);
     const tiposExtensiones = [
       {
         nombre: 'hoja-calculo',
@@ -59,9 +58,7 @@ export class ImgItemComponent implements OnInit {
       (tipo) => tipo.nombre === nombreTipo,
     );
     if (tipoEncontrado) {
-      console.log(tipoEncontrado);
       const perteneceExtension = tipoEncontrado.extensiones.includes(extension);
-      console.log(perteneceExtension);
       return perteneceExtension;
     } else {
       return false;
