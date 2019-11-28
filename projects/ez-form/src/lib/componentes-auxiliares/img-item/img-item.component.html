@@ -1,11 +1,23 @@
  <div class="contenedor-img">
-    <img *ngIf = "objetoArchivo.formato.split('/')[0] === 'image'"
+    <img *ngIf = "validarExtension('imagen',objetoArchivo.formato)"
       [src]='objetoArchivo.datos'
       class="img-fluid"
-      alt="">
-   <img *ngIf = "objetoArchivo.formato.split('/')[0] !== 'image'"
+      alt="imagen">
+
+   <img *ngIf = "validarExtension('documento',objetoArchivo.formato)"
+        src="https://www.zamzar.com/images/filetypes/doc.png"
+        alt="documento">
+
+   <img *ngIf = "validarExtension('hoja-calculo',objetoArchivo.formato)"
+        src="https://image.flaticon.com/icons/svg/1977/1977254.svg"
+        alt="hoja-calculo">
+
+   <img *ngIf = "validarExtension('presentacion',objetoArchivo.formato)"
+        src="https://image.flaticon.com/icons/svg/1420/1420046.svg"
+        alt="presentacion">
+   <img *ngIf = "validarExtension('otro',objetoArchivo.formato)"
         src="https://img.icons8.com/plasticine/2x/file.png"
-        alt="">
+        alt="otro">
     <div class="overlay">
         {{objetoArchivo.nombreArchivo}}
     </div>

@@ -25,3 +25,4 @@ export function llenarGaleria(palabraThis, event) {
     }
   );
 }
+
