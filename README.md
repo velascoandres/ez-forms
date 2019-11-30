@@ -20,6 +20,11 @@
 `ez-form` is a componente that allows create reactive forms for angular 2+.  
  
 ## Requirements
+* Bootstrap
+```shell script
+ $ npm i bootstrap
+```
+
 * Angular Material check [Documentation](https://material.angular.io/)
 ```text
     $ ng add @angular/material
