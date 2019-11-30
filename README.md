@@ -7,9 +7,13 @@
 
      4.1  [Toaster](#toaster)  
      
-     4.2  [Bootstrap](#bootstrap)
+     4.2  [Files](#file)
      
-     4.3  [Animations](#animations)
+     4.3  [Multiple files](#multiple-files)
+     
+     4.4  [Bootstrap](#bootstrap)
+     
+     4.5  [Animations](#animations)
 5. [Summary](#summary)     
   
 ## Description  
@@ -223,16 +227,33 @@ For example: we need to create a form with the following fields:
           },
         }
 ```
-* Profile Picture: `File` input
+* Profile Picture: `File` input (Accept images only)
 ```typescript
     {
-      controlName: 'profilePicture',
-      label: 'Profile Picture',
-      hint: 'Please upload your profile picture',
-      placeholder: 'Add your profile picture',
+          controlName: 'profilePicture',
+          label: 'Profile Picture',
+          hint: 'Please upload your profile picture',
+          placeholder: 'Add your profile picture',
+          type: {
+            typeName: 'file',
+            multiple: false,
+            accept: 'image/*',
+          },
+        }
+```
+
+* Favorite Files: `File` input (Multiple)
+```typescript
+{
+      controlName: 'someFiles',
+      label: 'Add Some Files',
+      hint: 'Please upload your files',
+      placeholder: 'Add Files',
       type: {
-        typeName: 'file'
-      }
+        typeName: 'file',
+        multiple: true,
+        accept: '*/*',
+      },
     }
 ```
 All fields must be at a config array like this in our parent component, for example: 
@@ -324,6 +345,9 @@ Results:
 For angular material this library makes use of [ngx-material-file-input](https://www.npmjs.com/package/ngx-material-file-input)
 Demonstration from the configuration example
 ![fileinput](https://github.com/velascoandrs/repo-de-imagenes/blob/master/fileds/file-mat.PNG?raw=true)
+
+## Multiple Files
+![files](https://github.com/velascoandrs/repo-de-imagenes/blob/master/fileds/files.PNG?raw=true)
 
 ## Toaster
 This library makes use of [angular2-toaster](https://www.npmjs.com/package/angular2-toaster)
@@ -443,7 +467,7 @@ Complete example form component:
 |Attribute | Description |
 | --- | ---|
 | input | Input field for text and numbers |
-| typename | type name: input, select, radio, check, textarea, date |
+| typename | type name: input, select, radio, check, textarea, date, file |
 | class | Uniquely for input type. Defines the character type for example a `password` field
 | options | Uniquely for select, radio, check
 | minRequired | Uniquely for check. Defines how many checks fields are mandatory
