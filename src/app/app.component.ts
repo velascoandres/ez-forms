@@ -148,16 +148,15 @@ export class AppComponent {
       },
     },
     {
-      controlName: 'favoritePictures',
-      label: 'Favorites Pictures',
-      hint: 'Please upload your favorite pictures',
-      placeholder: 'Add pictures',
+      controlName: 'someFiles',
+      label: 'Add Some Files',
+      hint: 'Please upload your files',
+      placeholder: 'Add Files',
       type: {
         typeName: 'file',
         multiple: true,
         accept: '*/*',
       },
-
     }
   ];
   usuario = {
