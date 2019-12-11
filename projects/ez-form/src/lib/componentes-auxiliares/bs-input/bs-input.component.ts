@@ -26,6 +26,8 @@ export class BsInputComponent implements OnInit, ControlValueAccessor {
   multiple = false;
   @Input()
   accept = '';
+  @Input()
+  showFile = false;
   value: File[] = [];
   listaObjetosArchivos = [];
   isDisabled: boolean;

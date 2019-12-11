@@ -4,12 +4,12 @@
 2. [Requirements](#requirements)
 3. [Install](#install)  
 4. [Usage](#usage)
-
-     4.1  [Toaster](#toaster)  
      
-     4.2  [Files](#file)
+     4.1  [Files](#file)
      
-     4.3  [Multiple files](#multiple-files)
+     4.2  [Multiple files](#multiple-files)
+     
+     4.3  [Toaster](#toaster)  
      
      4.4  [Bootstrap](#bootstrap)
      
@@ -258,6 +258,7 @@ For example: we need to create a form with the following fields:
         typeName: 'file',
         multiple: true,
         accept: '*/*',
+        showFile: true,
       },
     }
 ```
@@ -354,6 +355,7 @@ Demonstration from the configuration example
 ## Multiple Files
 ![files](https://github.com/velascoandrs/repo-de-imagenes/blob/master/fileds/files.PNG?raw=true)
 
+
 ## Toaster
 This library makes use of [angular2-toaster](https://www.npmjs.com/package/angular2-toaster)
 * The toaster is the message which shows on screen when the form has been filled correctly or not.
@@ -384,7 +386,7 @@ Also we could config the messages that will show on the toaster:
         }
       };
 ```    
-Usamos el Input : `toasterConfig`"
+Use the input : `toasterConfig`"
 
 
 ```html  
@@ -412,7 +414,7 @@ Use the Input : `styleFramework`"
           >..
 ```
 
-Resultados
+Results
 ![resultadoBootstrap](https://github.com/velascoandrs/repo-de-imagenes/blob/master/version-en/form-invalid-bs.PNG?raw=true)
 
 ### Animations
@@ -477,6 +479,7 @@ Complete example form component:
 | options | Uniquely for select, radio, check
 | minRequired | Uniquely for check. Defines how many checks fields are mandatory
 | maxLength | Uniquely for input, textarea and date. Defines how many characters are allowed
+| showFile | Uniquely for file. Default `false`. Show file or files preview.
 
 
 ### Example Full Code

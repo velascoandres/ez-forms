@@ -28,7 +28,7 @@
             </mat-hint>
           </mat-form-field>
           <div class="row"
-               *ngIf="filtrarArchivosPorControl(control.controlName).length > 0"
+               *ngIf="filtrarArchivosPorControl(control.controlName).length > 0 && control.type.showFile"
                [hidden]="esconderArchivos">
               <div class="col-3 item" *ngFor="let archivo of filtrarArchivosPorControl(control.controlName)">
                 <ez-file-item [objetoArchivo]="archivo"></ez-file-item>
@@ -175,6 +175,8 @@
             [placeholder]=control.placeholder
             [multiple]="control.type.multiple"
             [accept]="control.type.accept"
+            [showFile]="control.type.showFile"
+            controlName="{{control.controlName}}"
           >
           </ez-bs-input>
         </div>
@@ -274,13 +276,13 @@
           <div *ngFor="let opcion of control.type.options">
             <input
               class="form-check-input"
-              id="checkBs{{control.controlName}}"
+              id="radio{{opcion.label}}{{i}}"
               type="radio"
               [value]="opcion.value"
               formControlName="{{control.controlName}}"
             >
             <label
-              for="checkBs{{control.controlName}}"
+              for="radio{{opcion.label}}{{i}}"
               class="form-check-label"
             >
               {{opcion.label}}
@@ -293,13 +295,13 @@
             <div *ngFor="let opcion of control.type.options; let i = index" formArrayName="{{control.controlName}}">
               <input
                 class="form-check-input"
-                id="{{opcion.label}}"
+                id="check{{opcion.label}}{{i}}"
                 type="checkbox"
                 [value]="opcion.value"
                 formControlName="{{i}}"
               >
               <label
-                for="{{opcion.label}}"
+                for="check{{opcion.label}}{{i}}"
                 class="form-check-label"
               >
                 {{opcion.label}}
