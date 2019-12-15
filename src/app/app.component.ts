@@ -156,8 +156,27 @@ export class AppComponent {
         typeName: 'file',
         multiple: true,
         accept: '*/*',
+        showFile: true,
       },
     }
+  ];
+  configuracionFormularioBusqueda = [
+    {
+      controlName: 'userEmail',
+      validators: [
+        Validators.email
+      ],
+      placeholder: 'Enter an email',
+      type: {
+        typeName: 'input',
+        maxLength: 30,
+      },
+      errorMessages: {
+        required: 'The email is mandatory',
+        email: 'You must enter a valid email',
+      },
+      hint: 'Enter a valid email'
+    },
   ];
   usuario = {
     uuid: 1234,
