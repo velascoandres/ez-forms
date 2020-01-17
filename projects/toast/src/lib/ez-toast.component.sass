@@ -1,0 +1,47 @@
+@import "~animate.css/animate.min.css"
+
+.fila
+  width: 100%
+  height: auto
+  border-bottom: solid black 0.2rem
+  padding-left: 0.3rem
+  padding-right: 0.3rem
+
+.contenedor
+  position: absolute
+  height: auto
+  max-width: 15rem
+  top: 0.5rem
+  right: 1rem
+  border: solid black 0.1rem
+  word-wrap: break-word
+  transition: 1s
+
+.fadeLeft
+  animation: fadeLeft
+  animation-duration: 1s
+.success
+  background: chartreuse
+.danger
+  background: red
+.info
+  background: blue
+
+@-webkit-keyframes fadeLeft
+  from
+    top: 0.5rem
+    right: 100rem
+  to
+    top: 0.5rem
+    right: 1rem
+/* Standard syntax */
+@keyframes fadeIn
+  from
+    top: 0.5rem
+    right: 0
+  to
+    top: 0.5rem
+    right: 1rem
+
+
+

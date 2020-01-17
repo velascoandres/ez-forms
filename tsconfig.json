@@ -24,6 +24,12 @@
       ],
       "ez-form/*": [
         "dist/ez-form/*"
+      ],
+      "toast": [
+        "dist/toast"
+      ],
+      "toast/*": [
+        "dist/toast/*"
       ]
     }
   },
