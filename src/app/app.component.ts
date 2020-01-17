@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
 import {Validators} from '@angular/forms';
+import {ToastService} from '../../projects/toast/src/lib/toast.service';
 
 @Component({
   selector: 'mat-ta-root',
@@ -91,7 +92,7 @@ export class AppComponent {
       controlName: 'cities',
       type: {
         typeName: 'check',
-        minRequired : 2,
+        minRequired: 2,
         options: [
           {
             value: 1,
@@ -212,4 +213,17 @@ export class AppComponent {
     }
   }
 
+  constructor(
+    private readonly _toastService: ToastService
+  ) {
+  }
+
+  mostrarMensaje() {
+    const mensaje = {
+      title: 'Errorcito',
+      body: 'Algo salio mal, revisa el servidor',
+      type: 'success',
+    };
+    this._toastService.showMessage(mensaje);
+  }
 }
