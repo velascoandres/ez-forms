@@ -1,11 +1,14 @@
 import {AbstractControl, FormArray, FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import {ChangeDetectorRef, EventEmitter, Input, Output} from '@angular/core';
 import {ToasterConfig, ToasterService} from 'angular2-toaster';
-import {debounceTime} from 'rxjs/operators';
+import {debounceTime, mergeMap} from 'rxjs/operators';
 import {validarMinimoCheckBox} from './validadores_especiales';
 import {ObjetoArchivoInterface} from '../interfaces/objeto.archivo.interface';
+import {of} from 'rxjs';
 
 export class FormularioPrincipal {
+  registros: any[];
+  sugerencias: any[] = [];
   formulario: FormGroup;
   cd: ChangeDetectorRef;
   listaObjetosArchivos = [];
@@ -278,6 +281,14 @@ export class FormularioPrincipal {
     return this.listaObjetosArchivos.filter(
       (archivo) => {
         return archivo.propietario === nombreControl;
+      }
+    );
+  }
+
+  establecerOpciones(event, callback) {
+    of(callback(event)).subscribe(
+      (resultados) => {
+        this.sugerencias = resultados;
       }
     );
   }

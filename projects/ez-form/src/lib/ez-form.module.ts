@@ -8,6 +8,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MaterialFileInputModule} from 'ngx-material-file-input';
 import {
+  MatAutocompleteModule,
   MatButtonModule,
   MatCheckboxModule,
   MatDatepickerModule,
@@ -18,6 +19,7 @@ import {
 } from '@angular/material';
 import {BsInputComponent} from './componentes-auxiliares/bs-input/bs-input.component';
 import {ImgItemComponent} from './componentes-auxiliares/img-item/img-item.component';
+import {AutoCompleteModule} from 'primeng';
 
 
 @NgModule({
@@ -42,6 +44,8 @@ import {ImgItemComponent} from './componentes-auxiliares/img-item/img-item.compo
     MatButtonModule,
     MatDatepickerModule,
     MaterialFileInputModule,
+    MatAutocompleteModule,
+    AutoCompleteModule,
   ],
   exports: [EzFormComponent],
 })

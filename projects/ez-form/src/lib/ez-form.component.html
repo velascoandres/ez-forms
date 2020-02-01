@@ -15,7 +15,7 @@
             <ngx-mat-file-input
               formControlName={{control.controlName}}
               placeholder="{{control.placeholder ? control.placeholder : ''}}"
-              [multiple] = 'control.type.multiple'
+              [multiple]='control.type.multiple'
               [accept]='control.type.accept? control.type.accept : "*/*"'
               (change)="llenarGaleriaMaterial($event, control)"
             >
@@ -30,9 +30,9 @@
           <div class="row"
                *ngIf="filtrarArchivosPorControl(control.controlName).length > 0 && control.type.showFile"
                [hidden]="esconderArchivos">
-              <div class="col-3 item" *ngFor="let archivo of filtrarArchivosPorControl(control.controlName)">
-                <ez-file-item [objetoArchivo]="archivo"></ez-file-item>
-              </div>
+            <div class="col-3 item" *ngFor="let archivo of filtrarArchivosPorControl(control.controlName)">
+              <ez-file-item [objetoArchivo]="archivo"></ez-file-item>
+            </div>
           </div>
 
         </div>
@@ -162,7 +162,9 @@
           </ul>
         </div>
       </div>
+
     </div>
+
   </div>
   <div *ngIf="styleFramework === 'bootstrap'" class="d-flex justify-content-center">
     <div class="p-2 flex-fill">
@@ -308,6 +310,19 @@
               </label>
             </div>
           </div>
+        </div>
+        <div class="" *ngIf="control.type.typeName==='autocomplete'">
+          <p-autoComplete
+            [suggestions]="sugerencias"
+            [formControlName]="control.controlName"
+            [dropdown]="true"
+            (completeMethod)="establecerOpciones($event, control.type.completeMethod)"
+            styleClass="wid100"
+            [minLength]="1"
+            placeholder="Countries"
+            [multiple]="false"
+          >
+          </p-autoComplete>
         </div>
         <div *ngIf="verificarMensajeError(control.controlName)"
              class="alert alert-danger animated {{msgErrorAnimation}}"
