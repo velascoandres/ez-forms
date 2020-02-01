@@ -5,6 +5,7 @@ import {EzFormModule} from '../../projects/ez-form/src/lib/ez-form.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatDatepickerModule, MatNativeDateModule} from '@angular/material';
 import {ToastModule} from '../../projects/toast/src/lib/toast.module';
+import {ToastService} from '../../projects/toast/src/lib/toast.service';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import {ToastModule} from '../../projects/toast/src/lib/toast.module';
   ],
   providers: [
     MatDatepickerModule,
+    ToastService,
   ],
   bootstrap: [AppComponent]
 })

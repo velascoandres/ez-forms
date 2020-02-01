@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
 import {Validators} from '@angular/forms';
+import {ToastService} from '../../projects/toast/src/lib/toast.service';
 
 @Component({
   selector: 'mat-ta-root',
@@ -246,4 +247,17 @@ export class AppComponent {
     }
   }
 
+  constructor(
+    private readonly _toastService: ToastService
+  ) {
+  }
+
+  mostrarMensaje() {
+    const mensaje = {
+      title: 'Errorcito',
+      body: 'Algo salio mal, revisa el servidor',
+      type: 'success',
+    };
+    this._toastService.showMessage(mensaje);
+  }
 }

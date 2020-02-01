@@ -1,4 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
+import {of, Subscription} from 'rxjs';
+import {ToastService} from './toast.service';
+import {debounceTime, map} from 'rxjs/operators';
 
 @Component({
   selector: 'ez-toast',
@@ -6,13 +9,28 @@ import {Component, Input, OnInit} from '@angular/core';
   styleUrls: ['./ez-toast.component.sass'],
 })
 export class ToastComponent implements OnInit {
-  @Input()
   title: string;
-  @Input()
   body: string;
-  @Input()
   type: string;
-  constructor() { }
+  suscripcionMensaje: Subscription;
+  mostrar = false;
+
+  constructor(
+    private readonly _toastService: ToastService,
+  ) {
+    this.suscripcionMensaje = this._toastService.cambioMensaje$.subscribe(
+      (mensaje) => {
+        if (mensaje) {
+          console.log('cambio algo', mensaje.title);
+          this.title = mensaje.title;
+          this.body = mensaje.body;
+          this.type = mensaje.type;
+          this.mostrar = true;
+        }
+      }
+    );
+
+  }
 
   ngOnInit() {
   }
