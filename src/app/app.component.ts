@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {Validators} from '@angular/forms';
 import {ToastService} from '../../projects/toast/src/lib/toast.service';
+import {CityService} from './servicios/city.service';
 
 @Component({
   selector: 'mat-ta-root',
@@ -167,6 +168,7 @@ export class AppComponent {
       validators: [
         Validators.email
       ],
+      label: 'Email address',
       placeholder: 'Enter an email',
       type: {
         typeName: 'input',
@@ -183,21 +185,24 @@ export class AppComponent {
       validators: [
         Validators.required
       ],
-      placeholder: 'Pick a city',
+      label: 'City',
+      placeholder: 'Example: Barcelona',
       type: {
         typeName: 'autocomplete',
         maxLength: 30,
-        completeMethod: this.filterCity,
+        completeMethod: this.filterCityWithHttpService,
+        nameAutoComplete: 'name',
+        componentReference: this
       },
       errorMessages: {
         required: 'The city is mandatory',
       },
-      hint: ''
+      hint: 'Search a city'
     },
   ];
   infoLoca = {
     userEmail: 'juan.pecados@mail.com',
-    city: 'Barcelona',
+    city: {id: 2894, name: 'Parbasdorf', country: 'AT', lat: '48.28333', lng: '16.6'},
   };
   usuario = {
     uuid: 1234,
@@ -239,19 +244,28 @@ export class AppComponent {
     if (event.query) {
       return cities.filter(
         (city) => {
-          return city.startsWith(event.query[0]);
+          return city.includes(event.query);
         }
       );
     } else {
-      return  cities;
+      return cities;
     }
   }
 
-  constructor(
-    private readonly _toastService: ToastService
-  ) {
-  }
 
+  constructor(
+    private readonly _toastService: ToastService,
+    private readonly _cityService: CityService
+  ) {
+    this._cityService.find('asd').subscribe(
+      (respuesta) => {
+        console.log(respuesta);
+      }
+    );
+  }
+  filterCityWithHttpService(event, contexto) {
+    return contexto._cityService.find(event.query);
+  }
   mostrarMensaje() {
     const mensaje = {
       title: 'Errorcito',

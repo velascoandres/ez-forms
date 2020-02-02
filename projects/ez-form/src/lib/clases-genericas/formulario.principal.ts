@@ -4,7 +4,7 @@ import {ToasterConfig, ToasterService} from 'angular2-toaster';
 import {debounceTime, mergeMap} from 'rxjs/operators';
 import {validarMinimoCheckBox} from './validadores_especiales';
 import {ObjetoArchivoInterface} from '../interfaces/objeto.archivo.interface';
-import {of} from 'rxjs';
+import {isObservable, of} from 'rxjs';
 
 export class FormularioPrincipal {
   registros: any[];
@@ -285,11 +285,22 @@ export class FormularioPrincipal {
     );
   }
 
-  establecerOpciones(event, callback) {
-    of(callback(event)).subscribe(
-      (resultados) => {
-        this.sugerencias = resultados;
-      }
-    );
+  establecerOpciones(event, callback, reference?) {
+    const respuesta = callback(event, reference);
+    if (isObservable(respuesta)) {
+      respuesta.subscribe(
+        (resultados: any) => {
+          console.log('lo que obtengo', resultados);
+          this.sugerencias = resultados;
+        }
+      );
+    } else {
+      of(respuesta).subscribe(
+        (resultados) => {
+          console.log('lo que obtengo', resultados);
+          this.sugerencias = resultados;
+        }
+      );
+    }
   }
 }
