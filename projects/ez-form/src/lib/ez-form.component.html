@@ -1,9 +1,9 @@
 <toaster-container [toasterconfig]="config"></toaster-container>
 
 <form [formGroup]="formulario" class="filled">
-  <div *ngIf="styleFramework === 'material'" class="d-flex justify-content-center">
-    <div class="p-2 flex-fill">
-      <div *ngFor="let control of formConfig; let i = index">
+  <div *ngIf="styleFramework === 'material'" class="container">
+    <div class="row">
+      <div *ngFor="let control of formConfig; let i = index" class="col-md-6">
         <div *ngIf="control.type.typeName === 'file'">
           <mat-form-field
             class="filled"
@@ -155,11 +155,13 @@
             </mat-checkbox>
           </p>
         </div>
-        <div *ngIf="verificarMensajeError(control.controlName)"
-             class="alert alert-danger animated {{msgErrorAnimation}}" role="alert">
-          <ul>
-            <li *ngFor="let error of obtenerMensajesError(control.controlName)">{{error}}</li>
-          </ul>
+        <div class="row">
+          <div *ngIf="verificarMensajeError(control.controlName)"
+               class="alert alert-danger animated {{msgErrorAnimation}}" role="alert">
+            <ul>
+              <li *ngFor="let error of obtenerMensajesError(control.controlName)">{{error}}</li>
+            </ul>
+          </div>
         </div>
       </div>
 
