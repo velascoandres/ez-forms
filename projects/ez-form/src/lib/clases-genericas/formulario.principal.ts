@@ -1,10 +1,10 @@
 import {AbstractControl, FormArray, FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import {ChangeDetectorRef, EventEmitter, Input, Output} from '@angular/core';
 import {ToasterConfig, ToasterService} from 'angular2-toaster';
-import {debounceTime, mergeMap} from 'rxjs/operators';
+import {debounceTime, map, mergeMap, startWith} from 'rxjs/operators';
 import {validarMinimoCheckBox} from './validadores_especiales';
 import {ObjetoArchivoInterface} from '../interfaces/objeto.archivo.interface';
-import {isObservable, of} from 'rxjs';
+import {isObservable, Observable, of} from 'rxjs';
 
 export class FormularioPrincipal {
   registros: any[];
@@ -285,6 +285,20 @@ export class FormularioPrincipal {
     );
   }
 
+  // Para material
+  generearOpciones(nombreControl: string, callbackAsincrono, contexto) {
+    return this.formulario.get(nombreControl).valueChanges
+      .pipe(
+        startWith(''),
+        map(value => this.establecerOpciones(value, callbackAsincrono, contexto))
+      );
+    // return callbackAsincrono(this.obtenerValorDelControl(nombreControl), contexto);
+  }
+
+  obtenerValorDelControl(nombre: string): string {
+    return this.formulario.get(nombre).value;
+  }
+
   establecerOpciones(event, callback, reference?) {
     const respuesta = callback(event, reference);
     if (isObservable(respuesta)) {
@@ -302,5 +316,31 @@ export class FormularioPrincipal {
         }
       );
     }
+  }
+
+  buscarAutoCompleteMaterial(control) {
+    const esAutoComplete = control.type.typeName === 'autocomplete';
+    const esMaterial = this.styleFramework === 'material';
+    if (esAutoComplete && esMaterial) {
+      console.log(control.controlName);
+      this.formulario.get(control.controlName)
+        .valueChanges.pipe(
+        map(
+          (valor) => {
+              console.log(valor);
+              this.establecerOpciones(valor, control.type.callback, control.type.reference);
+          }
+        )
+      );
+    }
+  }
+
+  escucharAutoCompleteMaterial() {
+    this.formConfig.forEach(
+      (control) => {
+        console.log(control);
+        this.buscarAutoCompleteMaterial(control);
+      }
+    );
   }
 }

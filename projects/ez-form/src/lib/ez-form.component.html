@@ -155,6 +155,30 @@
             </mat-checkbox>
           </p>
         </div>
+        <div *ngIf="control.type.typeName === 'autocomplete'">
+          <label
+            for="auto{{control.controlName}}"
+          >
+            {{control.label ? control.label : control.placeholder ? control.placeholder : control.controlName}}
+          </label>
+          <p-autoComplete
+            id="autoMat{{control.controlName}}"
+            [suggestions]="sugerencias"
+            [formControlName]="control.controlName"
+            [dropdown]="true"
+            (completeMethod)="establecerOpciones($event, control.type.completeMethod, control.type.componentReference)"
+            [minLength]="1"
+            [placeholder]="control.placeholder ? control.placeholder : ''"
+            [multiple]="false"
+            class="control-ez ui-fluid"
+            styleClass="wid100"
+            field="{{control.type.nameAutoComplete}}"
+          >
+          </p-autoComplete>
+          <small *ngIf="control.type.maxLength || control.hint" [id]="control.controlName" class="form-text text-muted">
+            {{control.hint}}  {{control.type.maxLength  &&  control.type.typeName !== 'autocomplete'? +formulario.get(control.controlName).value.length + '/' + control.type.maxLength ? control.type.maxLength : '' : '' }}
+          </small>
+        </div>
         <div class="row">
           <div *ngIf="verificarMensajeError(control.controlName)"
                class="alert alert-danger animated {{msgErrorAnimation}}" role="alert">
