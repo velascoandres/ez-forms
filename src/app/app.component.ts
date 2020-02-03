@@ -264,7 +264,7 @@ export class AppComponent {
     );
   }
   filterCityWithHttpService(event, contexto) {
-    return contexto._cityService.find(event.query);
+    return contexto._cityService.find(event.query ? event.query : event);
   }
   mostrarMensaje() {
     const mensaje = {

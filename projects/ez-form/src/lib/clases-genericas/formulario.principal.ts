@@ -299,8 +299,10 @@ export class FormularioPrincipal {
     return this.formulario.get(nombre).value;
   }
 
-  establecerOpciones(event, callback, reference?) {
-    const respuesta = callback(event, reference);
+  establecerOpciones(evento, callbackComponentePadre, reference?, esMaterial = false) {
+    const parametro = evento;
+    console.log(parametro);
+    const respuesta = callbackComponentePadre(parametro, reference);
     if (isObservable(respuesta)) {
       respuesta.subscribe(
         (resultados: any) => {
@@ -318,6 +320,11 @@ export class FormularioPrincipal {
     }
   }
 
+  cambio(evento, nombreControl) {
+    console.log(evento);
+    this.formulario.get(nombreControl).setValue(evento);
+  }
+
   buscarAutoCompleteMaterial(control) {
     const esAutoComplete = control.type.typeName === 'autocomplete';
     const esMaterial = this.styleFramework === 'material';
@@ -327,8 +334,8 @@ export class FormularioPrincipal {
         .valueChanges.pipe(
         map(
           (valor) => {
-              console.log(valor);
-              this.establecerOpciones(valor, control.type.callback, control.type.reference);
+            console.log(valor);
+            this.establecerOpciones(valor, control.type.callback, control.type.reference);
           }
         )
       );
