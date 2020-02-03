@@ -169,6 +169,7 @@
               (input)="establecerOpciones($event.target.value, control.type.completeMethod, control.type.componentReference)"
               [matAutocomplete]="auto"
               [value]="inputData[control.controlName] ? control.type.nameAutoComplete ? inputData[control.controlName][control.type.nameAutoComplete] : inputData[control.controlName] : ''"
+              (click)="establecerOpciones('', control.type.completeMethod, control.type.componentReference)"
             >
             <mat-autocomplete #auto="matAutocomplete">
               <mat-option
