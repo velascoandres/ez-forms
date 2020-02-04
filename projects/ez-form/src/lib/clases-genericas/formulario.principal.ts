@@ -7,7 +7,6 @@ import {ObjetoArchivoInterface} from '../interfaces/objeto.archivo.interface';
 import {isObservable, Observable, of} from 'rxjs';
 
 export class FormularioPrincipal {
-  registros: any[];
   sugerencias: any[] = [];
   formulario: FormGroup;
   cd: ChangeDetectorRef;
@@ -301,19 +300,16 @@ export class FormularioPrincipal {
 
   establecerOpciones(evento, callbackComponentePadre, reference?, esMaterial = false) {
     const parametro = evento;
-    console.log(parametro);
     const respuesta = callbackComponentePadre(parametro, reference);
     if (isObservable(respuesta)) {
       respuesta.subscribe(
         (resultados: any) => {
-          console.log('lo que obtengo', resultados);
           this.sugerencias = resultados;
         }
       );
     } else {
       of(respuesta).subscribe(
         (resultados) => {
-          console.log('lo que obtengo', resultados);
           this.sugerencias = resultados;
         }
       );
@@ -321,33 +317,6 @@ export class FormularioPrincipal {
   }
 
   cambio(evento, nombreControl) {
-    console.log(evento);
     this.formulario.get(nombreControl).setValue(evento);
-  }
-
-  buscarAutoCompleteMaterial(control) {
-    const esAutoComplete = control.type.typeName === 'autocomplete';
-    const esMaterial = this.styleFramework === 'material';
-    if (esAutoComplete && esMaterial) {
-      console.log(control.controlName);
-      this.formulario.get(control.controlName)
-        .valueChanges.pipe(
-        map(
-          (valor) => {
-            console.log(valor);
-            this.establecerOpciones(valor, control.type.callback, control.type.reference);
-          }
-        )
-      );
-    }
-  }
-
-  escucharAutoCompleteMaterial() {
-    this.formConfig.forEach(
-      (control) => {
-        console.log(control);
-        this.buscarAutoCompleteMaterial(control);
-      }
-    );
   }
 }
