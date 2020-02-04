@@ -3,7 +3,6 @@ import {EzFormComponent} from './ez-form.component';
 import {CommonModule} from '@angular/common';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {ToasterModule} from 'angular2-toaster';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MaterialFileInputModule} from 'ngx-material-file-input';
@@ -19,7 +18,7 @@ import {
 } from '@angular/material';
 import {BsInputComponent} from './componentes-auxiliares/bs-input/bs-input.component';
 import {ImgItemComponent} from './componentes-auxiliares/img-item/img-item.component';
-import {AutoCompleteModule} from 'primeng';
+import { AutoCompleteModule } from 'primeng/autocomplete';
 
 
 @NgModule({
@@ -33,7 +32,6 @@ import {AutoCompleteModule} from 'primeng';
     FormsModule,
     ReactiveFormsModule,
     ToasterModule.forRoot(),
-    BrowserAnimationsModule,
     MatFormFieldModule,
     MatInputModule,
     MatOptionModule,
