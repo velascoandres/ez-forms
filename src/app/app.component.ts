@@ -29,6 +29,7 @@ export class AppComponent {
     {
       controlName: 'birthday',
       placeholder: 'Enter your birthday date',
+      hint: 'Enter a valid date',
       type: {
         typeName: 'date'
       },
@@ -37,18 +38,15 @@ export class AppComponent {
       ]
     },
     {
-      controlName: 'otherDate',
-      placeholder: 'Enter a date',
+      controlName: 'address',
+      placeholder: 'Enter a complete address',
       type: {
-        typeName: 'date'
+        typeName: 'textarea',
+        maxLength: 20,
       },
       validators: [
         Validators.required,
       ],
-      errorMessages: {
-        required: 'The date is required',
-        date: 'The date is not acceptable'
-      },
     },
     {
       controlName: 'email',
@@ -58,17 +56,20 @@ export class AppComponent {
       ],
       placeholder: 'Enter an email',
       type: {
-        typeName: 'input'
+        typeName: 'input',
+        maxLength: 30,
       },
       errorMessages: {
         required: 'The email is mandatory',
         email: 'You must enter a valid email',
       },
+      hint: 'Enter a valid email'
     },
     {
       controlName: 'civilState',
       placeholder: 'Choose a civil state',
       label: 'Civil state',
+      hint: 'Please pick a Civil State',
       validators: [
         Validators.required
       ],
@@ -88,11 +89,9 @@ export class AppComponent {
     },
     {
       controlName: 'cities',
-      validators: [
-        Validators.required
-      ],
       type: {
         typeName: 'check',
+        minRequired : 2,
         options: [
           {
             value: 1,
@@ -110,7 +109,7 @@ export class AppComponent {
       },
       label: 'Cities',
       errorMessages: {
-        required: 'select a city at least',
+        required: 'select two cities at least',
       }
     },
     {
@@ -136,7 +135,48 @@ export class AppComponent {
           }
         ],
       },
+    },
+    {
+      controlName: 'profilePicture',
+      label: 'Profile Picture',
+      hint: 'Please upload your profile picture',
+      placeholder: 'Add your profile picture',
+      type: {
+        typeName: 'file',
+        multiple: false,
+        accept: 'image/*',
+      },
+    },
+    {
+      controlName: 'someFiles',
+      label: 'Add Some Files',
+      hint: 'Please upload your files',
+      placeholder: 'Add Files',
+      type: {
+        typeName: 'file',
+        multiple: true,
+        accept: '*/*',
+        showFile: true,
+      },
     }
+  ];
+  configuracionFormularioBusqueda = [
+    {
+      controlName: 'userEmail',
+      validators: [
+        Validators.email
+      ],
+      placeholder: 'Enter an email',
+      type: {
+        typeName: 'input',
+        maxLength: 30,
+      },
+      errorMessages: {
+        required: 'The email is mandatory',
+        email: 'You must enter a valid email',
+      },
+      hint: 'Enter a valid email'
+    },
   ];
   usuario = {
     uuid: 1234,
@@ -145,8 +185,9 @@ export class AppComponent {
     otherDate: '2015-02-16',
     birthday: '1999-02-16',
     favoriteFruit: 1,
-    cities: [1, 3],
     password: '12133',
+    address: 'Av. 1231',
+    cities: [1, 2]
   };
 
   myToasterConfig = {

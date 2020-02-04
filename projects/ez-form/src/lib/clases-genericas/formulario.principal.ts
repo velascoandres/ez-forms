@@ -1,10 +1,15 @@
 import {AbstractControl, FormArray, FormBuilder, FormControl, FormGroup} from '@angular/forms';
-import {EventEmitter, Input, Output} from '@angular/core';
+import {ChangeDetectorRef, EventEmitter, Input, Output} from '@angular/core';
 import {ToasterConfig, ToasterService} from 'angular2-toaster';
 import {debounceTime} from 'rxjs/operators';
+import {validarMinimoCheckBox} from './validadores_especiales';
+import {ObjetoArchivoInterface} from '../interfaces/objeto.archivo.interface';
 
 export class FormularioPrincipal {
   formulario: FormGroup;
+  cd: ChangeDetectorRef;
+  listaObjetosArchivos = [];
+  esconderArchivos = false;
   @Input()
   styleFramework = 'material';
   @Input()
@@ -35,9 +40,10 @@ export class FormularioPrincipal {
   dataFromForm: EventEmitter<object | boolean> = new EventEmitter<object | boolean>();
 
   esconderTexto = true;
+  totalArchivos = 0;
   mensajesErrorDefecto = {
     required: 'mandatory field',
-    date: 'invalid date'
+    date: 'invalid date',
   };
 
   constructor(
@@ -53,6 +59,7 @@ export class FormularioPrincipal {
     this.construirFormulario();
     this.escucharFormulario();
     this.escucharCampos();
+    // this.llenarFormulario();
   }
 
   protected construirFormulario() {
@@ -71,8 +78,9 @@ export class FormularioPrincipal {
         const datoEntrada = this.inputData[nombreControl];
         const existeDatoEntrada = datoEntrada !== undefined;
         if (existeDatoEntrada) {
-          this.formulario.get(nombreControl).patchValue(datoEntrada);
-        } else {
+          if (typeof datoEntrada !== 'object') {
+            this.formulario.get(nombreControl).patchValue(datoEntrada);
+          }
         }
       }
     );
@@ -93,7 +101,12 @@ export class FormularioPrincipal {
           validadores = [...itemConfiguracion.validators];
         }
         if (itemConfiguracion.type.typeName === 'check') {
-          controles[nombreControl] = new FormArray(this.agregarSubControles(itemConfiguracion.type.options, nombreControl), validadores);
+          const esObligatorio = itemConfiguracion.type.minRequired !== undefined && typeof +itemConfiguracion.type.minRequired === 'number';
+          controles[nombreControl] = new FormArray(
+            this.agregarSubControlesCheck(
+              itemConfiguracion.type.options, nombreControl),
+            validarMinimoCheckBox(esObligatorio ? +itemConfiguracion.type.minRequired : 0)
+          );
         } else {
           controles[nombreControl] = [valorDefecto, validadores];
         }
@@ -109,7 +122,7 @@ export class FormularioPrincipal {
     return controles;
   }
 
-  agregarSubControles(opciones: [], nombreControl: string) {
+  agregarSubControlesCheck(opciones: [], nombreControl: string) {
     const arregloControles = [];
     opciones.forEach(
       (opcion: any) => {
@@ -139,9 +152,11 @@ export class FormularioPrincipal {
     );
   }
 
+
   protected llenarMensajesErrorCampo(control: AbstractControl | any, nombreCampo: string) {
     let arregloErrores = [];
-    if ((control.controls || (control.dirty || control.touched)) && control.errors) {
+    const tieneDatosPorDefecto = this.inputData !== undefined && Object.keys(this.inputData).length > 0;
+    if ((control.controls || (control.dirty || control.touched) || tieneDatosPorDefecto) && control.errors) {
       arregloErrores = Object.keys(control.errors).map(
         (llave) => {
           if (llave === 'matDatepickerParse') {
@@ -158,22 +173,29 @@ export class FormularioPrincipal {
     const llaves = Object.keys(datos);
     llaves.map(
       (llave) => {
-        if (typeof datos[llave] === 'object' && datos[llave].length > 0) {
+        if (typeof datos[llave] === 'object' && datos[llave] !== null && datos[llave].length > 0) {
           const arregloBoolean = datos[llave];
           const indice = this.formConfig.findIndex(
             (control) => {
-              return control.nombre === llave;
+              return control.controlName === llave;
             }
           );
-          const arreglo = arregloBoolean.reduce(
-            (acumulador, item, index) => {
-              if (item && this.formConfig[indice]) {
-                acumulador.push(this.formConfig[indice].type.options[index].value);
-              }
-              return acumulador;
-            }, []
-          );
-          datos[llave] = arreglo;
+          if (indice !== -1 && this.formConfig[indice].type.options) {
+            const arreglo = arregloBoolean.reduce(
+              (acumulador, item, index) => {
+                if (item && this.formConfig[indice]) {
+                  acumulador.push(this.formConfig[indice].type.options[index].value);
+                }
+                return acumulador;
+              }, []
+            );
+            if (!arreglo.length) {
+              datos[llave] = '';
+            } else {
+              datos[llave] = arreglo;
+            }
+          }
+
         }
       }
     );
@@ -187,6 +209,7 @@ export class FormularioPrincipal {
       )
       .subscribe(
         (informacionFormulario) => {
+          this.transformarControlesConArreglosBoolean(informacionFormulario);
           const formularioValido = !this.formulario.invalid;
           if (formularioValido) {
             if (this.showToaster) {
@@ -194,7 +217,6 @@ export class FormularioPrincipal {
                 this.toasterConfig.success
               );
             }
-            this.transformarControlesConArreglosBoolean(informacionFormulario);
             this.dataFromForm.emit(informacionFormulario);
           } else {
             if (this.showToaster) {
@@ -215,5 +237,48 @@ export class FormularioPrincipal {
 
   obtenerMensajesError(nombreControl) {
     return this.objetoArreglosErrores[nombreControl];
+  }
+
+  llenarGaleriaMaterial(event, control) {
+    const archivos = event.target.files;
+    this.quitarArchivosPorControl(control.controlName);
+    const objetoArchivos: File[] = Object.values(archivos);
+    this.totalArchivos = objetoArchivos.length ? objetoArchivos.length : 0;
+    objetoArchivos.forEach(
+      (archivo: File) => {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          if (typeof reader.result === 'string') {
+            const formato = archivo.type;
+            const objetoArchivo: ObjetoArchivoInterface = {
+              propietario: control.controlName,
+              datos: reader.result,
+              nombreArchivo: archivo.name,
+              formato,
+            };
+            this.listaObjetosArchivos.push(objetoArchivo);
+          }
+        };
+        if (archivo) {
+          reader.readAsDataURL(archivo);
+        }
+      }
+    );
+  }
+
+  quitarArchivosPorControl(nombreControl: string) {
+    this.listaObjetosArchivos = this.listaObjetosArchivos.filter(
+      (archivo) => {
+        return archivo.propietario !== nombreControl;
+      }
+    );
+  }
+
+  filtrarArchivosPorControl(nombreControl: string) {
+    return this.listaObjetosArchivos.filter(
+      (archivo) => {
+        return archivo.propietario === nombreControl;
+      }
+    );
   }
 }
