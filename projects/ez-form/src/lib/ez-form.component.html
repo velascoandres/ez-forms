@@ -1,9 +1,9 @@
 <toaster-container [toasterconfig]="config"></toaster-container>
 
 <form [formGroup]="formulario" class="filled">
-  <div *ngIf="styleFramework === 'material'" class="d-flex justify-content-center">
-    <div class="p-2 flex-fill">
-      <div *ngFor="let control of formConfig; let i = index">
+  <div *ngIf="styleFramework === 'material'" class="container">
+    <div class="row">
+      <div *ngFor="let control of formConfig; let i = index" class="col-md-6">
         <div *ngIf="control.type.typeName === 'file'">
           <mat-form-field
             class="filled"
@@ -15,7 +15,7 @@
             <ngx-mat-file-input
               formControlName={{control.controlName}}
               placeholder="{{control.placeholder ? control.placeholder : ''}}"
-              [multiple] = 'control.type.multiple'
+              [multiple]='control.type.multiple'
               [accept]='control.type.accept? control.type.accept : "*/*"'
               (change)="llenarGaleriaMaterial($event, control)"
             >
@@ -30,9 +30,9 @@
           <div class="row"
                *ngIf="filtrarArchivosPorControl(control.controlName).length > 0 && control.type.showFile"
                [hidden]="esconderArchivos">
-              <div class="col-3 item" *ngFor="let archivo of filtrarArchivosPorControl(control.controlName)">
-                <ez-file-item [objetoArchivo]="archivo"></ez-file-item>
-              </div>
+            <div class="col-3 item" *ngFor="let archivo of filtrarArchivosPorControl(control.controlName)">
+              <ez-file-item [objetoArchivo]="archivo"></ez-file-item>
+            </div>
           </div>
 
         </div>
@@ -155,18 +155,53 @@
             </mat-checkbox>
           </p>
         </div>
-        <div *ngIf="verificarMensajeError(control.controlName)"
-             class="alert alert-danger animated {{msgErrorAnimation}}" role="alert">
-          <ul>
-            <li *ngFor="let error of obtenerMensajesError(control.controlName)">{{error}}</li>
-          </ul>
+        <div *ngIf="control.type.typeName === 'autocomplete'">
+          <mat-form-field
+            class="filled"
+            appearance="outline"
+          >
+            <mat-label>
+              {{control.label ? control.label : control.placeholder ? control.placeholder : control.controlName}}
+            </mat-label>
+            <input
+              placeholder="{{control.placeholder ? control.placeholder : ''}}"
+              matInput
+              (input)="establecerOpciones($event.target.value, control.type.completeMethod, control.type.componentReference)"
+              [matAutocomplete]="auto"
+              [value]="inputData[control.controlName] ? control.type.nameAutoComplete ? inputData[control.controlName][control.type.nameAutoComplete] : inputData[control.controlName] : ''"
+              (click)="establecerOpciones('', control.type.completeMethod, control.type.componentReference)"
+            >
+            <mat-autocomplete #auto="matAutocomplete">
+              <mat-option
+                *ngFor="let option of sugerencias" [value]="option.name"
+                (onSelectionChange)="cambio(option, control.controlName)"
+              >
+                {{option.name}}
+              </mat-option>
+            </mat-autocomplete>
+            <mat-hint *ngIf="control.type.maxLength || control.hint" [id]="control.controlName"
+                      align="end"
+            >
+              {{control.hint}}  {{control.type.maxLength  &&  control.type.typeName !== 'autocomplete'? +formulario.get(control.controlName).value.length + '/' + control.type.maxLength ? control.type.maxLength : '' : '' }}
+            </mat-hint>
+          </mat-form-field>
+        </div>
+        <div class="row">
+          <div *ngIf="verificarMensajeError(control.controlName)"
+               class="alert alert-danger animated {{msgErrorAnimation}}" role="alert">
+            <ul>
+              <li *ngFor="let error of obtenerMensajesError(control.controlName)">{{error}}</li>
+            </ul>
+          </div>
         </div>
       </div>
+
     </div>
+
   </div>
-  <div *ngIf="styleFramework === 'bootstrap'" class="d-flex justify-content-center">
-    <div class="p-2 flex-fill">
-      <div *ngFor="let control of formConfig; let i = index">
+  <div *ngIf="styleFramework === 'bootstrap'" class="container">
+    <div class="row">
+      <div *ngFor="let control of formConfig; let i = index" class="col-md-6">
         <div *ngIf="control.type.typeName === 'file'"
              class="form-group">
           <ez-bs-input
@@ -309,12 +344,38 @@
             </div>
           </div>
         </div>
-        <div *ngIf="verificarMensajeError(control.controlName)"
-             class="alert alert-danger animated {{msgErrorAnimation}}"
-             role="alert">
-          <ul>
-            <li *ngFor="let error of obtenerMensajesError(control.controlName)">{{error}}</li>
-          </ul>
+        <div class="form-group" *ngIf="control.type.typeName==='autocomplete'">
+          <label
+            for="auto{{control.controlName}}"
+          >
+            {{control.label ? control.label : control.placeholder ? control.placeholder : control.controlName}}
+          </label>
+          <p-autoComplete
+            id="auto{{control.controlName}}"
+            [suggestions]="sugerencias"
+            [formControlName]="control.controlName"
+            [dropdown]="true"
+            (completeMethod)="establecerOpciones($event, control.type.completeMethod, control.type.componentReference)"
+            [minLength]="1"
+            [placeholder]="control.placeholder ? control.placeholder : ''"
+            [multiple]="false"
+            class="control-ez ui-fluid"
+            styleClass="wid100"
+            field="{{control.type.nameAutoComplete}}"
+          >
+          </p-autoComplete>
+          <small *ngIf="control.type.maxLength || control.hint" [id]="control.controlName" class="form-text text-muted">
+            {{control.hint}}  {{control.type.maxLength  &&  control.type.typeName !== 'autocomplete'? +formulario.get(control.controlName).value.length + '/' + control.type.maxLength ? control.type.maxLength : '' : '' }}
+          </small>
+        </div>
+        <div class="row">
+          <div *ngIf="verificarMensajeError(control.controlName)"
+               class="alert alert-danger animated {{msgErrorAnimation}}"
+               role="alert">
+            <ul>
+              <li *ngFor="let error of obtenerMensajesError(control.controlName)">{{error}}</li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>

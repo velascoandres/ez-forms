@@ -1,12 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 
-import { EzFormService } from './ez-form.service';
+import { ToastService } from './toast.service';
 
-describe('EzFormService', () => {
+describe('ToastService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: EzFormService = TestBed.get(EzFormService);
+    const service: ToastService = TestBed.get(ToastService);
     expect(service).toBeTruthy();
   });
 });

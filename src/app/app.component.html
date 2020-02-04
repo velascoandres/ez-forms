@@ -3,7 +3,7 @@
     [formConfig]="myConfiguration"
     [inputData]="usuario"
     (dataFromForm)="escucharDatosDelFormulario($event)"
-    [styleFramework]="'bootstrap'"
+    [styleFramework]="'material'"
     [msgErrorAnimation]="'fadeInLeft'"
     [toasterConfig]="myToasterConfig"
     [showToaster]="true"
@@ -14,8 +14,11 @@
     [formConfig]="configuracionFormularioBusqueda"
     [styleFramework]="'material'"
     [msgErrorAnimation]="'fadeInLeft'"
-    [showToaster]="false"
-    [inputData]='{"email":"vel@asd.com"}'
+    [showToaster]="true"
+    [inputData]='infoLoca'
+    (dataFromForm)="escucharDatosDelFormulario($event)"
   >
   </ez-form>
+<!--  <ez-toast body="ocurrio un error con el servidor intente mas tarde" title="error">-->
+<!--  </ez-toast>-->
 </div>

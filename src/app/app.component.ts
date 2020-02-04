@@ -1,5 +1,7 @@
 import {Component} from '@angular/core';
 import {Validators} from '@angular/forms';
+import {ToastService} from '../../projects/toast/src/lib/toast.service';
+import {CityService} from './servicios/city.service';
 
 @Component({
   selector: 'mat-ta-root',
@@ -91,7 +93,7 @@ export class AppComponent {
       controlName: 'cities',
       type: {
         typeName: 'check',
-        minRequired : 2,
+        minRequired: 2,
         options: [
           {
             value: 1,
@@ -166,6 +168,7 @@ export class AppComponent {
       validators: [
         Validators.email
       ],
+      label: 'Email address',
       placeholder: 'Enter an email',
       type: {
         typeName: 'input',
@@ -177,7 +180,30 @@ export class AppComponent {
       },
       hint: 'Enter a valid email'
     },
+    {
+      controlName: 'city',
+      validators: [
+        Validators.required
+      ],
+      label: 'City',
+      placeholder: 'Example: Barcelona',
+      type: {
+        typeName: 'autocomplete',
+        maxLength: 30,
+        completeMethod: this.filterCityWithHttpService,
+        nameAutoComplete: 'name',
+        componentReference: this
+      },
+      errorMessages: {
+        required: 'The city is mandatory',
+      },
+      hint: 'Search a city'
+    },
   ];
+  infoLoca = {
+    userEmail: 'juan.pecados@mail.com',
+    city: {id: 2894, name: 'Parbasdorf', country: 'AT', lat: '48.28333', lng: '16.6'},
+  };
   usuario = {
     uuid: 1234,
     email: 'juan.pecados@mail.com',
@@ -212,4 +238,40 @@ export class AppComponent {
     }
   }
 
+  filterCity(event) {
+    console.log('adad');
+    const cities = ['New York', 'Mexico DF', 'Los Angeles', 'Lima', 'Cuenca', 'Quito', 'Tokyo', 'Caracas', 'Santiago', 'Barcelona'];
+    if (event.query) {
+      return cities.filter(
+        (city) => {
+          return city.includes(event.query);
+        }
+      );
+    } else {
+      return cities;
+    }
+  }
+
+
+  constructor(
+    private readonly _toastService: ToastService,
+    private readonly _cityService: CityService
+  ) {
+    this._cityService.find('asd').subscribe(
+      (respuesta) => {
+        console.log(respuesta);
+      }
+    );
+  }
+  filterCityWithHttpService(event, contexto) {
+    return contexto._cityService.find(event.query ? event.query : event);
+  }
+  mostrarMensaje() {
+    const mensaje = {
+      title: 'Errorcito',
+      body: 'Algo salio mal, revisa el servidor',
+      type: 'success',
+    };
+    this._toastService.showMessage(mensaje);
+  }
 }

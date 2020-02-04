@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {FormBuilder} from '@angular/forms';
 import {ToasterService} from 'angular2-toaster';
 import {FormularioPrincipal} from './clases-genericas/formulario.principal';
+import {map, startWith} from 'rxjs/operators';
 
 @Component({
   selector: 'ez-form',

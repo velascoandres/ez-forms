@@ -9,11 +9,13 @@
      
      4.2  [Multiple files](#multiple-files)
      
-     4.3  [Toaster](#toaster)  
+     4.3  [Autocomplete](#autocomplete)
      
-     4.4  [Bootstrap](#bootstrap)
+     4.4  [Toaster](#toaster)  
      
-     4.5  [Animations](#animations)
+     4.5  [Bootstrap](#bootstrap)
+     
+     4.6  [Animations](#animations)
 5. [Summary](#summary)     
   
 ## Description  
@@ -355,6 +357,36 @@ Demonstration from the configuration example
 ## Multiple Files
 ![files](https://github.com/velascoandrs/repo-de-imagenes/blob/master/fileds/files.PNG?raw=true)
 
+
+## AutoComplete
+
+Parent component typescript code:
+
+```typescript
+    {
+          controlName: 'city',
+          validators: [
+            Validators.required
+          ],
+          label: 'City',
+          placeholder: 'Example: Barcelona',
+          type: {
+            typeName: 'autocomplete',
+            maxLength: 30,
+            completeMethod: this.filterCityWithHttpService,
+            nameAutoComplete: 'name',
+            componentReference: this
+          },
+          errorMessages: {
+            required: 'The city is mandatory',
+          },
+          hint: 'Search a city'
+    }
+
+    filterCityWithHttpService(event, context) {
+        return context._cityService.find(event.query ? event.query : event);
+    }
+```
 
 ## Toaster
 This library makes use of [angular2-toaster](https://www.npmjs.com/package/angular2-toaster)

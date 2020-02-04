@@ -1,11 +1,13 @@
 import {AbstractControl, FormArray, FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import {ChangeDetectorRef, EventEmitter, Input, Output} from '@angular/core';
 import {ToasterConfig, ToasterService} from 'angular2-toaster';
-import {debounceTime} from 'rxjs/operators';
+import {debounceTime, map, mergeMap, startWith} from 'rxjs/operators';
 import {validarMinimoCheckBox} from './validadores_especiales';
 import {ObjetoArchivoInterface} from '../interfaces/objeto.archivo.interface';
+import {isObservable, Observable, of} from 'rxjs';
 
 export class FormularioPrincipal {
+  sugerencias: any[] = [];
   formulario: FormGroup;
   cd: ChangeDetectorRef;
   listaObjetosArchivos = [];
@@ -280,5 +282,41 @@ export class FormularioPrincipal {
         return archivo.propietario === nombreControl;
       }
     );
+  }
+
+  // Para material
+  generearOpciones(nombreControl: string, callbackAsincrono, contexto) {
+    return this.formulario.get(nombreControl).valueChanges
+      .pipe(
+        startWith(''),
+        map(value => this.establecerOpciones(value, callbackAsincrono, contexto))
+      );
+    // return callbackAsincrono(this.obtenerValorDelControl(nombreControl), contexto);
+  }
+
+  obtenerValorDelControl(nombre: string): string {
+    return this.formulario.get(nombre).value;
+  }
+
+  establecerOpciones(evento, callbackComponentePadre, reference?, esMaterial = false) {
+    const parametro = evento;
+    const respuesta = callbackComponentePadre(parametro, reference);
+    if (isObservable(respuesta)) {
+      respuesta.subscribe(
+        (resultados: any) => {
+          this.sugerencias = resultados;
+        }
+      );
+    } else {
+      of(respuesta).subscribe(
+        (resultados) => {
+          this.sugerencias = resultados;
+        }
+      );
+    }
+  }
+
+  cambio(evento, nombreControl) {
+    this.formulario.get(nombreControl).setValue(evento);
   }
 }
