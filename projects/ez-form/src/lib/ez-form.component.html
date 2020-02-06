@@ -173,10 +173,10 @@
             >
             <mat-autocomplete #auto="matAutocomplete">
               <mat-option
-                *ngFor="let option of sugerencias" [value]="option.name"
+                *ngFor="let option of sugerencias" [value]="option[control.type.nameAutoComplete]"
                 (onSelectionChange)="cambio(option, control.controlName)"
               >
-                {{option.name}}
+                {{option[control.type.nameAutoComplete]}}
               </mat-option>
             </mat-autocomplete>
             <mat-hint *ngIf="control.type.maxLength || control.hint" [id]="control.controlName"
