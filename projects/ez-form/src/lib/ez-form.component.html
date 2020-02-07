@@ -187,11 +187,13 @@
           </mat-form-field>
         </div>
         <div class="row">
-          <div *ngIf="verificarMensajeError(control.controlName)"
-               class="alert alert-danger animated {{msgErrorAnimation}}" role="alert">
-            <ul>
-              <li *ngFor="let error of obtenerMensajesError(control.controlName)">{{error}}</li>
-            </ul>
+          <div class="col-md-12">
+            <div *ngIf="verificarMensajeError(control.controlName)"
+                 class="alert alert-danger animated full-width {{msgErrorAnimation}}" role="alert">
+              <ul>
+                <li *ngFor="let error of obtenerMensajesError(control.controlName)">{{error}}</li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>
@@ -369,12 +371,14 @@
           </small>
         </div>
         <div class="row">
-          <div *ngIf="verificarMensajeError(control.controlName)"
-               class="alert alert-danger animated {{msgErrorAnimation}}"
-               role="alert">
-            <ul>
-              <li *ngFor="let error of obtenerMensajesError(control.controlName)">{{error}}</li>
-            </ul>
+          <div class="col-md-12">
+            <div *ngIf="verificarMensajeError(control.controlName)"
+                 class="alert alert-danger animated full-width{{msgErrorAnimation}}"
+                 role="alert">
+              <ul>
+                <li *ngFor="let error of obtenerMensajesError(control.controlName)">{{error}}</li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>
