@@ -4,7 +4,7 @@ import {ToasterConfig, ToasterService} from 'angular2-toaster';
 import {debounceTime, map, mergeMap, startWith} from 'rxjs/operators';
 import {validarMinimoCheckBox} from './validadores_especiales';
 import {ObjetoArchivoInterface} from '../interfaces/objeto.archivo.interface';
-import {isObservable, Observable, of} from 'rxjs';
+import {isObservable, Observable, of, Subscription} from 'rxjs';
 
 export class FormularioPrincipal {
   sugerencias: any[] = [];
@@ -47,6 +47,7 @@ export class FormularioPrincipal {
     required: 'mandatory field',
     date: 'invalid date',
   };
+  listaSubscripciones: Subscription[] = [];
 
   constructor(
     public fb: FormBuilder,
@@ -136,13 +137,14 @@ export class FormularioPrincipal {
 
   escucharCampo(nombreCampo: string) {
     const campo$ = this.formulario.get(nombreCampo);
-    campo$
+    const subscripcionCampo = campo$
       .valueChanges
       .subscribe(
         valor => {
           this.objetoArreglosErrores[nombreCampo] = this.llenarMensajesErrorCampo(campo$, nombreCampo);
         }
       );
+    this.listaSubscripciones.push(subscripcionCampo);
   }
 
   escucharCampos() {
@@ -204,7 +206,7 @@ export class FormularioPrincipal {
   }
 
   escucharFormulario() {
-    this.formulario
+    const subscripcionFormulario = this.formulario
       .valueChanges
       .pipe(
         debounceTime(500)
@@ -230,6 +232,7 @@ export class FormularioPrincipal {
           }
         }
       );
+    this.listaSubscripciones.push(subscripcionFormulario);
   }
 
   verificarMensajeError(nombreControl) {
@@ -285,7 +288,7 @@ export class FormularioPrincipal {
   }
 
   // Para material
-  generearOpciones(nombreControl: string, callbackAsincrono, contexto) {
+  /*generearOpciones(nombreControl: string, callbackAsincrono, contexto) {
     return this.formulario.get(nombreControl).valueChanges
       .pipe(
         startWith(''),
@@ -296,24 +299,26 @@ export class FormularioPrincipal {
 
   obtenerValorDelControl(nombre: string): string {
     return this.formulario.get(nombre).value;
-  }
+  }*/
 
   establecerOpciones(evento, callbackComponentePadre, reference?, esMaterial = false) {
     const parametro = evento;
     const respuesta = callbackComponentePadre(parametro, reference);
+    let subscripcionOpcion;
     if (isObservable(respuesta)) {
-      respuesta.subscribe(
+      subscripcionOpcion = respuesta.subscribe(
         (resultados: any) => {
           this.sugerencias = resultados;
         }
       );
     } else {
-      of(respuesta).subscribe(
+      subscripcionOpcion = of(respuesta).subscribe(
         (resultados) => {
           this.sugerencias = resultados;
         }
       );
     }
+    this.listaSubscripciones.push(subscripcionOpcion);
   }
 
   cambio(evento, nombreControl) {

@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  url: 'http://127.0.0.1',
+  url: 'https://en.wikipedia.org/w/api.php?action=query&list=search&srprop=snippet&format=json&origin=*&utf8=',
   port: '8000'
 };
 

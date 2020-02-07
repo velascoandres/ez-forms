@@ -5,20 +5,22 @@ import {Injectable} from '@angular/core';
 import {mergeMap} from 'rxjs/operators';
 
 @Injectable()
-export class CityService {
+export class WikipediaRestService {
   url = environment.url;
-  segment = '/ciudad/api/v2/cities/';
   port = environment.port;
 
   constructor(private _httpClient: HttpClient) {
   }
 
   find(query: string): Observable<any> {
-    const url = `${this.url}:${this.port}${this.segment}?search=${query}`;
+    const url = `${this.url}&srsearch=${query}`;
     return this._httpClient.get(url).pipe(
       mergeMap(
         (respuesta: any) => {
-          return of(respuesta.results);
+          if (respuesta.query) {
+            return of(respuesta.query.search);
+          }
+          return of([]);
         }
       )
     );

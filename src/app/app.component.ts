@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {Validators} from '@angular/forms';
 import {ToastService} from '../../projects/toast/src/lib/toast.service';
-import {CityService} from './servicios/city.service';
+import {WikipediaRestService} from './servicios/wikipedia-rest.service';
 
 @Component({
   selector: 'mat-ta-root',
@@ -181,23 +181,23 @@ export class AppComponent {
       hint: 'Enter a valid email'
     },
     {
-      controlName: 'city',
+      controlName: 'article',
       validators: [
         Validators.required
       ],
-      label: 'City',
-      placeholder: 'Example: Barcelona',
+      label: 'Wikipedia article',
+      placeholder: 'Example: DNA',
       type: {
         typeName: 'autocomplete',
         maxLength: 30,
-        completeMethod: this.filterCityWithHttpService,
-        nameAutoComplete: 'name',
+        completeMethod: this.filterWikipediaArticleByTitle,
+        nameAutoComplete: 'title',
         componentReference: this
       },
       errorMessages: {
-        required: 'The city is mandatory',
+        required: 'The article is mandatory',
       },
-      hint: 'Search a city'
+      hint: 'Search an article'
     },
   ];
   infoLoca = {
@@ -237,34 +237,13 @@ export class AppComponent {
       console.log('todo mal');
     }
   }
-
-  filterCity(event) {
-    console.log('adad');
-    const cities = ['New York', 'Mexico DF', 'Los Angeles', 'Lima', 'Cuenca', 'Quito', 'Tokyo', 'Caracas', 'Santiago', 'Barcelona'];
-    if (event.query) {
-      return cities.filter(
-        (city) => {
-          return city.includes(event.query);
-        }
-      );
-    } else {
-      return cities;
-    }
-  }
-
-
   constructor(
     private readonly _toastService: ToastService,
-    private readonly _cityService: CityService
+    private readonly _wikipediaService: WikipediaRestService
   ) {
-    this._cityService.find('asd').subscribe(
-      (respuesta) => {
-        console.log(respuesta);
-      }
-    );
   }
-  filterCityWithHttpService(event, contexto) {
-    return contexto._cityService.find(event.query ? event.query : event);
+  filterWikipediaArticleByTitle(event, contexto) {
+    return contexto._wikipediaService.find(event.query ? event.query : event);
   }
   mostrarMensaje() {
     const mensaje = {
