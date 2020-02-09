@@ -17,7 +17,7 @@
          *ngIf="showFile"
     >
       <div class="col-3 item" *ngFor="let archivo of obtenerArchivos();">
-        <ez-file-item [objetoArchivo]="archivo"></ez-file-item>
+        <ez-file-item [objetoArchivo]="archivo" (archivoSalida)="escucharArchivo($event)"></ez-file-item>
       </div>
     </div>
   </div>
