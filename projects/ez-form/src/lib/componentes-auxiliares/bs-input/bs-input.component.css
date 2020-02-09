@@ -2,3 +2,35 @@
   max-width: 30%;
   max-height: 30%;
 }
+
+.custom-file-input {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  width: 100%;
+  opacity: 0;
+  height: auto;
+}
+
+.custom-file {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  height: auto;
+}
+
+.custom-file-label-label {
+  padding: .375rem .75rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #fff;
+  border: 1px solid #ced4da;
+  border-radius: .25rem;
+  height: auto;
+}
+
+.gal{
+  margin-top: 1rem;
+}

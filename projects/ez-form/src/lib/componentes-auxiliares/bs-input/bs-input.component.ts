@@ -32,7 +32,6 @@ export class BsInputComponent implements OnInit, ControlValueAccessor {
   listaObjetosArchivos = [];
   isDisabled: boolean;
   totalArchivos = 0;
-
   constructor() {
   }
 
@@ -84,12 +83,5 @@ export class BsInputComponent implements OnInit, ControlValueAccessor {
     llenarGaleria(this, Object.values(this.value[0]));
     this.onTouch();
     this.onChange(this.value);
-    // this.listaObjetosArchivos.filter(
-    //   (archivo) => {
-    //     console.log(archivo);
-    //     return archivo.nombreArchivo !== event;
-    //   }
-    // );
-
   }
 }
