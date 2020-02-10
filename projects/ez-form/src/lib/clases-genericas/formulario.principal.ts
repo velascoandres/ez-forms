@@ -287,6 +287,29 @@ export class FormularioPrincipal {
     );
   }
 
+  eliminarArchivo(evento, nombreControl) {
+    this.listaObjetosArchivos = this.listaObjetosArchivos.filter(
+      (archivo) => {
+        return (archivo.nombreArchivo !== evento && archivo.propietario === nombreControl) || archivo.propietario !== nombreControl;
+      }
+    );
+    const valores = this.formulario.get(nombreControl).value;
+    // Elimnar files
+    valores._files = valores._files.filter(
+      (archivo) => {
+        return archivo.name !== evento;
+      }
+    );
+    // Eliminar fileNames
+    const arregloNombresArchivos = valores._fileNames.split(valores.delimiter);
+    valores._fileNames = arregloNombresArchivos.filter(
+      (nombreArchivo) => {
+        return nombreArchivo !== evento;
+      }
+    ).join(valores.delimiter);
+    this.formulario.get(nombreControl).setValue(valores);
+  }
+
   // Para material
   /*generearOpciones(nombreControl: string, callbackAsincrono, contexto) {
     return this.formulario.get(nombreControl).valueChanges

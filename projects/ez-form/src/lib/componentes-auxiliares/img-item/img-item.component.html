@@ -1,11 +1,15 @@
- <div class="contenedor-img">
-    <img *ngIf = "validarExtension('imagen',objetoArchivo.formato)"
-      [src]='objetoArchivo.datos'
-      class="img-fluid"
-      alt="imagen">
-   <img *ngIf = "!validarExtension('imagen',objetoArchivo.formato) "
-        src="https://img.icons8.com/plasticine/2x/file.png"
-        alt="otro">
-    <div class="overlay">
-    </div>
+<div class="contenedor-img">
+  <img *ngIf="validarExtension('imagen',objetoArchivo.formato)"
+       [src]='objetoArchivo.datos'
+       class="img-fluid"
+       alt="imagen">
+  <mat-icon
+    *ngIf="!validarExtension('imagen',objetoArchivo.formato)">
+    insert_drive_file
+  </mat-icon>
+  <div class="overlay">
+    <button (click)="quitarArchivo()" mat-mini-fab color="warn" class="delete-btn">
+      <mat-icon>delete</mat-icon>
+    </button>
   </div>
+</div>

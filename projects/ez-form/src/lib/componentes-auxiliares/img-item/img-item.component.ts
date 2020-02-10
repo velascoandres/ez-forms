@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {ObjetoArchivoInterface} from '../../interfaces/objeto.archivo.interface';
 
 @Component({
@@ -8,11 +8,17 @@ import {ObjetoArchivoInterface} from '../../interfaces/objeto.archivo.interface'
 })
 export class ImgItemComponent implements OnInit {
 
-  constructor() { }
+  constructor() {
+  }
+
   @Input()
   objetoArchivo: ObjetoArchivoInterface;
+  @Output()
+  archivoSalida: EventEmitter<string> = new EventEmitter<string>();
+
   ngOnInit() {
   }
+
   validarExtension(nombreTipo: string, extension: string): boolean {
     const tiposExtensiones = [
       {
@@ -63,6 +69,12 @@ export class ImgItemComponent implements OnInit {
     } else {
       return false;
     }
+  }
+
+  quitarArchivo() {
+    this.archivoSalida.emit(
+      this.objetoArchivo.nombreArchivo,
+    );
   }
 
 }

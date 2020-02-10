@@ -1,7 +1,7 @@
 import {Component, forwardRef, Input, OnInit} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {ObjetoArchivoInterface} from '../../interfaces/objeto.archivo.interface';
-import {llenarGaleria} from '../../clases-genericas/funciones-archivos';
+import {llenarGaleria, quitarArchivoLista} from '../../clases-genericas/funciones-archivos';
 
 @Component({
   selector: 'ez-bs-input',
@@ -35,11 +35,13 @@ export class BsInputComponent implements OnInit, ControlValueAccessor {
   constructor() {
   }
 
-  onChange = (_) => {
-    console.log('asdasd');
+  onChange(value) {
+    // console.log('asdasd');
   }
-  onTouch = () => {
+
+  onTouch() {
   }
+
   onInput(value) {
     this.value.pop();
     this.value.push(value);
@@ -73,5 +75,13 @@ export class BsInputComponent implements OnInit, ControlValueAccessor {
 
   obtenerArchivos() {
     return this.listaObjetosArchivos;
+  }
+
+  escucharArchivo(event) {
+    this.value = quitarArchivoLista(event, this.value);
+    console.log(this.value);
+    llenarGaleria(this, Object.values(this.value[0]));
+    this.onTouch();
+    this.onChange(this.value);
   }
 }
