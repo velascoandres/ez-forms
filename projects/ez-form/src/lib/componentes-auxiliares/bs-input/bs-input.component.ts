@@ -79,7 +79,6 @@ export class BsInputComponent implements OnInit, ControlValueAccessor {
 
   escucharArchivo(event) {
     this.value = quitarArchivoLista(event, this.value);
-    console.log(this.value);
     llenarGaleria(this, Object.values(this.value[0]));
     this.onTouch();
     this.onChange(this.value);
