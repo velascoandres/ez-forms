@@ -47,7 +47,10 @@ import {TableModule} from 'primeng';
     AutoCompleteModule,
     TableModule,
   ],
-  exports: [EzFormComponent],
+  exports: [
+    EzFormComponent,
+    BsInputComponent,
+  ],
 })
 export class EzFormModule {
 }
