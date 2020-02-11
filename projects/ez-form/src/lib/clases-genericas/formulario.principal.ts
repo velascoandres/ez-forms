@@ -13,6 +13,8 @@ export class FormularioPrincipal {
   listaObjetosArchivos = [];
   esconderArchivos = false;
   @Input()
+  fullWidth = false;
+  @Input()
   styleFramework = 'material';
   @Input()
   inputData = {};

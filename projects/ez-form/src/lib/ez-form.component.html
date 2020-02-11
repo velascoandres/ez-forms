@@ -3,7 +3,7 @@
 <form [formGroup]="formulario" class="filled">
   <div *ngIf="styleFramework === 'material'" class="container">
     <div class="row">
-      <div *ngFor="let control of formConfig; let i = index" class="col-lg-6">
+      <div *ngFor="let control of formConfig; let i = index" class="col-lg-{{fullWidth ? '12' : '6'}}">
         <div *ngIf="control.type.typeName === 'file'">
           <mat-form-field
             class="filled"
@@ -209,7 +209,7 @@
   </div>
   <div *ngIf="styleFramework === 'bootstrap'" class="container">
     <div class="row">
-      <div *ngFor="let control of formConfig; let i = index" class="col-lg-6">
+      <div *ngFor="let control of formConfig; let i = index" class="col-lg-{{fullWidth ? '12' : '6'}}">
         <div *ngIf="control.type.typeName === 'file'"
              class="form-group">
           <ez-bs-input
