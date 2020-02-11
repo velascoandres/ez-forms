@@ -17,7 +17,7 @@
     <tr>
       <td *ngFor="let col of columns">
         <span class="ui-column-title">{{col.header}}</span>
-        <div *ngIf="col.header !== 'Actions'" class="text-div">
+        <div *ngIf="col.header === header.description || col.header === label" class="text-div contenedor-img">
           {{rowData[col.field]}}
           <div *ngIf="rowData['formato'].split('/')[0] === 'image'">
             <img
@@ -26,13 +26,13 @@
               alt="imagen">
           </div>
         </div>
-        <div *ngIf="col.header === 'Actions'" class="d-flex justify-content-center">
-          <div class="p-2">
-            <button class="btn btn-outline-danger" (click)="emitirArchivo(rowData[col.field])">
-              <i class="pi pi-times"></i>
-            </button>
-          </div>
+        <div *ngIf="col.header === 'Actions' || col.header === header.actions" class="d-flex justify-content-center">
+        <div class="p-2">
+          <button class="btn btn-outline-danger" (click)="emitirArchivo(rowData[col.field])">
+            <i class="pi pi-times"></i>
+          </button>
         </div>
+      </div>
       </td>
     </tr>
   </ng-template>

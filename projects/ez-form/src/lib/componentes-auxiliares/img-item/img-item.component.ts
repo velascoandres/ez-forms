@@ -19,14 +19,19 @@ export class ImgItemComponent implements OnInit {
   label;
   @Input()
   controlName;
+  @Input()
+  header = {actions: '', description: ''};
 
   ngOnInit() {
-
+    if (!this.header) {
+      this.header = {actions: 'Actions', description: ''};
+    }
     this.cols = [
-      {field: 'nombreArchivo', header: this.label ? this.label : this.controlName},
-      {field: 'nombreArchivo', header: 'Actions'},
+      {field: 'nombreArchivo', header: this.header.description ? this.header.description : this.label},
+      {field: 'nombreArchivo', header: this.header.actions ? this.header.actions : 'Actions' },
     ];
   }
+
   emitirArchivo(nombreArchivo: string) {
     this.archivoSalida.emit(nombreArchivo);
   }

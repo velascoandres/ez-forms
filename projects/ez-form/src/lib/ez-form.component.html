@@ -34,7 +34,9 @@
               <ez-file-items
                 [objetosArchivos]="listaObjetosArchivos"
                 [label]="control.label? control.label : control.controlName"
-                (archivoSalida)="eliminarArchivo($event, control.controlName )">
+                (archivoSalida)="eliminarArchivo($event, control.controlName )"
+                [header]="control.type.tableHeaders"
+              >
               </ez-file-items>
             </div>
           </div>
@@ -217,11 +219,10 @@
             [multiple]="control.type.multiple"
             [accept]="control.type.accept"
             [showFile]="control.type.showFile"
+            [hint]="control.hint"
+            [tableHeaders]="control.type.tableHeaders"
             controlName="{{control.controlName}}"
           >
-            <small *ngIf="control.hint" [id]="control.controlName" class="form-text text-muted">
-              {{control.hint}}
-            </small>
           </ez-bs-input>
         </div>
         <div *ngIf="control.type.typeName === 'textarea'"

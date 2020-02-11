@@ -23,8 +23,9 @@
         {{label ? label : placeholder ? placeholder : controlName}}
       </div>
     </div>
-    <ng-content>
-    </ng-content>
+    <small *ngIf="hint" [id]="'hint'+controlName" class="form-text text-muted">
+      {{hint}}
+    </small>
     <div class="container">
       <div class="row"
            *ngIf="showFile"
@@ -32,7 +33,9 @@
         <ez-file-items
           [objetosArchivos]="listaObjetosArchivos"
           [label]="label"
-          (archivoSalida)="escucharArchivo($event)">
+          (archivoSalida)="escucharArchivo($event)"
+          [header]="tableHeaders"
+        >
 
         </ez-file-items>
       </div>

@@ -1,6 +1,5 @@
 import {Component, forwardRef, Input, OnInit} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
-import {ObjetoArchivoInterface} from '../../interfaces/objeto.archivo.interface';
 import {llenarGaleria, quitarArchivoLista} from '../../clases-genericas/funciones-archivos';
 
 @Component({
@@ -28,6 +27,10 @@ export class BsInputComponent implements OnInit, ControlValueAccessor {
   accept = '';
   @Input()
   showFile = false;
+  @Input()
+  hint = '';
+  @Input()
+  tableHeaders = {actions: '', description: ''};
   value: File[] = [];
   listaObjetosArchivos = [];
   isDisabled: boolean;
@@ -35,7 +38,6 @@ export class BsInputComponent implements OnInit, ControlValueAccessor {
   }
 
   onChange(value) {
-    // console.log('asdasd');
   }
 
   onTouch() {
@@ -71,13 +73,7 @@ export class BsInputComponent implements OnInit, ControlValueAccessor {
       llenarGaleria(this, obj);
     }
   }
-
-  obtenerArchivos() {
-    return this.listaObjetosArchivos;
-  }
-
   escucharArchivo(event) {
-    console.log(event);
     this.value = quitarArchivoLista(event, this.value);
     llenarGaleria(this, Object.values(this.value[0]));
     this.onTouch();

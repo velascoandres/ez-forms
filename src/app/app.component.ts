@@ -159,6 +159,9 @@ export class AppComponent {
         multiple: true,
         accept: '*/*',
         showFile: true,
+        tableHeaders: {
+          actions: 'Operations',
+        }
       },
     }
   ];
