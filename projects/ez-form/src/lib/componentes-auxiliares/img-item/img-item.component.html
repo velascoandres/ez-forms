@@ -17,6 +17,9 @@
   [columns]="cols"
   [value]="objetosArchivos"
   [responsive]="true"
+  [paginator]="true"
+  [rows]="3"
+  [totalRecords]="objetosArchivos.length"
 >
   <ng-template pTemplate="header" let-columns>
     <tr>
