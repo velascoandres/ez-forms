@@ -30,8 +30,12 @@
           <div class="row"
                *ngIf="filtrarArchivosPorControl(control.controlName).length > 0 && control.type.showFile"
                [hidden]="esconderArchivos">
-            <div class="col-3 item" *ngFor="let archivo of filtrarArchivosPorControl(control.controlName)">
-              <ez-file-item [objetoArchivo]="archivo" (archivoSalida)="eliminarArchivo($event, control.controlName)"></ez-file-item>
+            <div class="col-sm-12">
+              <ez-file-items
+                [objetosArchivos]="listaObjetosArchivos"
+                [label]="control.label? control.label : control.controlName"
+                (archivoSalida)="eliminarArchivo($event, control.controlName )">
+              </ez-file-items>
             </div>
           </div>
 
@@ -208,13 +212,16 @@
              class="form-group">
           <ez-bs-input
             formControlName="{{control.controlName}}"
-            [label]=control.label
-            [placeholder]=control.placeholder
+            [label]="control.label"
+            [placeholder]="control.placeholder"
             [multiple]="control.type.multiple"
             [accept]="control.type.accept"
             [showFile]="control.type.showFile"
             controlName="{{control.controlName}}"
           >
+            <small *ngIf="control.hint" [id]="control.controlName" class="form-text text-muted">
+              {{control.hint}}
+            </small>
           </ez-bs-input>
         </div>
         <div *ngIf="control.type.typeName === 'textarea'"

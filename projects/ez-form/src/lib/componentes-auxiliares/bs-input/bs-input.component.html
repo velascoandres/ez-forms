@@ -14,23 +14,28 @@
       [multiple]="multiple"
     >
     <div class="custom-file-label-label">
-      <div *ngIf="obtenerArchivos().length">
-        <div class="" *ngFor="let archivo of obtenerArchivos();">
-           {{archivo.nombreArchivo}}
+      <div *ngIf="this.listaObjetosArchivos.length">
+        <div class="" *ngFor="let archivo of this.listaObjetosArchivos;">
+          {{archivo.nombreArchivo}}
         </div>
       </div>
-      <div *ngIf="!obtenerArchivos().length">
+      <div *ngIf="!this.listaObjetosArchivos.length">
         {{label ? label : placeholder ? placeholder : controlName}}
       </div>
     </div>
-    <div class="container gal">
+    <ng-content>
+    </ng-content>
+    <div class="container">
       <div class="row"
            *ngIf="showFile"
       >
-        <div class="col-3 item" *ngFor="let archivo of obtenerArchivos();">
-          <ez-file-item [objetoArchivo]="archivo" (archivoSalida)="escucharArchivo($event)"></ez-file-item>
-        </div>
+        <ez-file-items
+          [objetosArchivos]="listaObjetosArchivos"
+          [label]="label"
+          (archivoSalida)="escucharArchivo($event)">
+
+        </ez-file-items>
       </div>
     </div>
+  </div>
 </div>
-

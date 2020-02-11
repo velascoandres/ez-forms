@@ -31,7 +31,6 @@ export class BsInputComponent implements OnInit, ControlValueAccessor {
   value: File[] = [];
   listaObjetosArchivos = [];
   isDisabled: boolean;
-  totalArchivos = 0;
   constructor() {
   }
 
@@ -78,6 +77,7 @@ export class BsInputComponent implements OnInit, ControlValueAccessor {
   }
 
   escucharArchivo(event) {
+    console.log(event);
     this.value = quitarArchivoLista(event, this.value);
     llenarGaleria(this, Object.values(this.value[0]));
     this.onTouch();

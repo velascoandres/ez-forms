@@ -1,4 +1,4 @@
-<div class="contenedor-img">
+<!--<div class="contenedor-img">
   <img *ngIf="validarExtension('imagen',objetoArchivo.formato)"
        [src]='objetoArchivo.datos'
        class="img-fluid"
@@ -12,4 +12,40 @@
       <mat-icon>delete</mat-icon>
     </button>
   </div>
-</div>
+</div>-->
+<p-table
+  [columns]="cols"
+  [value]="objetosArchivos"
+  [responsive]="true"
+>
+  <ng-template pTemplate="header" let-columns>
+    <tr>
+      <th *ngFor="let col of columns">
+        {{col.header}}
+      </th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-rowData let-columns="columns">
+    <tr>
+      <td *ngFor="let col of columns">
+        <span class="ui-column-title">{{col.header}}</span>
+        <div *ngIf="col.header !== 'Actions'" class="text-div">
+          {{rowData[col.field]}}
+          <div *ngIf="rowData['formato'].split('/')[0] === 'image'">
+            <img
+              [src]="rowData['datos']"
+              class="img-fluid"
+              alt="imagen">
+          </div>
+        </div>
+        <div *ngIf="col.header === 'Actions'" class="d-flex justify-content-center">
+          <div class="p-2">
+            <button class="btn btn-outline-danger" (click)="emitirArchivo(rowData[col.field])">
+              <i class="pi pi-times"></i>
+            </button>
+          </div>
+        </div>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>

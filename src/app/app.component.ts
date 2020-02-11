@@ -151,7 +151,7 @@ export class AppComponent {
     },
     {
       controlName: 'someFiles',
-      label: 'Add Some Files',
+      label: 'Files',
       hint: 'Please upload your files',
       placeholder: 'Add Files',
       type: {

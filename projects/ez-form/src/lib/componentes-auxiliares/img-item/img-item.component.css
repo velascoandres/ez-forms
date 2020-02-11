@@ -34,3 +34,10 @@ img {
   top:50%;
   left:50%;
 }
+.text-div{
+  word-wrap: break-word;
+}
+.action-div{
+  align-content: center;
+  align-items: center;
+}
