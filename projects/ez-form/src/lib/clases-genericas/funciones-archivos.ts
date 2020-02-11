@@ -27,7 +27,6 @@ export function llenarGaleria(palabraThis, event, update = false) {
 }
 
 export function quitarArchivoLista(nombreArchivo: string, listaArchivos: any[]) {
-  console.log(listaArchivos[0]);
   const valores = Object.values(listaArchivos[0]);
   const archivosActualizados = valores.filter(
     (archivo: File) => {
