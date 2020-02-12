@@ -1,5 +1,5 @@
 <div class="container">
-  <ez-form
+  <!--<ez-form
     [formConfig]="myConfiguration"
     [inputData]="usuario"
     (dataFromForm)="escucharDatosDelFormulario($event)"
@@ -9,7 +9,7 @@
     [showToaster]="true"
   >
     <button [disabled]="!usuario" class="btn btn-block btn-info">Submit</button>
-  </ez-form>
+  </ez-form> -->
   <ez-form
     [formConfig]="myConfiguration"
     [inputData]="usuario"
@@ -23,7 +23,7 @@
   </ez-form>
   <ez-form
     [formConfig]="configuracionFormularioBusqueda"
-    [styleFramework]="'material'"
+    [styleFramework]="'bootstrap'"
     [msgErrorAnimation]="'fadeInLeft'"
     [showToaster]="true"
     [inputData]='infoLoca'

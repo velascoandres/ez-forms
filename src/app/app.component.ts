@@ -151,7 +151,7 @@ export class AppComponent {
     },
     {
       controlName: 'someFiles',
-      label: 'Add Some Files',
+      label: 'Files',
       hint: 'Please upload your files',
       placeholder: 'Add Files',
       type: {
@@ -159,6 +159,9 @@ export class AppComponent {
         multiple: true,
         accept: '*/*',
         showFile: true,
+        tableHeaders: {
+          actions: 'Operations',
+        }
       },
     }
   ];

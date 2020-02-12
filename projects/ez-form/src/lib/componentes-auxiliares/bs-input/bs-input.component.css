@@ -34,3 +34,7 @@
 .gal{
   margin-top: 1rem;
 }
+
+.text-div{
+  word-wrap: break-word;
+}

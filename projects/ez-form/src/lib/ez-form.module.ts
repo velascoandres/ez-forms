@@ -19,6 +19,7 @@ import {
 import {BsInputComponent} from './componentes-auxiliares/bs-input/bs-input.component';
 import {ImgItemComponent} from './componentes-auxiliares/img-item/img-item.component';
 import { AutoCompleteModule } from 'primeng/autocomplete';
+import {TableModule} from 'primeng/table';
 
 
 @NgModule({
@@ -44,8 +45,12 @@ import { AutoCompleteModule } from 'primeng/autocomplete';
     MaterialFileInputModule,
     MatAutocompleteModule,
     AutoCompleteModule,
+    TableModule,
   ],
-  exports: [EzFormComponent],
+  exports: [
+    EzFormComponent,
+    BsInputComponent,
+  ],
 })
 export class EzFormModule {
 }

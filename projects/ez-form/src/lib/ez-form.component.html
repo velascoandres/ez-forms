@@ -3,7 +3,7 @@
 <form [formGroup]="formulario" class="filled">
   <div *ngIf="styleFramework === 'material'" class="container">
     <div class="row">
-      <div *ngFor="let control of formConfig; let i = index" class="col-md-6">
+      <div *ngFor="let control of formConfig; let i = index" class="col-lg-{{fullWidth ? '12' : '6'}}">
         <div *ngIf="control.type.typeName === 'file'">
           <mat-form-field
             class="filled"
@@ -30,8 +30,14 @@
           <div class="row"
                *ngIf="filtrarArchivosPorControl(control.controlName).length > 0 && control.type.showFile"
                [hidden]="esconderArchivos">
-            <div class="col-3 item" *ngFor="let archivo of filtrarArchivosPorControl(control.controlName)">
-              <ez-file-item [objetoArchivo]="archivo" (archivoSalida)="eliminarArchivo($event, control.controlName)"></ez-file-item>
+            <div class="col-sm-12">
+              <ez-file-items
+                [objetosArchivos]="listaObjetosArchivos"
+                [label]="control.label? control.label : control.controlName"
+                (archivoSalida)="eliminarArchivo($event, control.controlName )"
+                [header]="control.type.tableHeaders"
+              >
+              </ez-file-items>
             </div>
           </div>
 
@@ -203,16 +209,18 @@
   </div>
   <div *ngIf="styleFramework === 'bootstrap'" class="container">
     <div class="row">
-      <div *ngFor="let control of formConfig; let i = index" class="col-md-6">
+      <div *ngFor="let control of formConfig; let i = index" class="col-lg-{{fullWidth ? '12' : '6'}}">
         <div *ngIf="control.type.typeName === 'file'"
              class="form-group">
           <ez-bs-input
             formControlName="{{control.controlName}}"
-            [label]=control.label
-            [placeholder]=control.placeholder
+            [label]="control.label"
+            [placeholder]="control.placeholder"
             [multiple]="control.type.multiple"
             [accept]="control.type.accept"
             [showFile]="control.type.showFile"
+            [hint]="control.hint"
+            [tableHeaders]="control.type.tableHeaders"
             controlName="{{control.controlName}}"
           >
           </ez-bs-input>
