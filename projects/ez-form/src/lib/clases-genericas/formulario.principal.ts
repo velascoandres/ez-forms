@@ -216,8 +216,7 @@ export class FormularioPrincipal {
         (informacionFormulario) => {
           this.transformarControlesConArreglosBoolean(informacionFormulario);
           const formularioValido = !this.formulario.invalid;
-          console.log(this.formulario.controls);
-          this.obtenerErrores();
+          // this.obtenerErrores();
           if (formularioValido) {
             if (this.showToaster) {
               this.toaster.pop(
@@ -240,7 +239,6 @@ export class FormularioPrincipal {
 
   verificarMensajeError(nombreControl) {
     const tieneMensajesError = this.objetoArreglosErrores[nombreControl] && this.objetoArreglosErrores[nombreControl].length > 0;
-    console.log(this.objetoArreglosErrores);
     return tieneMensajesError;
   }
 
@@ -260,7 +258,7 @@ export class FormularioPrincipal {
         }
       }
     );
-    console.log(errores);
+    // console.log(errores);
   }
 
   llenarGaleriaMaterial(event, control) {
