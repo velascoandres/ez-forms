@@ -30,7 +30,7 @@
       <div class="row"
            *ngIf="showFile"
       >
-        <ez-file-items
+        <ez-file-items *ngIf="listaObjetosArchivos.length"
           [objetosArchivos]="listaObjetosArchivos"
           [label]="label"
           (archivoSalida)="escucharArchivo($event)"

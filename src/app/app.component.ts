@@ -154,6 +154,9 @@ export class AppComponent {
       label: 'Files',
       hint: 'Please upload your files',
       placeholder: 'Add Files',
+      validators: [
+        Validators.required,
+      ],
       type: {
         typeName: 'file',
         multiple: true,
@@ -161,6 +164,7 @@ export class AppComponent {
         showFile: true,
         tableHeaders: {
           actions: 'Operations',
+          description: 'Entry Files'
         }
       },
     }
@@ -215,8 +219,9 @@ export class AppComponent {
     birthday: '1999-02-16',
     favoriteFruit: 1,
     password: '12133',
-    address: 'Av. 1231',
-    cities: [1, 2]
+    address: '',
+    cities: [1, 2],
+    someFiles: [],
   };
 
   myToasterConfig = {
@@ -240,14 +245,17 @@ export class AppComponent {
       console.log('todo mal');
     }
   }
+
   constructor(
     private readonly _toastService: ToastService,
     private readonly _wikipediaService: WikipediaRestService
   ) {
   }
+
   filterWikipediaArticleByTitle(event, contexto) {
     return contexto._wikipediaService.find(event.query ? event.query : event);
   }
+
   mostrarMensaje() {
     const mensaje = {
       title: 'Errorcito',

@@ -158,7 +158,6 @@ export class FormularioPrincipal {
     );
   }
 
-
   protected llenarMensajesErrorCampo(control: AbstractControl | any, nombreCampo: string) {
     let arregloErrores = [];
     const tieneDatosPorDefecto = this.inputData !== undefined && Object.keys(this.inputData).length > 0;
@@ -217,6 +216,8 @@ export class FormularioPrincipal {
         (informacionFormulario) => {
           this.transformarControlesConArreglosBoolean(informacionFormulario);
           const formularioValido = !this.formulario.invalid;
+          console.log(this.formulario.controls);
+          this.obtenerErrores();
           if (formularioValido) {
             if (this.showToaster) {
               this.toaster.pop(
@@ -239,11 +240,27 @@ export class FormularioPrincipal {
 
   verificarMensajeError(nombreControl) {
     const tieneMensajesError = this.objetoArreglosErrores[nombreControl] && this.objetoArreglosErrores[nombreControl].length > 0;
+    console.log(this.objetoArreglosErrores);
     return tieneMensajesError;
   }
 
   obtenerMensajesError(nombreControl) {
     return this.objetoArreglosErrores[nombreControl];
+  }
+
+  obtenerErrores() {
+    const controles = Object.keys(this.formulario.controls);
+    const errores = controles.map(
+      (nombreControl: string) => {
+        const control = this.formulario.controls[nombreControl];
+        if ( control.errors !== null) {
+          const error = {};
+          error[nombreControl] = control.errors;
+          return error;
+        }
+      }
+    );
+    console.log(errores);
   }
 
   llenarGaleriaMaterial(event, control) {
