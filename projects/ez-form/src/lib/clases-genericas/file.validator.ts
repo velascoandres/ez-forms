@@ -1,4 +1,3 @@
-// Validaddores Archivos
 import {FormControl, ValidatorFn} from '@angular/forms';
 
 export class FileValidator {
@@ -50,7 +49,7 @@ export class FileValidator {
   }
 
   private static fileValidation(funcionDeValidacion: (File) => null | object): ValidatorFn {
-    return (formControl: FormControl) => {
+    const funcionValidacion = (formControl: FormControl) => {
       const valores = Object.values(formControl.value);
       if (!valores.length) {
         return null;
@@ -66,6 +65,6 @@ export class FileValidator {
         return funcionDeValidacion(archivosDelFormulario[0]);
       }
     };
+    return funcionValidacion;
   }
-
 }
