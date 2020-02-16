@@ -16,8 +16,11 @@
      4.5  [Bootstrap](#bootstrap)
      
      4.6  [Animations](#animations)
+     
 5. [Summary](#summary)     
-  
+
+6. [Especial Thanks](#especial-thanks)  
+
 ## Description  
 `ez-form` is a componente that allows create reactive forms for angular 2+. 
 
@@ -383,6 +386,7 @@ Results:
 ## File
 For angular material this library makes use of [ngx-material-file-input](https://www.npmjs.com/package/ngx-material-file-input)
 Demonstration from the configuration example
+
 ![fileinput](https://github.com/velascoandrs/repo-de-imagenes/blob/master/archivos/single-file.PNG?raw=true)
 
 ## Multiple Files
@@ -586,7 +590,7 @@ Complete example form component:
 If you are looking for a full example of this library please check the following [github repository](https://github.com/velascoandrs/ez-form-example)
 
 
-### Especial Thanks
+# Especial Thanks
 
 * [Angular Material](https://material.angular.io/)
 * [PrimeNG](https://primefaces.org/primeng/#/)
