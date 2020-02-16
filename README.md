@@ -24,7 +24,7 @@
 ## Description  
 `ez-form` is a componente that allows create reactive forms for angular 2+. 
 
-``This library makes use of angular material, bootstrap and PrimeNG libraries and 
+``This library makes use of angular material, bocd otstrap and PrimeNG libraries and 
 components ``
  
 ## Requirements

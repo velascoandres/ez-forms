@@ -2,6 +2,12 @@
   "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
   "dest": "../../dist/ez-form",
   "lib": {
-    "entryFile": "src/public-api.ts"
+    "entryFile": "src/public-api.ts",
+    "umdModuleIds": {
+      "angular2-toaster": "angular2Toaster",
+      "ngx-material-file-input": "ngxMaterialFileInput",
+      "primeng/autocomplete": "autocomplete",
+      "primeng/table": "table"
+    }
   }
 }
