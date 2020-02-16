@@ -2,6 +2,7 @@ import {Component} from '@angular/core';
 import {Validators} from '@angular/forms';
 import {ToastService} from '../../projects/toast/src/lib/toast.service';
 import {WikipediaRestService} from './servicios/wikipedia-rest.service';
+import {FileValidator} from '../../projects/ez-form/src/lib/clases-genericas/file.validator';
 
 @Component({
   selector: 'mat-ta-root',
@@ -41,6 +42,7 @@ export class AppComponent {
     },
     {
       controlName: 'address',
+      labe: 'Address',
       placeholder: 'Enter a complete address',
       type: {
         typeName: 'textarea',
@@ -143,20 +145,40 @@ export class AppComponent {
       label: 'Profile Picture',
       hint: 'Please upload your profile picture',
       placeholder: 'Add your profile picture',
+      validators: [
+        Validators.required,
+        FileValidator.extensions(['jpg']),
+        FileValidator.minSize(100),
+        FileValidator.maxSize(500),
+      ],
+      errorMessages: {
+        required: 'Mandatory File',
+        fileExtension: 'Please select a jpg file',
+        fileMinSize: 'File size must be above of 100 kilobytes',
+        fileMaxSize: 'File size is larger than 500 kilobytes'
+      },
       type: {
         typeName: 'file',
         multiple: false,
         accept: 'image/*',
+        showFile: true,
       },
     },
     {
       controlName: 'someFiles',
-      label: 'Files',
+      label: 'Pictures',
       hint: 'Please upload your files',
       placeholder: 'Add Files',
       validators: [
         Validators.required,
+        FileValidator.extensions(['png']),
+        FileValidator.maxSize(500),
       ],
+      errorMessages: {
+        fileExtension: 'Please select png files only',
+        required: 'Mandatory File',
+        fileMaxSize: 'File size is larger than 500 kilobytes'
+      },
       type: {
         typeName: 'file',
         multiple: true,
@@ -219,7 +241,6 @@ export class AppComponent {
     birthday: '1999-02-16',
     favoriteFruit: 1,
     password: '12133',
-    address: '',
     cities: [1, 2],
     someFiles: [],
   };
