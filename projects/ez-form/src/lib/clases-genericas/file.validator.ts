@@ -6,7 +6,7 @@ export class FileValidator {
   static maxSize(maxSize: number): ValidatorFn {
     const validatorFn = (file: File) => {
       const esArchivo = file instanceof File;
-      const superaElMaximo = esArchivo && file.size > maxSize;
+      const superaElMaximo = esArchivo && file.size > maxSize * 1000;
       if (superaElMaximo) {
         return {fileMaxSize: true};
       }
@@ -16,7 +16,7 @@ export class FileValidator {
 
   static minSize(minSize: number): ValidatorFn {
     const validatorFn = (file: File) => {
-      if (file instanceof File && file.size < minSize) {
+      if (file instanceof File && file.size < minSize * 1000) {
         return {fileMinSize: true};
       }
     };

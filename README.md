@@ -19,13 +19,18 @@
 5. [Summary](#summary)     
   
 ## Description  
-`ez-form` is a componente that allows create reactive forms for angular 2+.  
+`ez-form` is a componente that allows create reactive forms for angular 2+. 
+
+``This library makes use of angular material, bootstrap and PrimeNG libraries and 
+components ``
  
 ## Requirements
 * Bootstrap
 ```shell script
  $ npm i bootstrap
 ```
+
+* PRIMENG check [Documentation](https://www.primefaces.org/primeng/#/setup)
 
 * Angular Material check [Documentation](https://material.angular.io/)
 ```text
@@ -34,6 +39,7 @@
 * Angular 2 Toaster check [Documentation](https://www.npmjs.com/package/angular2-toaster)
 
 * ngx-material-file-input check [Documentation](https://www.npmjs.com/package/ngx-material-file-input)
+  
   
 ## Install  
 * Install the package:   
@@ -250,18 +256,35 @@ For example: we need to create a form with the following fields:
 ```
 
 * Favorite Files: `File` input (Multiple)
+  * Validators: Required, minSize, maxSize, file extension.
 ```typescript
 {
       controlName: 'someFiles',
       label: 'Add Some Files',
       hint: 'Please upload your files',
       placeholder: 'Add Files',
+      validators: [
+        Validators.required,
+        FileValidator.extensions(['png']),
+        FileValidator.minSize(100),
+        FileValidator.maxSize(500),
+      ],
+      errorMessages: {
+        required: 'Mandatory File',
+        fileExtension: 'Please select png file',
+        fileMinSize: 'File size must be above of 100 kilobytes',
+        fileMaxSize: 'File size is larger than 500 kilobytes'
+      }
       type: {
         typeName: 'file',
         multiple: true,
         accept: '*/*',
         showFile: true,
-      },
+        tableHeaders: { // Optional
+          actions: 'Operations',
+          description: 'Entry Files'
+        }
+      }
     }
 ```
 All fields must be at a config array like this in our parent component, for example: 
@@ -358,7 +381,7 @@ Demonstration from the configuration example
 ![files](https://github.com/velascoandrs/repo-de-imagenes/blob/master/fileds/files.PNG?raw=true)
 
 
-## AutoComplete
+## Autocomplete
 
 Parent component typescript code:
 
@@ -374,7 +397,7 @@ Parent component typescript code:
             typeName: 'autocomplete',
             maxLength: 30,
             completeMethod: this.filterCityWithHttpService,
-            nameAutoComplete: 'name',
+            nameAutoComplete: 'name', // object attribute that will be displayed in the component
             componentReference: this
           },
           errorMessages: {
@@ -387,10 +410,44 @@ Parent component typescript code:
         return context._cityService.find(event.query ? event.query : event);
     }
 ```
+### About filter method
+```text
+    The filter service methond must be return an observable. If you need format the data from the API, 
+    you should use the `pipe` operator.
+```
+The `find` method code in wikipedia service:
+```typescript
+    find(query: string): Observable<any> {
+        const url = `${this.url}&srsearch=${query}`;
+        return this._httpClient.get(url)
+        .pipe(
+          mergeMap(
+            (response: any) => {
+              if (response.query) {
+                return of(response.query.search);
+              }
+              return of([]);
+            }
+          )
+        );
+      }
+```
+
+### Results
+* Material
+
+![autocomplete-material](https://github.com/velascoandrs/repo-de-imagenes/blob/master/autocomplete/material.PNG?raw=true)
+
+* PRIMENG
+```text
+I put the PRIMENG autocomplete into bootstrap mode since the boostrap framework does not have an autocomplete component.
+
+```
+![autocomplete-primeng](https://github.com/velascoandrs/repo-de-imagenes/blob/master/autocomplete/primeng.PNG?raw=true)
 
 ## Toaster
 This library makes use of [angular2-toaster](https://www.npmjs.com/package/angular2-toaster)
-* The toaster is the message which shows on screen when the form has been filled correctly or not.
+* The toaster is the message which shows on screen when the form has been filled correctly or incorrectly.
 * The display of this messages could be optional
 
 We need to make use of the following Input : `showToaster`"
@@ -446,8 +503,10 @@ Use the Input : `styleFramework`"
           >..
 ```
 
-Results
+## Results
+
 ![resultadoBootstrap](https://github.com/velascoandrs/repo-de-imagenes/blob/master/version-en/form-invalid-bs.PNG?raw=true)
+
 
 ### Animations
 The error messages animations for every form field could be modify, so we need to make use of [animate.css
@@ -489,6 +548,7 @@ Complete example form component:
 | msgErrorAnimation | Input | Error message animation | OPTIONAL
 | toasterConfig | Input | Toaster message configuration object | OPTIONAL
 | showToaster | Input | Show Toaster message | OPTIONAL
+| fullWidth | Input | Full width of each form fields | OPTIONAL
 
 ### Control Object
 |Attribute  | Description | Required |

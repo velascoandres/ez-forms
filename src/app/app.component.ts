@@ -2,8 +2,7 @@ import {Component} from '@angular/core';
 import {Validators} from '@angular/forms';
 import {ToastService} from '../../projects/toast/src/lib/toast.service';
 import {WikipediaRestService} from './servicios/wikipedia-rest.service';
-import {FileValidator} from "../../projects/ez-form/src/lib/clases-genericas/file.validator";
-import {RxwebValidators} from "@rxweb/reactive-form-validators";
+import {FileValidator} from '../../projects/ez-form/src/lib/clases-genericas/file.validator';
 
 @Component({
   selector: 'mat-ta-root',
@@ -148,8 +147,16 @@ export class AppComponent {
       placeholder: 'Add your profile picture',
       validators: [
         Validators.required,
-        FileValidator.extensions(['png']),
+        FileValidator.extensions(['jpg']),
+        FileValidator.minSize(100),
+        FileValidator.maxSize(500),
       ],
+      errorMessages: {
+        required: 'Mandatory File',
+        fileExtension: 'Please select jpg file',
+        fileMinSize: 'File size must be above of 100 kilobytes',
+        fileMaxSize: 'File size is larger than 500 kilobytes'
+      },
       type: {
         typeName: 'file',
         multiple: false,
@@ -159,16 +166,18 @@ export class AppComponent {
     },
     {
       controlName: 'someFiles',
-      label: 'Files',
+      label: 'Pictures',
       hint: 'Please upload your files',
       placeholder: 'Add Files',
       validators: [
         Validators.required,
         FileValidator.extensions(['png']),
+        FileValidator.maxSize(500),
       ],
       errorMessages: {
         fileExtension: 'Please select png files',
-        required: 'Mandatory File'
+        required: 'Mandatory File',
+        fileMaxSize: 'File size is larger than 500 kilobytes'
       },
       type: {
         typeName: 'file',
