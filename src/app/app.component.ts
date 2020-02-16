@@ -2,6 +2,8 @@ import {Component} from '@angular/core';
 import {Validators} from '@angular/forms';
 import {ToastService} from '../../projects/toast/src/lib/toast.service';
 import {WikipediaRestService} from './servicios/wikipedia-rest.service';
+import {FileValidator} from "../../projects/ez-form/src/lib/clases-genericas/file.validados";
+import {RxwebValidators} from "@rxweb/reactive-form-validators";
 
 @Component({
   selector: 'mat-ta-root',
@@ -41,6 +43,7 @@ export class AppComponent {
     },
     {
       controlName: 'address',
+      labe: 'Address',
       placeholder: 'Enter a complete address',
       type: {
         typeName: 'textarea',
@@ -143,6 +146,11 @@ export class AppComponent {
       label: 'Profile Picture',
       hint: 'Please upload your profile picture',
       placeholder: 'Add your profile picture',
+      validators: [
+        Validators.required,
+        RxwebValidators.extension({extensions: ['png']}),
+        FileValidator.extensions(['png']),
+      ],
       type: {
         typeName: 'file',
         multiple: false,
@@ -219,7 +227,6 @@ export class AppComponent {
     birthday: '1999-02-16',
     favoriteFruit: 1,
     password: '12133',
-    address: '',
     cities: [1, 2],
     someFiles: [],
   };

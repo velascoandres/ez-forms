@@ -1,7 +1,9 @@
 <div class="form-group">
   <label
     for="file{{controlName}}">
-    {{label ? label : placeholder ? placeholder : controlName}}
+    <span class="{{!listaObjetosArchivos.length ? 'text-error' : ''}}">
+          {{label ? label : placeholder ? placeholder : controlName}}
+    </span>
   </label>
   <div class="custom-file">
     <input

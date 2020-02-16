@@ -10,10 +10,12 @@
             appearance="outline"
           >
             <mat-label>
-              {{control.label ? control.label : control.placeholder ? control.placeholder : control.controlName}}
+              <span class="{{determinarSiEstaValido(control.controlName) ? 'text-error' : ''}}">
+                {{control.label ? control.label : control.placeholder ? control.placeholder : control.controlName}}
+              </span>
             </mat-label>
             <ngx-mat-file-input
-              formControlName={{control.controlName}}
+              formControlName="{{control.controlName}}"
               placeholder="{{control.placeholder ? control.placeholder : ''}}"
               [multiple]='control.type.multiple'
               [accept]='control.type.accept? control.type.accept : "*/*"'
@@ -48,7 +50,9 @@
                         class="filled"
         >
           <mat-label>
-            {{control.label ? control.label : control.placeholder ? control.placeholder : control.controlName}}
+            <span class="{{determinarSiEstaValido(control.controlName) ? 'text-error' : ''}}">
+              {{control.label ? control.label : control.placeholder ? control.placeholder : control.controlName}}
+            </span>
           </mat-label>
           <textarea
             matInput
@@ -69,8 +73,11 @@
                         appearance="outline"
                         class="filled">
           <mat-label>
-            {{control.label ? control.label : control.placeholder ? control.placeholder : control.controlName}}
+            <span class="{{determinarSiEstaValido(control.controlName) ? 'text-error' : ''}}">
+              {{control.label ? control.label : control.placeholder ? control.placeholder : control.controlName}}
+            </span>
           </mat-label>
+
           <input
             matInput
             type="text"
@@ -95,7 +102,10 @@
                         appearance="outline"
                         class="filled">
           <mat-label *ngIf="control.type.typeName === 'date'">
-            {{control.label ? control.label : control.placeholder ? control.placeholder : control.controlName}}</mat-label>
+            <span class="{{determinarSiEstaValido(control.controlName) ? 'text-error' : ''}}">
+              {{control.label ? control.label : control.placeholder ? control.placeholder : control.controlName}}
+            </span>
+          </mat-label>
           <input matInput
                  [matDatepicker]="dp3"
                  placeholder="{{control.placeholder ? control.placeholder : ''}}"
@@ -114,7 +124,9 @@
           appearance="outline" class="filled"
         >
           <mat-label *ngIf="control.label">
-            {{control.label}}
+            <span class="{{determinarSiEstaValido(control.controlName) ? 'text-error' : ''}}">
+              {{control.label ? control.label : control.placeholder ? control.placeholder : control.controlName}}
+            </span>
           </mat-label>
           <select matNativeControl
                   formControlName={{control.controlName}}
@@ -140,7 +152,11 @@
           formControlName="{{control.controlName}}"
           class="radio-group"
         >
-          <label>{{control.label}}</label>
+          <label>
+            <span class="{{determinarSiEstaValido(control.controlName) ? 'text-error' : ''}}">
+              {{control.label}}
+            </span>
+          </label>
           <mat-radio-button
             *ngFor="let opcion of control.type.options"
             class="radio-button"
@@ -150,7 +166,11 @@
           </mat-radio-button>
         </mat-radio-group>
         <div *ngIf="control.type.typeName === 'check'">
-          <label>{{control.label}}</label>
+          <label>
+            <span class="{{determinarSiEstaValido(control.controlName) ? 'text-error' : ''}}">
+              {{control.label}}
+            </span>
+          </label>
           <p *ngFor="let opcion of control.type.options; let i = index"
              formArrayName="{{control.controlName}}"
           >
@@ -167,7 +187,9 @@
             appearance="outline"
           >
             <mat-label>
+              <span class="{{determinarSiEstaValido(control.controlName) ? 'text-error' : ''}}">
               {{control.label ? control.label : control.placeholder ? control.placeholder : control.controlName}}
+            </span>
             </mat-label>
             <input
               placeholder="{{control.placeholder ? control.placeholder : ''}}"
@@ -230,7 +252,9 @@
           <label
             for="{{control.controlName}}"
           >
-            {{control.label ? control.label : control.placeholder ? control.placeholder : control.controlName}}
+            <span class="{{determinarSiEstaValido(control.controlName) ? 'text-error' : ''}}">
+              {{control.label ? control.label : control.placeholder ? control.placeholder : control.controlName}}
+            </span>
           </label>
           <textarea
             class="form-control"
@@ -252,7 +276,9 @@
             *ngIf="control.type.typeName === 'input'"
             for="{{control.controlName}}"
           >
-            {{control.label ? control.label : control.placeholder ? control.placeholder : control.controlName}}
+            <span class="{{determinarSiEstaValido(control.controlName) ? 'text-error' : ''}}">
+              {{control.label ? control.label : control.placeholder ? control.placeholder : control.controlName}}
+            </span>
           </label>
           <input
             [type]="control.type.class !== 'password'? 'text' : 'password'"
@@ -273,7 +299,9 @@
             *ngIf="control.type.typeName === 'date'"
             for="{{control.controlName}}"
           >
-            {{control.label ? control.label : control.placeholder ? control.placeholder : control.controlName}}
+            <span class="{{determinarSiEstaValido(control.controlName) ? 'text-error' : ''}}">
+              {{control.label ? control.label : control.placeholder ? control.placeholder : control.controlName}}
+            </span>
           </label>
           <input
             id="dateBs{{control.controlName}}"
@@ -295,7 +323,9 @@
             *ngIf="control.label"
             for="{{i}}"
           >
-            {{control.label}}
+            <span class="{{determinarSiEstaValido(control.controlName) ? 'text-error' : ''}}">
+              {{control.label}}
+            </span>
           </label>
           <select
             id="{{i}}"
@@ -316,7 +346,11 @@
             {{control.hint}}     {{control.type.maxLength ? +formulario.get(control.controlName).value.length + '/' : '' }}  {{control.type.maxLength ? control.type.maxLength : ''}}
           </small>
         </div>
-        <label *ngIf="control.type.typeName === 'radio'">{{control.label}}</label>
+        <label *ngIf="control.type.typeName === 'radio'">
+          <span class="{{determinarSiEstaValido(control.controlName) ? 'text-error' : ''}}">
+              {{control.label}}
+            </span>
+        </label>
         <div class="form-check" *ngIf="control.type.typeName === 'radio'">
           <div *ngFor="let opcion of control.type.options">
             <input
@@ -330,12 +364,18 @@
               for="radio{{opcion.label}}{{i}}"
               class="form-check-label"
             >
-              {{opcion.label}}
+              <span class="{{determinarSiEstaValido(control.controlName) ? 'text-error' : ''}}">
+              {{control.label}}
+            </span>
             </label>
           </div>
         </div>
         <div *ngIf="control.type.typeName === 'check'">
-          <label>{{control.label}}</label>
+          <label>
+            <span class="{{determinarSiEstaValido(control.controlName) ? 'text-error' : ''}}">
+              {{control.label}}
+            </span>
+          </label>
           <div class="form-check">
             <div *ngFor="let opcion of control.type.options; let i = index" formArrayName="{{control.controlName}}">
               <input
@@ -358,7 +398,9 @@
           <label
             for="auto{{control.controlName}}"
           >
-            {{control.label ? control.label : control.placeholder ? control.placeholder : control.controlName}}
+            <span class="{{determinarSiEstaValido(control.controlName) ? 'text-error' : ''}}">
+              {{control.label ? control.label : control.placeholder ? control.placeholder : control.controlName}}
+            </span>
           </label>
           <p-autoComplete
             id="auto{{control.controlName}}"

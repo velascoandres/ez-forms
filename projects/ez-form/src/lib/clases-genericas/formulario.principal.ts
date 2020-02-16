@@ -114,6 +114,8 @@ export class FormularioPrincipal {
           );
         } else {
           controles[nombreControl] = [valorDefecto, validadores];
+          console.log(controles[nombreControl]);
+
         }
         // controles[nombreControl]['disabled'] = desactivado;
         const tieneMensajesError = itemConfiguracion.errorMessages !== undefined;
@@ -217,6 +219,7 @@ export class FormularioPrincipal {
           this.transformarControlesConArreglosBoolean(informacionFormulario);
           const formularioValido = !this.formulario.invalid;
           // this.obtenerErrores();
+          console.log(this.formulario.controls);
           if (formularioValido) {
             if (this.showToaster) {
               this.toaster.pop(
@@ -251,7 +254,7 @@ export class FormularioPrincipal {
     const errores = controles.map(
       (nombreControl: string) => {
         const control = this.formulario.controls[nombreControl];
-        if ( control.errors !== null) {
+        if (control.errors !== null) {
           const error = {};
           error[nombreControl] = control.errors;
           return error;
@@ -363,5 +366,10 @@ export class FormularioPrincipal {
 
   cambio(evento, nombreControl) {
     this.formulario.get(nombreControl).setValue(evento);
+  }
+
+  determinarSiEstaValido(nombreControl: string) {
+    const control = this.formulario.controls[nombreControl];
+    return control.invalid;
   }
 }
