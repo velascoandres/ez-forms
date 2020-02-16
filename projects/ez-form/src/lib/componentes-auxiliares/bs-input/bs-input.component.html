@@ -1,46 +1,41 @@
-<div class="form-group">
-  <label
-    for="file{{controlName}}">
-    <span class="{{!listaObjetosArchivos.length ? 'text-error' : ''}}">
-          {{label ? label : placeholder ? placeholder : controlName}}
-    </span>
-  </label>
-  <div class="custom-file">
-    <input
-      type="file"
-      class="form-control-file custom-file-input"
-      id="file{{controlName}}"
-      placeholder="{{placeholder ? placeholder : ''}}"
-      [accept]='accept? accept : "*/*"'
-      (input)="onInput($event.target.files)"
-      [multiple]="multiple"
-    >
-    <div class="custom-file-label-label">
-      <div *ngIf="this.listaObjetosArchivos.length">
-        <div class="" *ngFor="let archivo of this.listaObjetosArchivos;">
-          {{archivo.nombreArchivo}}
-        </div>
-      </div>
-      <div *ngIf="!this.listaObjetosArchivos.length">
-        {{label ? label : placeholder ? placeholder : controlName}}
+<div class="custom-file">
+  <input
+    type="file"
+    class="form-control-file custom-file-input"
+    id="file{{controlName}}"
+    placeholder="{{placeholder ? placeholder : ''}}"
+    [accept]='accept? accept : "*/*"'
+    (input)="onInput($event.target.files)"
+    [multiple]="multiple"
+
+  >
+  <div class="custom-file-label-label">
+    <div *ngIf="this.listaObjetosArchivos.length">
+      <div class="" *ngFor="let archivo of this.listaObjetosArchivos;">
+        {{archivo.nombreArchivo}}
       </div>
     </div>
-    <small *ngIf="hint" [id]="'hint'+controlName" class="form-text text-muted">
-      {{hint}}
-    </small>
-    <div class="container">
-      <div class="row"
-           *ngIf="showFile"
+    <div *ngIf="!this.listaObjetosArchivos.length">
+      {{label ? label : placeholder ? placeholder : controlName}}
+    </div>
+  </div>
+  <small *ngIf="hint" [id]="'hint'+controlName" class="form-text text-muted">
+    {{hint}}
+  </small>
+  <div class="container">
+    <ng-content></ng-content>
+    <div class="row"
+         *ngIf="showFile"
+    >
+      <ez-file-items
+        *ngIf="listaObjetosArchivos.length"
+        [objetosArchivos]="listaObjetosArchivos"
+        [label]="label"
+        (archivoSalida)="escucharArchivo($event)"
+        [header]="tableHeaders"
       >
-        <ez-file-items *ngIf="listaObjetosArchivos.length"
-          [objetosArchivos]="listaObjetosArchivos"
-          [label]="label"
-          (archivoSalida)="escucharArchivo($event)"
-          [header]="tableHeaders"
-        >
+      </ez-file-items>
 
-        </ez-file-items>
-      </div>
     </div>
   </div>
 </div>

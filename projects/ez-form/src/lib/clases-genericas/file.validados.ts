@@ -5,8 +5,10 @@ export class FileValidator {
 
   static maxSize(maxSize: number): ValidatorFn {
     const validatorFn = (file: File) => {
-      if (file instanceof File && file.size > maxSize) {
-        return { fileMinSize: { requiredSize: maxSize, actualSize: file.size, file } };
+      const esArchivo = file instanceof File;
+      const superaElMaximo = esArchivo && file.size > maxSize;
+      if (superaElMaximo) {
+        return {fileMaxSize: true};
       }
     };
     return FileValidator.fileValidation(validatorFn);
@@ -15,55 +17,54 @@ export class FileValidator {
   static minSize(minSize: number): ValidatorFn {
     const validatorFn = (file: File) => {
       if (file instanceof File && file.size < minSize) {
-        return { fileMinSize: { requiredSize: minSize, actualSize: file.size, file } };
+        return {fileMinSize: true};
       }
     };
     return FileValidator.fileValidation(validatorFn);
   }
 
-  /**
-   * extensions must not contain dot
-   */
+  // validar extensiones de archivo
   static extensions(allowedExtensions: Array<string>): ValidatorFn {
-    const validatorFn = (file: File) => {
-      if (allowedExtensions.length === 0) {
+    const funcionValidacion = (file: File) => {
+      const existenExtenciones = allowedExtensions.length === 0;
+      if (existenExtenciones) {
         return null;
       }
-
-      if (file instanceof File) {
+      const esArchivo = file instanceof File;
+      if (esArchivo) {
         const ext = FileValidator.obtenerExtension(file.name);
-        if (allowedExtensions.indexOf(ext) === -1) {
-          return { fileExtension: { allowedExtensions, actualExtension: file.type, file } };
+        const noContieneExtension = allowedExtensions.indexOf(ext) === -1;
+        if (noContieneExtension) {
+          return {fileExtension: true};
         }
       }
     };
-    return FileValidator.fileValidation(validatorFn);
+    return FileValidator.fileValidation(funcionValidacion);
   }
 
-  private static obtenerExtension(filename: string): null|string {
-    if (filename.indexOf('.') === -1) {
+  private static obtenerExtension(nombreDelArchivo: string): null | string {
+    if (nombreDelArchivo.indexOf('.') === -1) {
       return null;
     }
-    return filename.split('.').pop();
+    return nombreDelArchivo.split('.').pop();
   }
 
-  private static fileValidation(validatorFn: (File) => null|object): ValidatorFn {
+  private static fileValidation(funcionDeValidacion: (File) => null | object): ValidatorFn {
     return (formControl: FormControl) => {
-      if (!formControl.value) {
+      const valores = Object.values(formControl.value);
+      if (!valores.length) {
         return null;
       }
-
+      const archivosDelFormulario = Object.values(valores[0]);
       const files: File[] = [];
       const isMultiple = Array.isArray(formControl.value);
-      isMultiple
-        ? formControl.value.forEach((file: File) => files.push(file))
-        : files.push(formControl.value);
-
-      /*for (const file of files) {
-        return validatorFn(file);
-      }*/
-
-      return {extension: true};
+      if (isMultiple) {
+        for (const archivo of archivosDelFormulario) {
+          return funcionDeValidacion(archivo);
+        }
+      } else {
+        return funcionDeValidacion(archivosDelFormulario[0]);
+      }
     };
   }
 

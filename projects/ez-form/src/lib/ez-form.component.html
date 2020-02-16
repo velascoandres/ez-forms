@@ -29,15 +29,26 @@
               {{control.hint}}  {{control.type.maxLength ? +formulario.get(control.controlName).value.length + '/' : '' }}  {{control.type.maxLength ? control.type.maxLength : ''}}
             </mat-hint>
           </mat-form-field>
+          <div class="row">
+            <div class="col-md-12">
+              <div *ngIf="verificarMensajeError(control.controlName)"
+                   class="alert alert-warning animated full-width{{msgErrorAnimation}}"
+                   role="alert">
+                <ul>
+                  <li *ngFor="let error of obtenerMensajesError(control.controlName)">{{error}}</li>
+                </ul>
+              </div>
+            </div>
+          </div>
           <div class="row"
                *ngIf="filtrarArchivosPorControl(control.controlName).length > 0 && control.type.showFile"
                [hidden]="esconderArchivos">
             <div class="col-sm-12">
-              <ez-file-items *ngIf="listaObjetosArchivos.length"
-                [objetosArchivos]="listaObjetosArchivos"
-                [label]="control.label? control.label : control.controlName"
-                (archivoSalida)="eliminarArchivo($event, control.controlName )"
-                [header]="control.type.tableHeaders"
+              <ez-file-items *ngIf="listarArhivosPorControl(control.controlName).length"
+                             [objetosArchivos]="listarArhivosPorControl(control.controlName)"
+                             [label]="control.label? control.label : control.controlName"
+                             (archivoSalida)="eliminarArchivo($event, control.controlName )"
+                             [header]="control.type.tableHeaders"
               >
               </ez-file-items>
             </div>
@@ -210,14 +221,14 @@
             <mat-hint *ngIf="control.type.maxLength || control.hint" [id]="control.controlName"
                       align="end"
             >
-              {{control.hint}}  {{control.type.maxLength  &&  control.type.typeName !== 'autocomplete'? +formulario.get(control.controlName).value.length + '/' + control.type.maxLength ? control.type.maxLength : '' : '' }}
+              {{control.hint}}  {{control.type.maxLength && control.type.typeName !== 'autocomplete' ? +formulario.get(control.controlName).value.length + '/' + control.type.maxLength ? control.type.maxLength : '' : '' }}
             </mat-hint>
           </mat-form-field>
         </div>
         <div class="row">
           <div class="col-md-12">
-            <div *ngIf="verificarMensajeError(control.controlName)"
-                 class="alert alert-danger animated full-width {{msgErrorAnimation}}" role="alert">
+            <div *ngIf="verificarMensajeError(control.controlName) && control.type.typeName!=='file'"
+                 class="alert alert-warning animated full-width {{msgErrorAnimation}}" role="alert">
               <ul>
                 <li *ngFor="let error of obtenerMensajesError(control.controlName)">{{error}}</li>
               </ul>
@@ -234,7 +245,14 @@
       <div *ngFor="let control of formConfig; let i = index" class="col-lg-{{fullWidth ? '12' : '6'}}">
         <div *ngIf="control.type.typeName === 'file'"
              class="form-group">
+          <label
+            for="file{{control.controlName}}">
+              <span class="{{determinarSiEstaValido(control.controlName) ? 'text-error' : ''}}">
+                  {{control.label ? control.label : control.placeholder ? control.placeholder : control.controlName}}
+              </span>
+          </label>
           <ez-bs-input
+            id="file{{control.controlName}}"
             formControlName="{{control.controlName}}"
             [label]="control.label"
             [placeholder]="control.placeholder"
@@ -245,6 +263,17 @@
             [tableHeaders]="control.type.tableHeaders"
             controlName="{{control.controlName}}"
           >
+            <div class="row">
+              <div class="col-md-12">
+                <div *ngIf="verificarMensajeError(control.controlName)"
+                     class="alert alert-warning animated full-width{{msgErrorAnimation}}"
+                     role="alert">
+                  <ul>
+                    <li *ngFor="let error of obtenerMensajesError(control.controlName)">{{error}}</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
           </ez-bs-input>
         </div>
         <div *ngIf="control.type.typeName === 'textarea'"
@@ -417,12 +446,12 @@
           >
           </p-autoComplete>
           <small *ngIf="control.type.maxLength || control.hint" [id]="control.controlName" class="form-text text-muted">
-            {{control.hint}}  {{control.type.maxLength  &&  control.type.typeName !== 'autocomplete'? +formulario.get(control.controlName).value.length + '/' + control.type.maxLength ? control.type.maxLength : '' : '' }}
+            {{control.hint}}  {{control.type.maxLength && control.type.typeName !== 'autocomplete' ? +formulario.get(control.controlName).value.length + '/' + control.type.maxLength ? control.type.maxLength : '' : '' }}
           </small>
         </div>
         <div class="row">
           <div class="col-md-12">
-            <div *ngIf="verificarMensajeError(control.controlName)"
+            <div *ngIf="verificarMensajeError(control.controlName) && control.type.typeName!=='file'"
                  class="alert alert-warning animated full-width{{msgErrorAnimation}}"
                  role="alert">
               <ul>

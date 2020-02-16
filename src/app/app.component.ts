@@ -148,13 +148,13 @@ export class AppComponent {
       placeholder: 'Add your profile picture',
       validators: [
         Validators.required,
-        RxwebValidators.extension({extensions: ['png']}),
         FileValidator.extensions(['png']),
       ],
       type: {
         typeName: 'file',
         multiple: false,
         accept: 'image/*',
+        showFile: true,
       },
     },
     {
@@ -164,7 +164,12 @@ export class AppComponent {
       placeholder: 'Add Files',
       validators: [
         Validators.required,
+        FileValidator.extensions(['png']),
       ],
+      errorMessages: {
+        fileExtension: 'Please select png files',
+        required: 'Mandatory File'
+      },
       type: {
         typeName: 'file',
         multiple: true,

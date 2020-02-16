@@ -48,6 +48,7 @@ export class FormularioPrincipal {
   mensajesErrorDefecto = {
     required: 'mandatory field',
     date: 'invalid date',
+    fileExtension: 'Wrong file extension',
   };
   listaSubscripciones: Subscription[] = [];
 
@@ -327,7 +328,13 @@ export class FormularioPrincipal {
         return nombreArchivo !== evento;
       }
     ).join(valores.delimiter);
-    this.formulario.get(nombreControl).setValue(valores);
+    console.log(valores);
+    const estaVacio = valores._files.length === 0;
+    if (estaVacio) {
+      this.formulario.get(nombreControl).setValue('');
+    } else {
+      this.formulario.get(nombreControl).setValue(valores);
+    }
   }
 
   // Para material
@@ -371,5 +378,13 @@ export class FormularioPrincipal {
   determinarSiEstaValido(nombreControl: string) {
     const control = this.formulario.controls[nombreControl];
     return control.invalid;
+  }
+
+  listarArhivosPorControl(controlName: string) {
+    return this.listaObjetosArchivos.filter(
+      (archivo) => {
+        return archivo.propietario === controlName;
+      }
+    );
   }
 }
