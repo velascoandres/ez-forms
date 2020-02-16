@@ -30,15 +30,23 @@ components ``
  $ npm i bootstrap
 ```
 
-* PRIMENG check [Documentation](https://www.primefaces.org/primeng/#/setup)
-
-* Angular Material check [Documentation](https://material.angular.io/)
+* PRIMENG:   Check [Documentation](https://www.primefaces.org/primeng/#/setup)
+* chart.j: Check [Documentation](https://www.npmjs.com/package/chart.js) 
+   ```shell script
+     $ npm i chart.js
+    ```
+* Quill: Check [Documentation](https://www.npmjs.com/package/quill)
+    ```shell script
+      $ npm i quill
+     ```
+  
+* Angular Material: Check [Documentation](https://material.angular.io/)
 ```text
     $ ng add @angular/material
 ```
-* Angular 2 Toaster check [Documentation](https://www.npmjs.com/package/angular2-toaster)
+* Angular 2 Toaster: Check [Documentation](https://www.npmjs.com/package/angular2-toaster)
 
-* ngx-material-file-input check [Documentation](https://www.npmjs.com/package/ngx-material-file-input)
+* ngx-material-file-input: Check [Documentation](https://www.npmjs.com/package/ngx-material-file-input)
   
   
 ## Install  
@@ -271,7 +279,7 @@ For example: we need to create a form with the following fields:
       ],
       errorMessages: {
         required: 'Mandatory File',
-        fileExtension: 'Please select png file',
+        fileExtension: 'Please select png files only',
         fileMinSize: 'File size must be above of 100 kilobytes',
         fileMaxSize: 'File size is larger than 500 kilobytes'
       }
@@ -375,10 +383,10 @@ Results:
 ## File
 For angular material this library makes use of [ngx-material-file-input](https://www.npmjs.com/package/ngx-material-file-input)
 Demonstration from the configuration example
-![fileinput](https://github.com/velascoandrs/repo-de-imagenes/blob/master/fileds/file-mat.PNG?raw=true)
+![fileinput](https://github.com/velascoandrs/repo-de-imagenes/blob/master/archivos/single-file.PNG?raw=true)
 
 ## Multiple Files
-![files](https://github.com/velascoandrs/repo-de-imagenes/blob/master/fileds/files.PNG?raw=true)
+![files](https://github.com/velascoandrs/repo-de-imagenes/blob/master/archivos/multiple-files.PNG?raw=true)
 
 
 ## Autocomplete
@@ -412,7 +420,7 @@ Parent component typescript code:
 ```
 ### About filter method
 ```text
-    The filter service methond must be return an observable. If you need format the data from the API, 
+    The filter service methond must return an observable. If you need format the data from the API, 
     you should use the `pipe` operator.
 ```
 The `find` method code in wikipedia service:
@@ -576,3 +584,16 @@ Complete example form component:
 
 ### Example Full Code
 If you are looking for a full example of this library please check the following [github repository](https://github.com/velascoandrs/ez-form-example)
+
+
+### Especial Thanks
+
+* [Angular Material](https://material.angular.io/)
+* [PrimeNG](https://primefaces.org/primeng/#/)
+* [Bootstrap](https://getbootstrap.com/)
+* [ngx-material-file-input](https://www.npmjs.com/package/ngx-material-file-input)
+* [Animate.css](https://daneden.github.io/animate.css/)
+* [angular2-toaster](https://www.npmjs.com/package/angular2-toaster)
+* [Pexels](https://www.pexels.com/)
+* [chart.js](https://www.chartjs.org/) 
+* [Quill](https://quilljs.com/)

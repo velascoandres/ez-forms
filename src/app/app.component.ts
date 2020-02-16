@@ -153,7 +153,7 @@ export class AppComponent {
       ],
       errorMessages: {
         required: 'Mandatory File',
-        fileExtension: 'Please select jpg file',
+        fileExtension: 'Please select a jpg file',
         fileMinSize: 'File size must be above of 100 kilobytes',
         fileMaxSize: 'File size is larger than 500 kilobytes'
       },
@@ -175,7 +175,7 @@ export class AppComponent {
         FileValidator.maxSize(500),
       ],
       errorMessages: {
-        fileExtension: 'Please select png files',
+        fileExtension: 'Please select png files only',
         required: 'Mandatory File',
         fileMaxSize: 'File size is larger than 500 kilobytes'
       },

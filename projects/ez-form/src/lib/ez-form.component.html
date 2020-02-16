@@ -266,7 +266,7 @@
             <div class="row">
               <div class="col-md-12">
                 <div *ngIf="verificarMensajeError(control.controlName)"
-                     class="alert alert-warning animated full-width{{msgErrorAnimation}}"
+                     class="alert alert-warning animated {{msgErrorAnimation}} full-width"
                      role="alert">
                   <ul>
                     <li *ngFor="let error of obtenerMensajesError(control.controlName)">{{error}}</li>
@@ -452,7 +452,7 @@
         <div class="row">
           <div class="col-md-12">
             <div *ngIf="verificarMensajeError(control.controlName) && control.type.typeName!=='file'"
-                 class="alert alert-warning animated full-width{{msgErrorAnimation}}"
+                 class="alert alert-warning animated {{msgErrorAnimation}} full-width"
                  role="alert">
               <ul>
                 <li *ngFor="let error of obtenerMensajesError(control.controlName)">{{error}}</li>
