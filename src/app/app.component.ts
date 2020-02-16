@@ -2,7 +2,7 @@ import {Component} from '@angular/core';
 import {Validators} from '@angular/forms';
 import {ToastService} from '../../projects/toast/src/lib/toast.service';
 import {WikipediaRestService} from './servicios/wikipedia-rest.service';
-import {FileValidator} from "../../projects/ez-form/src/lib/clases-genericas/file.validados";
+import {FileValidator} from "../../projects/ez-form/src/lib/clases-genericas/file.validator";
 import {RxwebValidators} from "@rxweb/reactive-form-validators";
 
 @Component({
