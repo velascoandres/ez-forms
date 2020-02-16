@@ -10,10 +10,12 @@
             appearance="outline"
           >
             <mat-label>
-              {{control.label ? control.label : control.placeholder ? control.placeholder : control.controlName}}
+              <span class="{{determinarSiEstaValido(control.controlName) ? 'text-error' : ''}}">
+                {{control.label ? control.label : control.placeholder ? control.placeholder : control.controlName}}
+              </span>
             </mat-label>
             <ngx-mat-file-input
-              formControlName={{control.controlName}}
+              formControlName="{{control.controlName}}"
               placeholder="{{control.placeholder ? control.placeholder : ''}}"
               [multiple]='control.type.multiple'
               [accept]='control.type.accept? control.type.accept : "*/*"'
@@ -27,15 +29,26 @@
               {{control.hint}}  {{control.type.maxLength ? +formulario.get(control.controlName).value.length + '/' : '' }}  {{control.type.maxLength ? control.type.maxLength : ''}}
             </mat-hint>
           </mat-form-field>
+          <div class="row">
+            <div class="col-md-12">
+              <div *ngIf="verificarMensajeError(control.controlName)"
+                   class="alert alert-warning animated full-width{{msgErrorAnimation}}"
+                   role="alert">
+                <ul>
+                  <li *ngFor="let error of obtenerMensajesError(control.controlName)">{{error}}</li>
+                </ul>
+              </div>
+            </div>
+          </div>
           <div class="row"
                *ngIf="filtrarArchivosPorControl(control.controlName).length > 0 && control.type.showFile"
                [hidden]="esconderArchivos">
             <div class="col-sm-12">
-              <ez-file-items
-                [objetosArchivos]="listaObjetosArchivos"
-                [label]="control.label? control.label : control.controlName"
-                (archivoSalida)="eliminarArchivo($event, control.controlName )"
-                [header]="control.type.tableHeaders"
+              <ez-file-items *ngIf="listarArhivosPorControl(control.controlName).length"
+                             [objetosArchivos]="listarArhivosPorControl(control.controlName)"
+                             [label]="control.label? control.label : control.controlName"
+                             (archivoSalida)="eliminarArchivo($event, control.controlName )"
+                             [header]="control.type.tableHeaders"
               >
               </ez-file-items>
             </div>
@@ -48,7 +61,9 @@
                         class="filled"
         >
           <mat-label>
-            {{control.label ? control.label : control.placeholder ? control.placeholder : control.controlName}}
+            <span class="{{determinarSiEstaValido(control.controlName) ? 'text-error' : ''}}">
+              {{control.label ? control.label : control.placeholder ? control.placeholder : control.controlName}}
+            </span>
           </mat-label>
           <textarea
             matInput
@@ -69,8 +84,11 @@
                         appearance="outline"
                         class="filled">
           <mat-label>
-            {{control.label ? control.label : control.placeholder ? control.placeholder : control.controlName}}
+            <span class="{{determinarSiEstaValido(control.controlName) ? 'text-error' : ''}}">
+              {{control.label ? control.label : control.placeholder ? control.placeholder : control.controlName}}
+            </span>
           </mat-label>
+
           <input
             matInput
             type="text"
@@ -95,7 +113,10 @@
                         appearance="outline"
                         class="filled">
           <mat-label *ngIf="control.type.typeName === 'date'">
-            {{control.label ? control.label : control.placeholder ? control.placeholder : control.controlName}}</mat-label>
+            <span class="{{determinarSiEstaValido(control.controlName) ? 'text-error' : ''}}">
+              {{control.label ? control.label : control.placeholder ? control.placeholder : control.controlName}}
+            </span>
+          </mat-label>
           <input matInput
                  [matDatepicker]="dp3"
                  placeholder="{{control.placeholder ? control.placeholder : ''}}"
@@ -114,7 +135,9 @@
           appearance="outline" class="filled"
         >
           <mat-label *ngIf="control.label">
-            {{control.label}}
+            <span class="{{determinarSiEstaValido(control.controlName) ? 'text-error' : ''}}">
+              {{control.label ? control.label : control.placeholder ? control.placeholder : control.controlName}}
+            </span>
           </mat-label>
           <select matNativeControl
                   formControlName={{control.controlName}}
@@ -140,7 +163,11 @@
           formControlName="{{control.controlName}}"
           class="radio-group"
         >
-          <label>{{control.label}}</label>
+          <label>
+            <span class="{{determinarSiEstaValido(control.controlName) ? 'text-error' : ''}}">
+              {{control.label}}
+            </span>
+          </label>
           <mat-radio-button
             *ngFor="let opcion of control.type.options"
             class="radio-button"
@@ -150,7 +177,11 @@
           </mat-radio-button>
         </mat-radio-group>
         <div *ngIf="control.type.typeName === 'check'">
-          <label>{{control.label}}</label>
+          <label>
+            <span class="{{determinarSiEstaValido(control.controlName) ? 'text-error' : ''}}">
+              {{control.label}}
+            </span>
+          </label>
           <p *ngFor="let opcion of control.type.options; let i = index"
              formArrayName="{{control.controlName}}"
           >
@@ -167,7 +198,9 @@
             appearance="outline"
           >
             <mat-label>
+              <span class="{{determinarSiEstaValido(control.controlName) ? 'text-error' : ''}}">
               {{control.label ? control.label : control.placeholder ? control.placeholder : control.controlName}}
+            </span>
             </mat-label>
             <input
               placeholder="{{control.placeholder ? control.placeholder : ''}}"
@@ -188,14 +221,14 @@
             <mat-hint *ngIf="control.type.maxLength || control.hint" [id]="control.controlName"
                       align="end"
             >
-              {{control.hint}}  {{control.type.maxLength  &&  control.type.typeName !== 'autocomplete'? +formulario.get(control.controlName).value.length + '/' + control.type.maxLength ? control.type.maxLength : '' : '' }}
+              {{control.hint}}  {{control.type.maxLength && control.type.typeName !== 'autocomplete' ? +formulario.get(control.controlName).value.length + '/' + control.type.maxLength ? control.type.maxLength : '' : '' }}
             </mat-hint>
           </mat-form-field>
         </div>
         <div class="row">
           <div class="col-md-12">
-            <div *ngIf="verificarMensajeError(control.controlName)"
-                 class="alert alert-danger animated full-width {{msgErrorAnimation}}" role="alert">
+            <div *ngIf="verificarMensajeError(control.controlName) && control.type.typeName!=='file'"
+                 class="alert alert-warning animated full-width {{msgErrorAnimation}}" role="alert">
               <ul>
                 <li *ngFor="let error of obtenerMensajesError(control.controlName)">{{error}}</li>
               </ul>
@@ -212,7 +245,14 @@
       <div *ngFor="let control of formConfig; let i = index" class="col-lg-{{fullWidth ? '12' : '6'}}">
         <div *ngIf="control.type.typeName === 'file'"
              class="form-group">
+          <label
+            for="file{{control.controlName}}">
+              <span class="{{determinarSiEstaValido(control.controlName) ? 'text-error' : ''}}">
+                  {{control.label ? control.label : control.placeholder ? control.placeholder : control.controlName}}
+              </span>
+          </label>
           <ez-bs-input
+            id="file{{control.controlName}}"
             formControlName="{{control.controlName}}"
             [label]="control.label"
             [placeholder]="control.placeholder"
@@ -223,6 +263,17 @@
             [tableHeaders]="control.type.tableHeaders"
             controlName="{{control.controlName}}"
           >
+            <div class="row">
+              <div class="col-md-12">
+                <div *ngIf="verificarMensajeError(control.controlName)"
+                     class="alert alert-warning animated {{msgErrorAnimation}} full-width"
+                     role="alert">
+                  <ul>
+                    <li *ngFor="let error of obtenerMensajesError(control.controlName)">{{error}}</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
           </ez-bs-input>
         </div>
         <div *ngIf="control.type.typeName === 'textarea'"
@@ -230,7 +281,9 @@
           <label
             for="{{control.controlName}}"
           >
-            {{control.label ? control.label : control.placeholder ? control.placeholder : control.controlName}}
+            <span class="{{determinarSiEstaValido(control.controlName) ? 'text-error' : ''}}">
+              {{control.label ? control.label : control.placeholder ? control.placeholder : control.controlName}}
+            </span>
           </label>
           <textarea
             class="form-control"
@@ -252,7 +305,9 @@
             *ngIf="control.type.typeName === 'input'"
             for="{{control.controlName}}"
           >
-            {{control.label ? control.label : control.placeholder ? control.placeholder : control.controlName}}
+            <span class="{{determinarSiEstaValido(control.controlName) ? 'text-error' : ''}}">
+              {{control.label ? control.label : control.placeholder ? control.placeholder : control.controlName}}
+            </span>
           </label>
           <input
             [type]="control.type.class !== 'password'? 'text' : 'password'"
@@ -273,7 +328,9 @@
             *ngIf="control.type.typeName === 'date'"
             for="{{control.controlName}}"
           >
-            {{control.label ? control.label : control.placeholder ? control.placeholder : control.controlName}}
+            <span class="{{determinarSiEstaValido(control.controlName) ? 'text-error' : ''}}">
+              {{control.label ? control.label : control.placeholder ? control.placeholder : control.controlName}}
+            </span>
           </label>
           <input
             id="dateBs{{control.controlName}}"
@@ -295,7 +352,9 @@
             *ngIf="control.label"
             for="{{i}}"
           >
-            {{control.label}}
+            <span class="{{determinarSiEstaValido(control.controlName) ? 'text-error' : ''}}">
+              {{control.label}}
+            </span>
           </label>
           <select
             id="{{i}}"
@@ -316,7 +375,11 @@
             {{control.hint}}     {{control.type.maxLength ? +formulario.get(control.controlName).value.length + '/' : '' }}  {{control.type.maxLength ? control.type.maxLength : ''}}
           </small>
         </div>
-        <label *ngIf="control.type.typeName === 'radio'">{{control.label}}</label>
+        <label *ngIf="control.type.typeName === 'radio'">
+          <span class="{{determinarSiEstaValido(control.controlName) ? 'text-error' : ''}}">
+              {{control.label}}
+            </span>
+        </label>
         <div class="form-check" *ngIf="control.type.typeName === 'radio'">
           <div *ngFor="let opcion of control.type.options">
             <input
@@ -330,12 +393,18 @@
               for="radio{{opcion.label}}{{i}}"
               class="form-check-label"
             >
-              {{opcion.label}}
+              <span class="{{determinarSiEstaValido(control.controlName) ? 'text-error' : ''}}">
+              {{control.label}}
+            </span>
             </label>
           </div>
         </div>
         <div *ngIf="control.type.typeName === 'check'">
-          <label>{{control.label}}</label>
+          <label>
+            <span class="{{determinarSiEstaValido(control.controlName) ? 'text-error' : ''}}">
+              {{control.label}}
+            </span>
+          </label>
           <div class="form-check">
             <div *ngFor="let opcion of control.type.options; let i = index" formArrayName="{{control.controlName}}">
               <input
@@ -358,7 +427,9 @@
           <label
             for="auto{{control.controlName}}"
           >
-            {{control.label ? control.label : control.placeholder ? control.placeholder : control.controlName}}
+            <span class="{{determinarSiEstaValido(control.controlName) ? 'text-error' : ''}}">
+              {{control.label ? control.label : control.placeholder ? control.placeholder : control.controlName}}
+            </span>
           </label>
           <p-autoComplete
             id="auto{{control.controlName}}"
@@ -375,13 +446,13 @@
           >
           </p-autoComplete>
           <small *ngIf="control.type.maxLength || control.hint" [id]="control.controlName" class="form-text text-muted">
-            {{control.hint}}  {{control.type.maxLength  &&  control.type.typeName !== 'autocomplete'? +formulario.get(control.controlName).value.length + '/' + control.type.maxLength ? control.type.maxLength : '' : '' }}
+            {{control.hint}}  {{control.type.maxLength && control.type.typeName !== 'autocomplete' ? +formulario.get(control.controlName).value.length + '/' + control.type.maxLength ? control.type.maxLength : '' : '' }}
           </small>
         </div>
         <div class="row">
           <div class="col-md-12">
-            <div *ngIf="verificarMensajeError(control.controlName)"
-                 class="alert alert-danger animated full-width{{msgErrorAnimation}}"
+            <div *ngIf="verificarMensajeError(control.controlName) && control.type.typeName!=='file'"
+                 class="alert alert-warning animated {{msgErrorAnimation}} full-width"
                  role="alert">
               <ul>
                 <li *ngFor="let error of obtenerMensajesError(control.controlName)">{{error}}</li>

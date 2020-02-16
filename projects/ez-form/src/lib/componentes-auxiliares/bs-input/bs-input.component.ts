@@ -1,5 +1,5 @@
 import {Component, forwardRef, Input, OnInit} from '@angular/core';
-import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
+import {ControlValueAccessor, NG_VALIDATORS, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {llenarGaleria, quitarArchivoLista} from '../../clases-genericas/funciones-archivos';
 
 @Component({
@@ -10,11 +10,11 @@ import {llenarGaleria, quitarArchivoLista} from '../../clases-genericas/funcione
     {
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => BsInputComponent),
-      multi: true
-    }
+      multi: true,
+    },
   ]
 })
-export class BsInputComponent implements OnInit, ControlValueAccessor {
+export class BsInputComponent implements OnInit, ControlValueAccessor  {
   @Input()
   controlName = '';
   @Input()

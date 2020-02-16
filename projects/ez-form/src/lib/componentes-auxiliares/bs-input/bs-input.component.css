@@ -38,3 +38,7 @@
 .text-div{
   word-wrap: break-word;
 }
+
+.text-error{
+  color: red;
+}
