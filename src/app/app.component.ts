@@ -241,7 +241,7 @@ export class AppComponent {
     birthday: '1999-02-16',
     favoriteFruit: 1,
     password: '12133',
-    cities: [1, 2],
+    // cities: [1, 2],
     someFiles: [],
   };
 

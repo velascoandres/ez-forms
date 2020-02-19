@@ -356,7 +356,9 @@ export class FormularioPrincipal {
 
   determinarSiEstaValido(nombreControl: string) {
     const control = this.formulario.controls[nombreControl];
-    return control.invalid;
+    const estaTocado = this.formulario.get(nombreControl).touched;
+    const estaSucio = this.formulario.get(nombreControl).dirty;
+    return control.invalid && (estaSucio || estaTocado);
   }
 
   listarArhivosPorControl(controlName: string) {
