@@ -9,5 +9,8 @@
       "primeng/autocomplete": "autocomplete",
       "primeng/table": "table"
     }
-  }
+  },
+  "whitelistedNonPeerDependencies": [
+    "."
+  ]
 }

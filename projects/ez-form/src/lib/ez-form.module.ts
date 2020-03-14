@@ -18,8 +18,9 @@ import {
 } from '@angular/material';
 import {BsInputComponent} from './componentes-auxiliares/bs-input/bs-input.component';
 import {ImgItemComponent} from './componentes-auxiliares/img-item/img-item.component';
-import { AutoCompleteModule } from 'primeng/autocomplete';
+import {AutoCompleteModule} from 'primeng/autocomplete';
 import {TableModule} from 'primeng/table';
+import {MatNativeDateModule} from '@angular/material/core';
 
 
 @NgModule({
@@ -46,6 +47,7 @@ import {TableModule} from 'primeng/table';
     MatAutocompleteModule,
     AutoCompleteModule,
     TableModule,
+    MatNativeDateModule,
   ],
   exports: [
     EzFormComponent,
