@@ -22,7 +22,7 @@
 6. [Especial Thanks](#especial-thanks)  
 
 ## Description  
-`ez-form` is a componente that allows create reactive forms for angular 2+. 
+`ez-form` is a component that allows create reactive forms for angular 2+. 
 
 ``This library makes use of angular material, bocd otstrap and PrimeNG libraries and 
 components ``
@@ -51,6 +51,10 @@ components ``
 
 * ngx-material-file-input: Check [Documentation](https://www.npmjs.com/package/ngx-material-file-input)
   
+* FullCalendar Core: [Documentacion](https://fullcalendar.io/docs/initialize-es6)
+    ```shell script
+      $ npm i @fullcalendar/core
+    ```      
   
 ## Install  
 * Install the package:   
@@ -399,27 +403,27 @@ Parent component typescript code:
 
 ```typescript
     {
-          controlName: 'city',
+          controlName: 'article',
           validators: [
             Validators.required
           ],
           label: 'City',
-          placeholder: 'Example: Barcelona',
+          placeholder: 'Example: DNA',
           type: {
             typeName: 'autocomplete',
             maxLength: 30,
-            completeMethod: this.filterCityWithHttpService,
+            completeMethod: this.filterArticleWithHttpService,
             nameAutoComplete: 'name', // object attribute that will be displayed in the component
             componentReference: this
           },
           errorMessages: {
-            required: 'The city is mandatory',
+            required: 'The article is mandatory',
           },
-          hint: 'Search a city'
+          hint: 'Search an article'
     }
 
-    filterCityWithHttpService(event, context) {
-        return context._cityService.find(event.query ? event.query : event);
+    filterArticleWithHttpService(event, context) {
+        return context._wikipediaService.find(event.query ? event.query : event);
     }
 ```
 ### About filter method

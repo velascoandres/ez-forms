@@ -207,7 +207,6 @@
               matInput
               (input)="establecerOpciones($event.target.value, control.type.completeMethod, control.type.componentReference)"
               [matAutocomplete]="auto"
-              [value]="inputData[control.controlName] ? control.type.nameAutoComplete ? inputData[control.controlName][control.type.nameAutoComplete] : inputData[control.controlName] : ''"
               (click)="establecerOpciones('', control.type.completeMethod, control.type.componentReference)"
             >
             <mat-autocomplete #auto="matAutocomplete">
@@ -445,7 +444,9 @@
             field="{{control.type.nameAutoComplete}}"
           >
           </p-autoComplete>
-          <small *ngIf="control.type.maxLength || control.hint" [id]="control.controlName" class="form-text text-muted">
+          <small
+            *ngIf="control.type.maxLength || control.hint"
+            [id]="control.controlName" class="form-text text-muted">
             {{control.hint}}  {{control.type.maxLength && control.type.typeName !== 'autocomplete' ? +formulario.get(control.controlName).value.length + '/' + control.type.maxLength ? control.type.maxLength : '' : '' }}
           </small>
         </div>
