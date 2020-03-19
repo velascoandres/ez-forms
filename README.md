@@ -1,61 +1,31 @@
 # ez-form  
 ## Index  
 1. [Description](#description)  
-2. [Requirements](#requirements)
-3. [Install](#install)  
-4. [Usage](#usage)
+2. [Install](#install)  
+3. [Usage](#usage)
      
-     4.1  [Files](#file)
+     3.1  [Files](#file)
      
-     4.2  [Multiple files](#multiple-files)
+     3.2  [Multiple files](#multiple-files)
      
-     4.3  [Autocomplete](#autocomplete)
+     3.3  [Autocomplete](#autocomplete)
      
-     4.4  [Toaster](#toaster)  
+     3.4  [Toaster](#toaster)  
      
-     4.5  [Bootstrap](#bootstrap)
+     3.5  [Bootstrap](#bootstrap)
      
-     4.6  [Animations](#animations)
+     3.6  [Animations](#animations)
      
-5. [Summary](#summary)     
+4. [Summary](#summary)     
 
-6. [Especial Thanks](#especial-thanks)  
+5. [Especial Thanks](#especial-thanks)  
 
 ## Description  
 `ez-form` is a component that allows create reactive forms for angular 2+. 
 
 ``This library makes use of angular material, bocd otstrap and PrimeNG libraries and 
 components ``
- 
-## Requirements
-* Bootstrap
-```shell script
- $ npm i bootstrap
-```
-
-* PRIMENG:   Check [Documentation](https://www.primefaces.org/primeng/#/setup)
-* chart.j: Check [Documentation](https://www.npmjs.com/package/chart.js) 
-   ```shell script
-     $ npm i chart.js
-    ```
-* Quill: Check [Documentation](https://www.npmjs.com/package/quill)
-    ```shell script
-      $ npm i quill
-     ```
-  
-* Angular Material: Check [Documentation](https://material.angular.io/)
-```text
-    $ ng add @angular/material
-```
-* Angular 2 Toaster: Check [Documentation](https://www.npmjs.com/package/angular2-toaster)
-
-* ngx-material-file-input: Check [Documentation](https://www.npmjs.com/package/ngx-material-file-input)
-  
-* FullCalendar Core: [Documentacion](https://fullcalendar.io/docs/initialize-es6)
-    ```shell script
-      $ npm i @fullcalendar/core
-    ```      
-  
+   
 ## Install  
 * Install the package:   
   
@@ -78,26 +48,6 @@ components ``
       providers: [],  
       bootstrap: [AppComponent]  
     })  
-```  
-  
-If you want use  `datepicker` from angular material:
-
-```typescript
-    @NgModule({
-      declarations: [
-        AppComponent
-      ],
-      imports: [
-        BrowserModule,
-        EzFormModule,
-        BrowserAnimationsModule,
-        MatNativeDateModule,
-      ],
-      providers: [
-        MatDatepickerModule,
-      ],
-      bootstrap: [AppComponent]
-    })
 ```
 
 ## Usage  
