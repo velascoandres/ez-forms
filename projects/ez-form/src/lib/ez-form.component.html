@@ -4,7 +4,7 @@
   <div *ngIf="styleFramework === 'material'" class="container">
     <div class="row">
       <div *ngFor="let control of formConfig; let i = index" class="col-lg-{{fullWidth ? '12' : '6'}}">
-        <div *ngIf="control.type.typeName === 'file'">
+        <!-- <div *ngIf="control.type.typeName === 'file'">
           <mat-form-field
             class="filled"
             appearance="outline"
@@ -54,8 +54,40 @@
             </div>
           </div>
 
+        </div> -->
+        <div *ngIf="control.type.typeName === 'file'"
+             class="form-group">
+          <label
+            for="file{{control.controlName}}">
+              <span class="{{determinarSiEstaValido(control.controlName) ? 'text-error' : ''}}">
+                  {{control.label ? control.label : control.placeholder ? control.placeholder : control.controlName}}
+              </span>
+          </label>
+          <ez-bs-input
+            id="file{{control.controlName}}"
+            formControlName="{{control.controlName}}"
+            [label]="control.label"
+            [placeholder]="control.placeholder"
+            [multiple]="control.type.multiple"
+            [accept]="control.type.accept"
+            [showFile]="control.type.showFile"
+            [hint]="control.hint"
+            [tableHeaders]="control.type.tableHeaders"
+            controlName="{{control.controlName}}"
+          >
+            <div class="row">
+              <div class="col-md-12">
+                <div *ngIf="verificarMensajeError(control.controlName)"
+                     class="alert alert-warning animated {{msgErrorAnimation}} full-width"
+                     role="alert">
+                  <ul>
+                    <li *ngFor="let error of obtenerMensajesError(control.controlName)">{{error}}</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </ez-bs-input>
         </div>
-
         <mat-form-field *ngIf="control.type.typeName === 'textarea'"
                         appearance="outline"
                         class="filled"

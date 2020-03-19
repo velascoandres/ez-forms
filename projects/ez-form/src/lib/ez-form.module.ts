@@ -5,7 +5,6 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {ToasterModule} from 'angular2-toaster';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
-import {MaterialFileInputModule} from 'ngx-material-file-input';
 import {
   MatAutocompleteModule,
   MatButtonModule,
@@ -43,7 +42,6 @@ import {MatNativeDateModule} from '@angular/material/core';
     MatIconModule,
     MatButtonModule,
     MatDatepickerModule,
-    MaterialFileInputModule,
     MatAutocompleteModule,
     AutoCompleteModule,
     TableModule,

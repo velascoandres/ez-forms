@@ -338,10 +338,6 @@ Results:
 ![formulario](https://github.com/velascoandrs/repo-de-imagenes/blob/master/version-en/form-valid-mat.PNG?raw=true)  
 
 ## File
-For angular material this library makes use of [ngx-material-file-input](https://www.npmjs.com/package/ngx-material-file-input)
-Demonstration from the configuration example
-
-![fileinput](https://github.com/velascoandrs/repo-de-imagenes/blob/master/archivos/single-file.PNG?raw=true)
 
 ## Multiple Files
 ![files](https://github.com/velascoandrs/repo-de-imagenes/blob/master/archivos/multiple-files.PNG?raw=true)
@@ -549,7 +545,6 @@ If you are looking for a full example of this library please check the following
 * [Angular Material](https://material.angular.io/)
 * [PrimeNG](https://primefaces.org/primeng/#/)
 * [Bootstrap](https://getbootstrap.com/)
-* [ngx-material-file-input](https://www.npmjs.com/package/ngx-material-file-input)
 * [Animate.css](https://daneden.github.io/animate.css/)
 * [angular2-toaster](https://www.npmjs.com/package/angular2-toaster)
 * [Pexels](https://www.pexels.com/)
