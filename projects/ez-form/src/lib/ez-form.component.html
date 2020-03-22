@@ -68,11 +68,11 @@
             formControlName="{{control.controlName}}"
             [label]="control.label"
             [placeholder]="control.placeholder"
-            [multiple]="control.type.multiple"
-            [accept]="control.type.accept"
-            [showFile]="control.type.showFile"
+            [multiple]="$any(control).type.multiple"
+            [accept]="$any(control).type.accept"
+            [showFile]="$any(control).type.showFile"
             [hint]="control.hint"
-            [tableHeaders]="control.type.tableHeaders"
+            [tableHeaders]="$any(control).type.tableHeaders"
             controlName="{{control.controlName}}"
           >
             <div class="row">
@@ -101,15 +101,15 @@
             matInput
             formControlName={{control.controlName}}
             placeholder="{{control.placeholder ? control.placeholder : ''}}"
-            [rows]="control.type.rows? control.type.rows : 3"
-            [maxlength]="control.type.maxLength ? control.type.maxLength : ''"
+            [rows]="$any(control).type.rows? $any(control).type.rows : 3"
+            [maxlength]="$any(control).type.maxLength ? $any(control).type.maxLength : ''"
             id="txtArea{{control.controlName}}"
           >
           </textarea>
-          <mat-hint *ngIf="control.type.maxLength || control.hint" [id]="control.controlName"
+          <mat-hint *ngIf="$any(control).type.maxLength || control.hint" [id]="control.controlName"
                     align="end"
           >
-            {{control.hint}}     {{control.type.maxLength ? +formulario.get(control.controlName).value.length + '/' : '' }}  {{control.type.maxLength ? control.type.maxLength : ''}}
+            {{control.hint}}     {{$any(control).type.maxLength ? +formulario.get(control.controlName).value.length + '/' : '' }}  {{$any(control).type.maxLength ? $any(control).type.maxLength : ''}}
           </mat-hint>
         </mat-form-field>
         <mat-form-field *ngIf="control.type.typeName === 'input-text'"
@@ -126,16 +126,16 @@
             type="text"
             formControlName={{control.controlName}}
             placeholder="{{control.placeholder ? control.placeholder : ''}}"
-            [maxlength]="control.type.maxLength ? control.type.maxLength : ''"
+            [maxlength]="$any(control).type.maxLength ? $any(control).type.maxLength : ''"
             id="{{control.controlName}}"
-            [type]="control.type.class === 'password' && esconderTexto ? 'password' : 'text'"
+            [type]="$any(control).type.class === 'password' && esconderTexto ? 'password' : 'text'"
           >
-          <mat-hint *ngIf="control.type.maxLength || control.hint" [id]="control.controlName"
+          <mat-hint *ngIf="$any(control).type.maxLength || control.hint" [id]="control.controlName"
                     align="end"
           >
-            {{control.hint}}     {{control.type.maxLength ? +formulario.get(control.controlName).value.length + '/' : '' }}  {{control.type.maxLength ? control.type.maxLength : ''}}
+            {{control.hint}}     {{$any(control).type.maxLength ? +formulario.get(control.controlName).value.length + '/' : '' }}  {{$any(control).type.maxLength ? $any(control).type.maxLength : ''}}
           </mat-hint>
-          <button *ngIf="control.type.class === 'password'"
+          <button *ngIf="$any(control).type.class === 'password'"
                   mat-icon-button matSuffix (click)="esconderTexto = !esconderTexto" [attr.aria-label]="'Hide password'"
                   [attr.aria-pressed]="esconderTexto">
             <mat-icon>{{esconderTexto ? 'visibility_off' : 'visibility'}}</mat-icon>
@@ -156,10 +156,10 @@
           >
           <mat-datepicker-toggle matSuffix [for]="dp3"></mat-datepicker-toggle>
           <mat-datepicker #dp3 [disabled]="control.disabled"></mat-datepicker>
-          <mat-hint *ngIf="control.type.maxLength || control.hint" [id]="control.controlName"
+          <mat-hint *ngIf="$any(control).type.maxLength || control.hint" [id]="control.controlName"
                     align="end"
           >
-            {{control.hint}}  {{control.type.maxLength ? +formulario.get(control.controlName).value.length + '/' : '' }}  {{control.type.maxLength ? control.type.maxLength : ''}}
+            {{control.hint}}  {{$any(control).type.maxLength ? +formulario.get(control.controlName).value.length + '/' : '' }}  {{$any(control).type.maxLength ? $any(control).type.maxLength : ''}}
           </mat-hint>
         </mat-form-field>
         <mat-form-field
@@ -177,17 +177,17 @@
           >
             <option *ngIf="control.placeholder" value=''>{{control.placeholder}}</option>
             <option
-              *ngFor="let opcion of control.type.options"
+              *ngFor="let opcion of $any(control).type.options"
               value="{{opcion.value}}"
 
             >
               {{opcion.label}}
             </option>
           </select>
-          <mat-hint *ngIf="control.type.maxLength || control.hint" [id]="control.controlName"
+          <mat-hint *ngIf="$any(control).type.maxLength || control.hint" [id]="control.controlName"
                     align="end"
           >
-            {{control.hint}}     {{control.type.maxLength ? +formulario.get(control.controlName).value.length + '/' : '' }}  {{control.type.maxLength ? control.type.maxLength : ''}}
+            {{control.hint}}     {{$any(control).type.maxLength ? +formulario.get(control.controlName).value.length + '/' : '' }}  {{$any(control).type.maxLength ? $any(control).type.maxLength : ''}}
           </mat-hint>
         </mat-form-field>
         <mat-radio-group
@@ -201,7 +201,7 @@
             </span>
           </label>
           <mat-radio-button
-            *ngFor="let opcion of control.type.options"
+            *ngFor="let opcion of $any(control).type.options"
             class="radio-button"
             [value]="opcion.value"
           >
@@ -214,7 +214,7 @@
               {{control.label}}
             </span>
           </label>
-          <p *ngFor="let opcion of control.type.options; let i = index"
+          <p *ngFor="let opcion of $any(control).type.options; let i = index"
              formArrayName="{{control.controlName}}"
           >
             <mat-checkbox
@@ -237,22 +237,22 @@
             <input
               placeholder="{{control.placeholder ? control.placeholder : ''}}"
               matInput
-              (input)="establecerOpciones($event.target.value, control.type.completeMethod, control.type.componentReference)"
+              (input)="establecerOpciones($event.target.value, $any(control).type.completeMethod, $any(control).type.componentReference)"
               [matAutocomplete]="auto"
-              (click)="establecerOpciones('', control.type.completeMethod, control.type.componentReference)"
+              (click)="establecerOpciones('', $any(control).type.completeMethod, $any(control).type.componentReference)"
             >
             <mat-autocomplete #auto="matAutocomplete">
               <mat-option
-                *ngFor="let option of sugerencias" [value]="option[control.type.showAttribute]"
+                *ngFor="let option of sugerencias" [value]="option[$any(control).type.showAttribute]"
                 (onSelectionChange)="cambio(option, control.controlName)"
               >
-                {{option[control.type.showAttribute]}}
+                {{option[$any(control).type.showAttribute]}}
               </mat-option>
             </mat-autocomplete>
-            <mat-hint *ngIf="control.type.maxLength || control.hint" [id]="control.controlName"
+            <mat-hint *ngIf="$any(control).type.maxLength || control.hint" [id]="control.controlName"
                       align="end"
             >
-              {{control.hint}}  {{control.type.maxLength && control.type.typeName !== 'autocomplete' ? +formulario.get(control.controlName).value.length + '/' + control.type.maxLength ? control.type.maxLength : '' : '' }}
+              {{control.hint}}  {{$any(control).type.maxLength && control.type.typeName !== 'autocomplete' ? +formulario.get(control.controlName).value.length + '/' + $any(control).type.maxLength ? $any(control).type.maxLength : '' : '' }}
             </mat-hint>
           </mat-form-field>
         </div>
@@ -287,11 +287,11 @@
             formControlName="{{control.controlName}}"
             [label]="control.label"
             [placeholder]="control.placeholder"
-            [multiple]="control.type.multiple"
-            [accept]="control.type.accept"
-            [showFile]="control.type.showFile"
+            [multiple]="$any(control).type.multiple"
+            [accept]="$any(control).type.accept"
+            [showFile]="$any(control).type.showFile"
             [hint]="control.hint"
-            [tableHeaders]="control.type.tableHeaders"
+            [tableHeaders]="$any(control).type.tableHeaders"
             controlName="{{control.controlName}}"
           >
             <div class="row">
@@ -321,13 +321,13 @@
             id="txtAreaBs{{control.controlName}}"
             formControlName={{control.controlName}}
             placeholder="{{control.placeholder ? control.placeholder : ''}}"
-            [rows]="control.type.rows? control.type.rows : 3"
-            [maxlength]="control.type.maxLength ? control.type.maxLength : ''"
+            [rows]="$any(control).type.rows? $any(control).type.rows : 3"
+            [maxlength]="$any(control).type.maxLength ? $any(control).type.maxLength : ''"
             [attr.aria-describedby]="control.controlName"
           >
           </textarea>
-          <small *ngIf="control.type.maxLength || control.hint" [id]="control.controlName" class="form-text text-muted">
-            {{control.hint}}     {{control.type.maxLength ? +formulario.get(control.controlName).value.length + '/' : '' }}  {{control.type.maxLength ? control.type.maxLength : ''}}
+          <small *ngIf="$any(control).type.maxLength || control.hint" [id]="control.controlName" class="form-text text-muted">
+            {{control.hint}}     {{$any(control).type.maxLength ? +formulario.get(control.controlName).value.length + '/' : '' }}  {{$any(control).type.maxLength ? $any(control).type.maxLength : ''}}
           </small>
         </div>
         <div *ngIf="control.type.typeName === 'input-text'"
@@ -341,16 +341,16 @@
             </span>
           </label>
           <input
-            [type]="control.type.class !== 'password'? 'text' : 'password'"
+            [type]="$any(control).type.class !== 'password'? 'text' : 'password'"
             class="form-control"
             id="inputBs{{control.controlName}}"
             formControlName={{control.controlName}}
             [attr.aria-describedby]="control.controlName"
             placeholder="{{control.placeholder ? control.placeholder : ''}}"
-            [maxlength]="control.type.maxLength ? control.type.maxLength : ''"
+            [maxlength]="$any(control).type.maxLength ? $any(control).type.maxLength : ''"
           >
-          <small *ngIf="control.type.maxLength || control.hint" [id]="control.controlName" class="form-text text-muted">
-            {{control.hint}}     {{control.type.maxLength ? +formulario.get(control.controlName).value.length + '/' : '' }}  {{control.type.maxLength ? control.type.maxLength : ''}}
+          <small *ngIf="$any(control).type.maxLength || control.hint" [id]="control.controlName" class="form-text text-muted">
+            {{control.hint}}     {{$any(control).type.maxLength ? +formulario.get(control.controlName).value.length + '/' : '' }}  {{$any(control).type.maxLength ? $any(control).type.maxLength : ''}}
           </small>
         </div>
         <div *ngIf="control.type.typeName === 'date'"
@@ -371,8 +371,8 @@
             type="date"
             [attr.aria-describedby]="control.controlName"
           >
-          <small *ngIf="control.type.maxLength || control.hint" [id]="control.controlName" class="form-text text-muted">
-            {{control.hint}}     {{control.type.maxLength ? +formulario.get(control.controlName).value.length + '/' : '' }}  {{control.type.maxLength ? control.type.maxLength : ''}}
+          <small *ngIf="$any(control).type.maxLength || control.hint" [id]="control.controlName" class="form-text text-muted">
+            {{control.hint}}     {{$any(control).type.maxLength ? +formulario.get(control.controlName).value.length + '/' : '' }}  {{$any(control).type.maxLength ? $any(control).type.maxLength : ''}}
           </small>
         </div>
         <div
@@ -395,15 +395,15 @@
           >
             <option *ngIf="control.placeholder" value=''>{{control.placeholder}}</option>
             <option
-              *ngFor="let opcion of control.type.options"
+              *ngFor="let opcion of $any(control).type.options"
               value="{{opcion.value}}"
 
             >
               {{opcion.label}}
             </option>
           </select>
-          <small *ngIf="control.type.maxLength || control.hint" [id]="control.controlName" class="form-text text-muted">
-            {{control.hint}}     {{control.type.maxLength ? +formulario.get(control.controlName).value.length + '/' : '' }}  {{control.type.maxLength ? control.type.maxLength : ''}}
+          <small *ngIf="$any(control).type.maxLength || control.hint" [id]="control.controlName" class="form-text text-muted">
+            {{control.hint}}     {{$any(control).type.maxLength ? +formulario.get(control.controlName).value.length + '/' : '' }}  {{$any(control).type.maxLength ? $any(control).type.maxLength : ''}}
           </small>
         </div>
         <label *ngIf="control.type.typeName === 'radio'">
@@ -412,7 +412,7 @@
             </span>
         </label>
         <div class="form-check" *ngIf="control.type.typeName === 'radio'">
-          <div *ngFor="let opcion of control.type.options">
+          <div *ngFor="let opcion of $any(control).type.options">
             <input
               class="form-check-input"
               id="radio{{opcion.label}}{{i}}"
@@ -437,7 +437,7 @@
             </span>
           </label>
           <div class="form-check">
-            <div *ngFor="let opcion of control.type.options; let i = index" formArrayName="{{control.controlName}}">
+            <div *ngFor="let opcion of $any(control).type.options; let i = index" formArrayName="{{control.controlName}}">
               <input
                 class="form-check-input"
                 id="check{{opcion.label}}{{i}}"
@@ -467,19 +467,19 @@
             [suggestions]="sugerencias"
             [formControlName]="control.controlName"
             [dropdown]="true"
-            (completeMethod)="establecerOpciones($event, control.type.completeMethod, control.type.componentReference)"
+            (completeMethod)="establecerOpciones($event, $any(control).type.completeMethod, $any(control).type.componentReference)"
             [minLength]="1"
             [placeholder]="control.placeholder ? control.placeholder : ''"
             [multiple]="false"
             class="control-ez ui-fluid"
             styleClass="wid100"
-            field="{{control.type.showAttribute}}"
+            field="{{$any(control).type.showAttribute}}"
           >
           </p-autoComplete>
           <small
-            *ngIf="control.type.maxLength || control.hint"
+            *ngIf="$any(control).type.maxLength || control.hint"
             [id]="control.controlName" class="form-text text-muted">
-            {{control.hint}}  {{control.type.maxLength && control.type.typeName !== 'autocomplete' ? +formulario.get(control.controlName).value.length + '/' + control.type.maxLength ? control.type.maxLength : '' : '' }}
+            {{control.hint}}  {{$any(control).type.maxLength && control.type.typeName !== 'autocomplete' ? +formulario.get(control.controlName).value.length + '/' + $any(control).type.maxLength ? $any(control).type.maxLength : '' : '' }}
           </small>
         </div>
         <div class="row">

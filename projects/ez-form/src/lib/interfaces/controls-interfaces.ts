@@ -28,6 +28,7 @@ export interface InputTextInterface extends PrincipalTypeInterface {
 // text-area
 export interface TextAreaInterface extends InputTextInterface {
     typeName: 'textArea';
+    rows?: number;
 }
 // option
 export interface OptionInterface {
