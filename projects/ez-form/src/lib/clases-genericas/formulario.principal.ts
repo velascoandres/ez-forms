@@ -5,6 +5,7 @@ import {debounceTime} from 'rxjs/operators';
 import {validarMinimoCheckBox} from './validadores_especiales';
 import {ObjetoArchivoInterface} from '../interfaces/objeto.archivo.interface';
 import {isObservable, of, Subscription} from 'rxjs';
+import { PrincipalFormInterface, CheckInterface } from '../interfaces/controls-interfaces';
 
 export class FormularioPrincipal {
   sugerencias: any[] = [];
@@ -36,7 +37,7 @@ export class FormularioPrincipal {
     }
   };
   @Input()
-  formConfig = [];
+  formConfig: PrincipalFormInterface[] = [];
 
   mensajesErrores = {};
   objetoArreglosErrores = {};
@@ -186,11 +187,11 @@ export class FormularioPrincipal {
               return control.controlName === llave;
             }
           );
-          if (indice !== -1 && this.formConfig[indice].type.options) {
+          if (indice !== -1 && (this.formConfig[indice].type as CheckInterface).options) {
             const arreglo = arregloBoolean.reduce(
               (acumulador, item, index) => {
                 if (item && this.formConfig[indice]) {
-                  acumulador.push(this.formConfig[indice].type.options[index].value);
+                  acumulador.push((this.formConfig[indice].type as CheckInterface ).options[index].value);
                 }
                 return acumulador;
               }, []
