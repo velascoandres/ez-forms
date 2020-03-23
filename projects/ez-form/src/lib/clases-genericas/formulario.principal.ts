@@ -1,5 +1,5 @@
 import {AbstractControl, FormArray, FormBuilder, FormControl, FormGroup} from '@angular/forms';
-import {ChangeDetectorRef, EventEmitter, Input, Output} from '@angular/core';
+import { ChangeDetectorRef, EventEmitter, Input, Output, Directive } from '@angular/core';
 import {ToasterConfig, ToasterService} from 'angular2-toaster';
 import {debounceTime} from 'rxjs/operators';
 import {validarMinimoCheckBox} from './validadores_especiales';
@@ -7,6 +7,7 @@ import {ObjetoArchivoInterface} from '../interfaces/objeto.archivo.interface';
 import {isObservable, of, Subscription} from 'rxjs';
 import { PrincipalFormInterface, CheckInterface } from '../interfaces/controls-interfaces';
 
+@Directive()
 export class FormularioPrincipal {
   sugerencias: any[] = [];
   formulario: FormGroup;
