@@ -32,6 +32,8 @@ components ``
 ```shell script  
     $ npm i @gordon_freeman/ez-form  
 ```  
+
+ >You must have bootstrap  installed in your angular project
   
 * Import `EzFormModule`
   
@@ -59,8 +61,8 @@ For example: we need to create a form with the following fields:
       {
         controlName: 'uuid',
         type: {
-          typeName: 'input'
-        },
+          typeName: 'input-text'
+        } as InputTextInterface,
         disabled: true,
       },
 ```
@@ -69,9 +71,9 @@ For example: we need to create a form with the following fields:
       {
         controlName: 'password',
         type: {
-          typeName: 'input',
+          typeName: 'input-text',
           class: 'password',
-        },
+        } as InputTextInterface,
         validators: [
           Validators.required,
         ]
@@ -85,7 +87,7 @@ For example: we need to create a form with the following fields:
         hint: 'Enter a valid date',
         type: {
           typeName: 'date'
-        },
+        } as DateInterface,
         validators: [
           Validators.required,
         ]
@@ -97,9 +99,9 @@ For example: we need to create a form with the following fields:
         controlName: 'address',
         placeholder: 'Enter a complete address',
         type: {
-          typeName: 'textarea',
+          typeName: 'textArea',
           maxLength: 20,
-        },
+        } as TextAreaInterface,
         validators: [
           Validators.required,
         ],
@@ -115,9 +117,9 @@ For example: we need to create a form with the following fields:
         ],
         placeholder: 'Enter an email',
         type: {
-          typeName: 'input',
+          typeName: 'input-text',
           maxLength: 30,
-        },
+        } as InputTextInterface,
         errorMessages: {
           required: 'The email is mandatory',
           email: 'You must enter a valid email',
@@ -147,7 +149,7 @@ For example: we need to create a form with the following fields:
               label: 'Single'
             }
           ]
-        },
+        } as SimpleSelectInterface,
       },
 ```
 * Cities: `Multiple Select` input  (Required, minimum 2)
@@ -171,7 +173,7 @@ For example: we need to create a form with the following fields:
               label: 'Ambato'
             }
           ]
-        },
+        } as CheckInterface,
         label: 'Cities',
         errorMessages: {
           required: 'select two cities at least',
@@ -202,7 +204,7 @@ For example: we need to create a form with the following fields:
                 label: 'Pineapple'
               }
             ],
-          },
+          } as RadioInterface,
         }
 ```
 * Profile Picture: `File` input (Accept images only)
@@ -216,7 +218,7 @@ For example: we need to create a form with the following fields:
             typeName: 'file',
             multiple: false,
             accept: 'image/*',
-          },
+          } as FileInterface,
         }
 ```
 
@@ -248,8 +250,8 @@ For example: we need to create a form with the following fields:
         tableHeaders: { // Optional
           actions: 'Operations',
           description: 'Entry Files'
-        }
-      }
+        } as TableHeadersInterface,
+      } as FileInterface
     }
 ```
 All fields must be at a config array like this in our parent component, for example: 
@@ -257,12 +259,12 @@ All fields must be at a config array like this in our parent component, for exam
 ### `parentComponent.ts`
 
 ```typescript  
-  myConfiguration = [
+  myConfiguration: PrincipalFormInterface[] = [
       {
         controlName: 'uuid',
         type: {
-          typeName: 'input'
-        },
+          typeName: 'input-text'
+        } as InputTextInterface,
         disabled: true,
       },
       {
@@ -270,7 +272,7 @@ All fields must be at a config array like this in our parent component, for exam
         type: {
           typeName: 'input',
           class: 'password',
-        },
+        } as InputTextInterface,
         validators: [
           Validators.required,
         ]
@@ -356,12 +358,12 @@ Parent component typescript code:
           label: 'City',
           placeholder: 'Example: DNA',
           type: {
-            typeName: 'autocomplete',
+            typeName: 'autoComplete',
             maxLength: 30,
             completeMethod: this.filterArticleWithHttpService,
-            nameAutoComplete: 'name', // object attribute that will be displayed in the component
+            showAttributte: 'name', // object attribute that will be displayed in the component
             componentReference: this
-          },
+          } as AutoCompleteInterface,
           errorMessages: {
             required: 'The article is mandatory',
           },
