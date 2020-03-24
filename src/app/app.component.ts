@@ -3,6 +3,7 @@ import {Validators} from '@angular/forms';
 import {ToastService} from '../../projects/toast/src/lib/toast.service';
 import {WikipediaRestService} from './servicios/wikipedia-rest.service';
 import {FileValidator} from '../../projects/ez-form/src/lib/clases-genericas/file.validator';
+import { PrincipalFormInterface, InputTextInterface, TextAreaInterface, SimpleSelectInterface, CheckInterface, RadioInterface, FileInterface, AutoCompleteInterface } from 'projects/ez-form/src/lib/interfaces/controls-interfaces';
 
 @Component({
   selector: 'mat-ta-root',
@@ -11,20 +12,20 @@ import {FileValidator} from '../../projects/ez-form/src/lib/clases-genericas/fil
 })
 export class AppComponent {
   title = 'formularios';
-  myConfiguration = [
+  myConfiguration: PrincipalFormInterface[] = [
     {
       controlName: 'uuid',
       type: {
-        typeName: 'input'
+        typeName: 'input-text'
       },
       disabled: true,
     },
     {
       controlName: 'password',
       type: {
-        typeName: 'input',
+        typeName: 'input-text',
         class: 'password',
-      },
+      } as InputTextInterface,
       validators: [
         Validators.required,
       ]
@@ -42,12 +43,12 @@ export class AppComponent {
     },
     {
       controlName: 'address',
-      labe: 'Address',
+      label: 'Address',
       placeholder: 'Enter a complete address',
       type: {
-        typeName: 'textarea',
+        typeName: 'textArea',
         maxLength: 20,
-      },
+      } as TextAreaInterface,
       validators: [
         Validators.required,
       ],
@@ -60,9 +61,9 @@ export class AppComponent {
       ],
       placeholder: 'Enter an email',
       type: {
-        typeName: 'input',
+        typeName: 'input-text',
         maxLength: 30,
-      },
+      } as InputTextInterface,
       errorMessages: {
         required: 'The email is mandatory',
         email: 'You must enter a valid email',
@@ -89,7 +90,7 @@ export class AppComponent {
             label: 'Single'
           }
         ]
-      },
+      } as SimpleSelectInterface,
     },
     {
       controlName: 'cities',
@@ -110,7 +111,7 @@ export class AppComponent {
             label: 'Ambato'
           }
         ]
-      },
+      } as CheckInterface,
       label: 'Cities',
       errorMessages: {
         required: 'select two cities at least',
@@ -138,7 +139,7 @@ export class AppComponent {
             label: 'Pineapple'
           }
         ],
-      },
+      } as RadioInterface,
     },
     {
       controlName: 'profilePicture',
@@ -162,7 +163,7 @@ export class AppComponent {
         multiple: false,
         accept: 'image/*',
         showFile: true,
-      },
+      } as FileInterface,
     },
     {
       controlName: 'someFiles',
@@ -188,7 +189,7 @@ export class AppComponent {
           actions: 'Operations',
           description: 'Entry Files'
         }
-      },
+      } as FileInterface,
     }
   ];
   configuracionFormularioBusqueda = [
@@ -217,12 +218,11 @@ export class AppComponent {
       label: 'Wikipedia article',
       placeholder: 'Example: DNA',
       type: {
-        typeName: 'autocomplete',
-        maxLength: 30,
+        typeName: 'autoComplete',
         completeMethod: this.filterWikipediaArticleByTitle,
-        nameAutoComplete: 'title',
-        componentReference: this
-      },
+        showAttribute: 'title',
+        componentReference: this,
+      } as AutoCompleteInterface,
       errorMessages: {
         required: 'The article is mandatory',
       },
@@ -241,7 +241,7 @@ export class AppComponent {
     birthday: '1999-02-16',
     favoriteFruit: 1,
     password: '12133',
-    // cities: [1, 2],
+    cities: [1, 2],
     someFiles: [],
   };
 

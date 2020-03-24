@@ -1,11 +1,13 @@
 import {AbstractControl, FormArray, FormBuilder, FormControl, FormGroup} from '@angular/forms';
-import {ChangeDetectorRef, EventEmitter, Input, Output} from '@angular/core';
+import { ChangeDetectorRef, EventEmitter, Input, Output, Directive } from '@angular/core';
 import {ToasterConfig, ToasterService} from 'angular2-toaster';
 import {debounceTime} from 'rxjs/operators';
 import {validarMinimoCheckBox} from './validadores_especiales';
 import {ObjetoArchivoInterface} from '../interfaces/objeto.archivo.interface';
 import {isObservable, of, Subscription} from 'rxjs';
+import { PrincipalFormInterface, CheckInterface } from '../interfaces/controls-interfaces';
 
+@Directive()
 export class FormularioPrincipal {
   sugerencias: any[] = [];
   formulario: FormGroup;
@@ -36,7 +38,7 @@ export class FormularioPrincipal {
     }
   };
   @Input()
-  formConfig = [];
+  formConfig: PrincipalFormInterface[] = [];
 
   mensajesErrores = {};
   objetoArreglosErrores = {};
@@ -186,11 +188,11 @@ export class FormularioPrincipal {
               return control.controlName === llave;
             }
           );
-          if (indice !== -1 && this.formConfig[indice].type.options) {
+          if (indice !== -1 && (this.formConfig[indice].type as CheckInterface).options) {
             const arreglo = arregloBoolean.reduce(
               (acumulador, item, index) => {
                 if (item && this.formConfig[indice]) {
-                  acumulador.push(this.formConfig[indice].type.options[index].value);
+                  acumulador.push((this.formConfig[indice].type as CheckInterface ).options[index].value);
                 }
                 return acumulador;
               }, []
