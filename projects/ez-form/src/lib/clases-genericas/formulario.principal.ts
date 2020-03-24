@@ -7,7 +7,6 @@ import {ObjetoArchivoInterface} from '../interfaces/objeto.archivo.interface';
 import {isObservable, of, Subscription} from 'rxjs';
 import { PrincipalFormInterface, CheckInterface } from '../interfaces/controls-interfaces';
 
-@Directive()
 export class FormularioPrincipal {
   sugerencias: any[] = [];
   formulario: FormGroup;
