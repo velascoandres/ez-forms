@@ -1,18 +1,21 @@
 import {AbstractControl, FormArray, FormBuilder, FormControl, FormGroup} from '@angular/forms';
-import { ChangeDetectorRef, EventEmitter, Input, Output, Directive } from '@angular/core';
+import {ChangeDetectorRef, EventEmitter, Input, Output, Component} from '@angular/core';
 import {ToasterConfig, ToasterService} from 'angular2-toaster';
 import {debounceTime} from 'rxjs/operators';
 import {validarMinimoCheckBox} from './validadores_especiales';
-import {ObjetoArchivoInterface} from '../interfaces/objeto.archivo.interface';
-import {isObservable, of, Subscription} from 'rxjs';
-import { PrincipalFormInterface, CheckInterface } from '../interfaces/controls-interfaces';
+import {isObservable, Observable, of, Subscription} from 'rxjs';
+import {
+  PrincipalFormFieldInterface,
+  CheckInterface,
+  AutoCompleteFieldInterface, HashMap
+} from '../interfaces/controls-interfaces';
+import {MetadataAutocompleteInterface} from '../interfaces/metadata-autocomplete.interface';
 
 export class FormularioPrincipal {
-  sugerencias: any[] = [];
+  listaMetadataAutoComplete: MetadataAutocompleteInterface[] = [];
   formulario: FormGroup;
   cd: ChangeDetectorRef;
-  listaObjetosArchivos = [];
-  esconderArchivos = false;
+  listaObjetosArchivos = {};
   @Input()
   fullWidth = false;
   @Input()
@@ -37,7 +40,7 @@ export class FormularioPrincipal {
     }
   };
   @Input()
-  formConfig: PrincipalFormInterface[] = [];
+  formConfig: PrincipalFormFieldInterface[] = [];
 
   mensajesErrores = {};
   objetoArreglosErrores = {};
@@ -78,20 +81,20 @@ export class FormularioPrincipal {
     );
   }
 
-  protected llenarFormulario() {
-    const nombreControles = Object.keys(this.formulario.controls);
-    nombreControles.forEach(
-      (nombreControl) => {
-        const datoEntrada = this.inputData[nombreControl];
-        const existeDatoEntrada = datoEntrada !== undefined;
-        if (existeDatoEntrada) {
-          if (typeof datoEntrada !== 'object') {
-            this.formulario.get(nombreControl).patchValue(datoEntrada);
-          }
-        }
-      }
-    );
-  }
+  // protected llenarFormulario() {
+  //   const nombreControles = Object.keys(this.formulario.controls);
+  //   nombreControles.forEach(
+  //     (nombreControl) => {
+  //       const datoEntrada = this.inputData[nombreControl];
+  //       const existeDatoEntrada = datoEntrada !== undefined;
+  //       if (existeDatoEntrada) {
+  //         if (typeof datoEntrada !== 'object') {
+  //           this.formulario.get(nombreControl).patchValue(datoEntrada);
+  //         }
+  //       }
+  //     }
+  //   );
+  // }
 
   protected generarControles(configuracion: any) {
     const controles = {};
@@ -191,7 +194,7 @@ export class FormularioPrincipal {
             const arreglo = arregloBoolean.reduce(
               (acumulador, item, index) => {
                 if (item && this.formConfig[indice]) {
-                  acumulador.push((this.formConfig[indice].type as CheckInterface ).options[index].value);
+                  acumulador.push((this.formConfig[indice].type as CheckInterface).options[index].value);
                 }
                 return acumulador;
               }, []
@@ -247,104 +250,26 @@ export class FormularioPrincipal {
     return this.objetoArreglosErrores[nombreControl];
   }
 
-  obtenerErrores() {
-    const controles = Object.keys(this.formulario.controls);
-    const errores = controles.map(
-      (nombreControl: string) => {
-        const control = this.formulario.controls[nombreControl];
-        if (control.errors !== null) {
-          const error = {};
-          error[nombreControl] = control.errors;
-          return error;
-        }
-      }
-    );
-  }
-
-  llenarGaleriaMaterial(event, control) {
-    const archivos = event.target.files;
-    this.quitarArchivosPorControl(control.controlName);
-    const objetoArchivos: File[] = Object.values(archivos);
-    this.totalArchivos = objetoArchivos.length ? objetoArchivos.length : 0;
-    objetoArchivos.forEach(
-      (archivo: File) => {
-        const reader = new FileReader();
-        reader.onloadend = () => {
-          if (typeof reader.result === 'string') {
-            const formato = archivo.type;
-            const objetoArchivo: ObjetoArchivoInterface = {
-              propietario: control.controlName,
-              datos: reader.result,
-              nombreArchivo: archivo.name,
-              formato,
-            };
-            this.listaObjetosArchivos.push(objetoArchivo);
-          }
-        };
-        if (archivo) {
-          reader.readAsDataURL(archivo);
-        }
-      }
-    );
-  }
-
-  quitarArchivosPorControl(nombreControl: string) {
-    this.listaObjetosArchivos = this.listaObjetosArchivos.filter(
-      (archivo) => {
-        return archivo.propietario !== nombreControl;
-      }
-    );
-  }
-
-  filtrarArchivosPorControl(nombreControl: string) {
-    return this.listaObjetosArchivos.filter(
-      (archivo) => {
-        return archivo.propietario === nombreControl;
-      }
-    );
-  }
-
-  eliminarArchivo(evento, nombreControl) {
-    this.listaObjetosArchivos = this.listaObjetosArchivos.filter(
-      (archivo) => {
-        return (archivo.nombreArchivo !== evento && archivo.propietario === nombreControl) || archivo.propietario !== nombreControl;
-      }
-    );
-    const valores = this.formulario.get(nombreControl).value;
-    // Elimnar files
-    valores._files = valores._files.filter(
-      (archivo) => {
-        return archivo.name !== evento;
-      }
-    );
-    // Eliminar fileNames
-    const arregloNombresArchivos = valores._fileNames.split(valores.delimiter);
-    valores._fileNames = arregloNombresArchivos.filter(
-      (nombreArchivo) => {
-        return nombreArchivo !== evento;
-      }
-    ).join(valores.delimiter);
-    const estaVacio = valores._files.length === 0;
-    if (estaVacio) {
-      this.formulario.get(nombreControl).setValue('');
-    } else {
-      this.formulario.get(nombreControl).setValue(valores);
-    }
-  }
-  establecerOpciones(evento, callbackComponentePadre, reference?, esMaterial = false) {
+  establecerOpciones(evento, control: AutoCompleteFieldInterface) {
     const parametro = evento;
-    const respuesta = callbackComponentePadre(parametro, reference);
+    const cb: (event: { query: string } | string, context: Component) => Observable<HashMap<any>[]> = control.type.completeMethod;
+    const respuesta = cb(parametro, control.type.componentReference);
     let subscripcionOpcion;
+    let metadataCampo: MetadataAutocompleteInterface = {
+      propietario: control.controlName,
+    };
     if (isObservable(respuesta)) {
       subscripcionOpcion = respuesta.subscribe(
         (resultados: any) => {
-          this.sugerencias = resultados;
+          metadataCampo.sugerencias = resultados;
+          this.listaMetadataAutoComplete[control.controlName] = metadataCampo;
         }
       );
     } else {
       subscripcionOpcion = of(respuesta).subscribe(
         (resultados) => {
-          this.sugerencias = resultados;
+          metadataCampo.sugerencias = resultados;
+          this.listaMetadataAutoComplete[`${control.controlName}`] = metadataCampo;
         }
       );
     }
@@ -355,18 +280,34 @@ export class FormularioPrincipal {
     this.formulario.get(nombreControl).setValue(evento);
   }
 
+  // Cuando se toca un campo
   determinarSiEstaValido(nombreControl: string) {
     const control = this.formulario.controls[nombreControl];
     const estaTocado = this.formulario.get(nombreControl).touched;
     const estaSucio = this.formulario.get(nombreControl).dirty;
+    if (estaTocado) {
+      const valor = this.formulario.get(nombreControl).value;
+      const esArreglo = valor instanceof Array;
+      const esListaArchivos = esArreglo && valor[0] instanceof FileList;
+      // if (!esArreglo && !valor) {
+      //   this.formulario.get(nombreControl).setValue(valor);
+      // }
+      // if (esArreglo && !esListaArchivos && !valor.length) {
+      //   this.formulario.get(nombreControl).setValue('');
+      // }
+      if (esArreglo && esListaArchivos && !valor[0].length) {
+        this.formulario.get(nombreControl).setValue('');
+      }
+
+    }
     return control.invalid && (estaSucio || estaTocado);
   }
 
-  listarArhivosPorControl(controlName: string) {
-    return this.listaObjetosArchivos.filter(
-      (archivo) => {
-        return archivo.propietario === controlName;
-      }
-    );
+  buscarSugerenciasPorControl(nombreControl: string): Array<any> {
+    const metadata: MetadataAutocompleteInterface = this.listaMetadataAutoComplete[nombreControl];
+    if (metadata) {
+      return metadata.sugerencias ? metadata.sugerencias : [];
+    }
+    return [];
   }
 }

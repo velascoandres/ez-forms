@@ -2,8 +2,8 @@ import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
 
-
-export interface PrincipalFormInterface {
+// Principal Form Field
+export interface PrincipalFormFieldInterface {
     controlName: string;
     placeholder?: string;
     label?: string;
@@ -12,6 +12,34 @@ export interface PrincipalFormInterface {
     disabled?: boolean;
     hint?: string;
     errorMessages?: { [key: string]: string };
+}
+// InputText Field
+export interface InputTextFieldInterface extends PrincipalFormFieldInterface{
+  type: InputTextInterface;
+}
+// TextArea Field
+export interface TextAreaFieldInterface extends PrincipalFormFieldInterface{
+  type: TextAreaInterface;
+}
+// Selection Field
+export interface SelectionFieldInterface extends PrincipalFormFieldInterface{
+  type: SelectionInterface;
+}
+// SimpleSelect Field
+export interface SimpleSelectFieldInterface extends PrincipalFormFieldInterface{
+  type: SimpleSelectInterface;
+}
+// Date Field
+export interface DateFieldInterface extends PrincipalFormFieldInterface{
+  type: DateInterface;
+}
+// File Field
+export interface FileFieldInterface extends PrincipalFormFieldInterface{
+  type: FileInterface;
+}
+// AutoComplete Field
+export interface AutoCompleteFieldInterface extends PrincipalFormFieldInterface{
+  type: AutoCompleteInterface;
 }
 
 

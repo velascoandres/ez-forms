@@ -237,13 +237,13 @@
             <input
               placeholder="{{control.placeholder ? control.placeholder : ''}}"
               matInput
-              (input)="establecerOpciones($event.target.value, $any(control).type.completeMethod, $any(control).type.componentReference)"
+              (input)="establecerOpciones($any($event).target.value,$any(control))"
               [matAutocomplete]="auto"
-              (click)="establecerOpciones('', $any(control).type.completeMethod, $any(control).type.componentReference)"
+              (click)="establecerOpciones('', $any(control))"
             >
             <mat-autocomplete #auto="matAutocomplete">
               <mat-option
-                *ngFor="let option of sugerencias" [value]="option[$any(control).type.showAttribute]"
+                *ngFor="let option of buscarSugerenciasPorControl($any(control).controlName)" [value]="option[$any(control).type.showAttribute]"
                 (onSelectionChange)="cambio(option, control.controlName)"
               >
                 {{option[$any(control).type.showAttribute]}}
@@ -283,7 +283,7 @@
               </span>
           </label>
           <ez-bs-input
-            id="file{{control.controlName}}"
+            id="file-bs{{control.controlName}}"
             formControlName="{{control.controlName}}"
             [label]="control.label"
             [placeholder]="control.placeholder"
@@ -464,10 +464,10 @@
           </label>
           <p-autoComplete
             id="auto{{control.controlName}}"
-            [suggestions]="sugerencias"
+            [suggestions]="buscarSugerenciasPorControl($any(control).controlName)"
             [formControlName]="control.controlName"
             [dropdown]="true"
-            (completeMethod)="establecerOpciones($event, $any(control).type.completeMethod, $any(control).type.componentReference)"
+            (completeMethod)="establecerOpciones($event, $any(control))"
             [minLength]="1"
             [placeholder]="control.placeholder ? control.placeholder : ''"
             [multiple]="false"

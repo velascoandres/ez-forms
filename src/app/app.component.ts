@@ -3,7 +3,7 @@ import {Validators} from '@angular/forms';
 import {ToastService} from '../../projects/toast/src/lib/toast.service';
 import {WikipediaRestService} from './servicios/wikipedia-rest.service';
 import {FileValidator} from '../../projects/ez-form/src/lib/clases-genericas/file.validator';
-import { PrincipalFormInterface, InputTextInterface, TextAreaInterface, SimpleSelectInterface, CheckInterface, RadioInterface, FileInterface, AutoCompleteInterface } from 'projects/ez-form/src/lib/interfaces/controls-interfaces';
+import { PrincipalFormFieldInterface, InputTextInterface, TextAreaInterface, SimpleSelectInterface, CheckInterface, RadioInterface, FileInterface, AutoCompleteInterface } from 'projects/ez-form/src/lib/interfaces/controls-interfaces';
 
 @Component({
   selector: 'mat-ta-root',
@@ -12,7 +12,7 @@ import { PrincipalFormInterface, InputTextInterface, TextAreaInterface, SimpleSe
 })
 export class AppComponent {
   title = 'formularios';
-  myConfiguration: PrincipalFormInterface[] = [
+  myConfiguration: PrincipalFormFieldInterface[] = [
     {
       controlName: 'uuid',
       type: {
