@@ -3,7 +3,15 @@ import {Validators} from '@angular/forms';
 import {ToastService} from '../../projects/toast/src/lib/toast.service';
 import {WikipediaRestService} from './servicios/wikipedia-rest.service';
 import {FileValidator} from '../../projects/ez-form/src/lib/clases-genericas/file.validator';
-import { PrincipalFormFieldInterface, InputTextInterface, TextAreaInterface, SimpleSelectInterface, CheckInterface, RadioInterface, FileInterface, AutoCompleteInterface } from 'projects/ez-form/src/lib/interfaces/controls-interfaces';
+import {
+  PrincipalFormFieldInterface,
+  InputTextFieldInterface,
+  DateFieldInterface,
+  TextAreaFieldInterface,
+  SimpleSelectFieldInterface,
+  RadioFieldInterface,
+  CheckFieldInterface, FileFieldInterface, AutoCompleteFieldInterface
+} from 'projects/ez-form/src/lib/interfaces/controls-interfaces';
 
 @Component({
   selector: 'mat-ta-root',
@@ -12,160 +20,169 @@ import { PrincipalFormFieldInterface, InputTextInterface, TextAreaInterface, Sim
 })
 export class AppComponent {
   title = 'formularios';
-  myConfiguration: PrincipalFormFieldInterface[] = [
-    {
-      controlName: 'uuid',
-      type: {
-        typeName: 'input-text'
-      },
-      disabled: true,
+  // uuidField
+  uuidField: InputTextFieldInterface = {
+    controlName: 'uuid',
+    type: {
+      typeName: 'input-text'
     },
-    {
-      controlName: 'password',
-      type: {
-        typeName: 'input-text',
-        class: 'password',
-      } as InputTextInterface,
-      validators: [
-        Validators.required,
+    disabled: true,
+  };
+  // passwordField
+  passwordField: InputTextFieldInterface = {
+    controlName: 'password',
+    type: {
+      typeName: 'input-text',
+      class: 'password',
+    },
+    validators: [
+      Validators.required,
+    ]
+  };
+  // birthdayField
+  birthdayField: DateFieldInterface = {
+    controlName: 'birthday',
+    placeholder: 'Enter your birthday date',
+    hint: 'Enter a valid date',
+    type: {
+      typeName: 'date'
+    },
+    validators: [
+      Validators.required,
+    ]
+  };
+  // addressField
+  addressField: TextAreaFieldInterface = {
+    controlName: 'address',
+    label: 'Address',
+    placeholder: 'Enter a complete address',
+    type: {
+      typeName: 'textArea',
+      maxLength: 20,
+    },
+    validators: [
+      Validators.required,
+    ],
+  };
+  // emailField
+  emailField: InputTextFieldInterface = {
+    controlName: 'email',
+    validators: [
+      Validators.required,
+      Validators.email
+    ],
+    placeholder: 'Enter an email',
+    type: {
+      typeName: 'input-text',
+      maxLength: 30,
+    },
+    errorMessages: {
+      required: 'The email is mandatory',
+      email: 'You must enter a valid email',
+    },
+    hint: 'Enter a valid email'
+  };
+  // civilStateField
+  civilStateField: SimpleSelectFieldInterface = {
+    controlName: 'civilState',
+    placeholder: 'Choose a civil state',
+    label: 'Civil state',
+    hint: 'Please pick a Civil State',
+    validators: [
+      Validators.required
+    ],
+    type: {
+      typeName: 'select',
+      options: [
+        {
+          value: 1,
+          label: 'Married'
+        },
+        {
+          value: 2,
+          label: 'Single'
+        }
       ]
     },
-    {
-      controlName: 'birthday',
-      placeholder: 'Enter your birthday date',
-      hint: 'Enter a valid date',
-      type: {
-        typeName: 'date'
-      },
-      validators: [
-        Validators.required,
+  };
+  // favoriteFruit
+  favoriteFruitField: RadioFieldInterface = {
+    controlName: 'favoriteFruit',
+    validators: [
+      Validators.required
+    ],
+    label: 'Favorite Fruit',
+    type: {
+      typeName: 'radio',
+      options: [
+        {
+          value: 3,
+          label: 'Apple'
+        },
+        {
+          value: 1,
+          label: 'Pear'
+        },
+        {
+          value: 2,
+          label: 'Pineapple'
+        }
+      ],
+    },
+  };
+  // citiesField
+  citiesField: CheckFieldInterface = {
+    controlName: 'cities',
+    type: {
+      typeName: 'check',
+      minRequired: 2,
+      options: [
+        {
+          value: 1,
+          label: 'Quito'
+        },
+        {
+          value: 2,
+          label: 'Cuenca'
+        },
+        {
+          value: 3,
+          label: 'Ambato'
+        }
       ]
     },
-    {
-      controlName: 'address',
-      label: 'Address',
-      placeholder: 'Enter a complete address',
-      type: {
-        typeName: 'textArea',
-        maxLength: 20,
-      } as TextAreaInterface,
-      validators: [
-        Validators.required,
-      ],
+    label: 'Cities',
+    errorMessages: {
+      required: 'select two cities at least',
+    }
+  };
+  // profilePictureField
+  profilePictureField: FileFieldInterface = {
+    controlName: 'profilePicture',
+    label: 'Profile Picture',
+    hint: 'Please upload your profile picture',
+    placeholder: 'Add your profile picture',
+    validators: [
+      Validators.required,
+      FileValidator.extensions(['jpg']),
+      FileValidator.minSize(100),
+      FileValidator.maxSize(500),
+    ],
+    errorMessages: {
+      required: 'Mandatory File',
+      fileExtension: 'Please select a jpg file',
+      fileMinSize: 'File size must be above of 100 kilobytes',
+      fileMaxSize: 'File size is larger than 500 kilobytes'
     },
-    {
-      controlName: 'email',
-      validators: [
-        Validators.required,
-        Validators.email
-      ],
-      placeholder: 'Enter an email',
-      type: {
-        typeName: 'input-text',
-        maxLength: 30,
-      } as InputTextInterface,
-      errorMessages: {
-        required: 'The email is mandatory',
-        email: 'You must enter a valid email',
-      },
-      hint: 'Enter a valid email'
+    type: {
+      typeName: 'file',
+      multiple: false,
+      accept: 'image/*',
+      showFile: true,
     },
-    {
-      controlName: 'civilState',
-      placeholder: 'Choose a civil state',
-      label: 'Civil state',
-      hint: 'Please pick a Civil State',
-      validators: [
-        Validators.required
-      ],
-      type: {
-        typeName: 'select',
-        options: [
-          {
-            value: 1,
-            label: 'Married'
-          },
-          {
-            value: 2,
-            label: 'Single'
-          }
-        ]
-      } as SimpleSelectInterface,
-    },
-    {
-      controlName: 'cities',
-      type: {
-        typeName: 'check',
-        minRequired: 2,
-        options: [
-          {
-            value: 1,
-            label: 'Quito'
-          },
-          {
-            value: 2,
-            label: 'Cuenca'
-          },
-          {
-            value: 3,
-            label: 'Ambato'
-          }
-        ]
-      } as CheckInterface,
-      label: 'Cities',
-      errorMessages: {
-        required: 'select two cities at least',
-      }
-    },
-    {
-      controlName: 'favoriteFruit',
-      validators: [
-        Validators.required
-      ],
-      label: 'Favorite Fruit',
-      type: {
-        typeName: 'radio',
-        options: [
-          {
-            value: 3,
-            label: 'Apple'
-          },
-          {
-            value: 1,
-            label: 'Pear'
-          },
-          {
-            value: 2,
-            label: 'Pineapple'
-          }
-        ],
-      } as RadioInterface,
-    },
-    {
-      controlName: 'profilePicture',
-      label: 'Profile Picture',
-      hint: 'Please upload your profile picture',
-      placeholder: 'Add your profile picture',
-      validators: [
-        Validators.required,
-        FileValidator.extensions(['jpg']),
-        FileValidator.minSize(100),
-        FileValidator.maxSize(500),
-      ],
-      errorMessages: {
-        required: 'Mandatory File',
-        fileExtension: 'Please select a jpg file',
-        fileMinSize: 'File size must be above of 100 kilobytes',
-        fileMaxSize: 'File size is larger than 500 kilobytes'
-      },
-      type: {
-        typeName: 'file',
-        multiple: false,
-        accept: 'image/*',
-        showFile: true,
-      } as FileInterface,
-    },
-    {
+  };
+  // someFiles
+  someFilesField: FileFieldInterface = {
       controlName: 'someFiles',
       label: 'Pictures',
       hint: 'Please upload your files',
@@ -189,45 +206,65 @@ export class AppComponent {
           actions: 'Operations',
           description: 'Entry Files'
         }
-      } as FileInterface,
-    }
+      },
+    };
+  // Form Config
+  myConfiguration: PrincipalFormFieldInterface[] = [
+    this.uuidField,
+    this.passwordField,
+    this.birthdayField,
+    this.addressField,
+    this.emailField,
+    this.civilStateField,
+    this.citiesField,
+    this.favoriteFruitField,
+    this.profilePictureField,
+    this.someFilesField,
   ];
+
+  // User Email Field
+  userEmailField: InputTextFieldInterface = {
+    controlName: 'userEmail',
+    validators: [
+      Validators.email
+    ],
+    label: 'Email address',
+    placeholder: 'Enter an email',
+    type: {
+      typeName: 'input-text',
+      maxLength: 30,
+    },
+    errorMessages: {
+      required: 'The email is mandatory',
+      email: 'You must enter a valid email',
+    },
+    hint: 'Enter a valid email'
+  };
+
+  // Article Field (AutoComplete)
+  articleField: AutoCompleteFieldInterface = {
+    controlName: 'article',
+    validators: [
+      Validators.required
+    ],
+    label: 'Wikipedia article',
+    placeholder: 'Example: DNA',
+    type: {
+      typeName: 'autoComplete',
+      completeMethod: this.filterWikipediaArticleByTitle,
+      showAttribute: 'title',
+      componentReference: this,
+    },
+    errorMessages: {
+      required: 'The article is mandatory',
+    },
+    hint: 'Search an article'
+  };
+
+  // Other Form Config
   configuracionFormularioBusqueda = [
-    {
-      controlName: 'userEmail',
-      validators: [
-        Validators.email
-      ],
-      label: 'Email address',
-      placeholder: 'Enter an email',
-      type: {
-        typeName: 'input',
-        maxLength: 30,
-      },
-      errorMessages: {
-        required: 'The email is mandatory',
-        email: 'You must enter a valid email',
-      },
-      hint: 'Enter a valid email'
-    },
-    {
-      controlName: 'article',
-      validators: [
-        Validators.required
-      ],
-      label: 'Wikipedia article',
-      placeholder: 'Example: DNA',
-      type: {
-        typeName: 'autoComplete',
-        completeMethod: this.filterWikipediaArticleByTitle,
-        showAttribute: 'title',
-        componentReference: this,
-      } as AutoCompleteInterface,
-      errorMessages: {
-        required: 'The article is mandatory',
-      },
-      hint: 'Search an article'
-    },
+    this.userEmailField,
+    this.articleField,
   ];
   infoLoca = {
     userEmail: 'juan.pecados@mail.com',

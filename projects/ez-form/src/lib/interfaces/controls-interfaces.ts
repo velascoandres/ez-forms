@@ -15,7 +15,7 @@ export interface PrincipalFormFieldInterface {
 }
 // InputText Field
 export interface InputTextFieldInterface extends PrincipalFormFieldInterface{
-  type: InputTextInterface;
+  type: InputTextTypeInterface;
 }
 // TextArea Field
 export interface TextAreaFieldInterface extends PrincipalFormFieldInterface{
@@ -23,23 +23,31 @@ export interface TextAreaFieldInterface extends PrincipalFormFieldInterface{
 }
 // Selection Field
 export interface SelectionFieldInterface extends PrincipalFormFieldInterface{
-  type: SelectionInterface;
+  type: SelectionTypeInterface;
 }
 // SimpleSelect Field
 export interface SimpleSelectFieldInterface extends PrincipalFormFieldInterface{
-  type: SimpleSelectInterface;
+  type: SimpleSelectTypeInterface;
+}
+// radio Field
+export interface RadioFieldInterface extends PrincipalFormFieldInterface {
+  type: RadioTypeInterface;
+}
+// check Field
+export interface CheckFieldInterface extends PrincipalFormFieldInterface {
+  type: CheckTypeInterface;
 }
 // Date Field
 export interface DateFieldInterface extends PrincipalFormFieldInterface{
-  type: DateInterface;
+  type: DateTypeInterface;
 }
 // File Field
 export interface FileFieldInterface extends PrincipalFormFieldInterface{
-  type: FileInterface;
+  type: FileTypeInterface;
 }
 // AutoComplete Field
 export interface AutoCompleteFieldInterface extends PrincipalFormFieldInterface{
-  type: AutoCompleteInterface;
+  type: AutoCompleteTypeInterface;
 }
 
 
@@ -47,14 +55,14 @@ export interface PrincipalTypeInterface {
     typeName: 'textArea' | 'input-text' | 'file' | 'date' | 'password' | 'radio' | 'check' | 'select' | 'autoComplete';
 }
 // input-text
-export interface InputTextInterface extends PrincipalTypeInterface {
+export interface InputTextTypeInterface extends PrincipalTypeInterface {
     typeName: 'input-text' | 'textArea';
     maxLength?: number;
     minLenght?: number;
     class?: 'password';
 }
 // text-area
-export interface TextAreaInterface extends InputTextInterface {
+export interface TextAreaInterface extends InputTextTypeInterface {
     typeName: 'textArea';
     rows?: number;
 }
@@ -64,25 +72,25 @@ export interface OptionInterface {
     label: string;
 }
 // selection
-export interface SelectionInterface extends PrincipalTypeInterface {
+export interface SelectionTypeInterface extends PrincipalTypeInterface {
     typeName: 'select' | 'radio' | 'check';
     options: OptionInterface[];
 }
 // select
-export interface SimpleSelectInterface extends PrincipalTypeInterface {
+export interface SimpleSelectTypeInterface extends SelectionTypeInterface {
     typeName: 'select';
 }
 // radio
-export interface RadioInterface extends SelectionInterface {
+export interface RadioTypeInterface extends SelectionTypeInterface {
     typeName: 'radio';
 }
 // check
-export interface CheckInterface extends SelectionInterface {
+export interface CheckTypeInterface extends SelectionTypeInterface {
     typeName: 'check';
     minRequired?: number;
 }
 // date
-export interface DateInterface extends PrincipalTypeInterface {
+export interface DateTypeInterface extends PrincipalTypeInterface {
     typeName: 'date';
 }
 
@@ -95,7 +103,7 @@ export interface TableHeadersInterface {
 
 
 // file
-export interface FileInterface extends PrincipalTypeInterface {
+export interface FileTypeInterface extends PrincipalTypeInterface {
     typeName: 'file';
     multiple?: boolean;
     accept: string;
@@ -104,11 +112,11 @@ export interface FileInterface extends PrincipalTypeInterface {
 }
 
 // autoComplete
-export interface AutoCompleteInterface extends PrincipalTypeInterface {
+export interface AutoCompleteTypeInterface extends PrincipalTypeInterface {
     typeName: 'autoComplete';
     completeMethod: (event: { query: string } | string, context: Component) => Observable<HashMap<any>[]>;
     showAttribute: string;
-    componentReference: Component;
+    componentReference: Component | Object;
 }
 
 export interface HashMap<T> {

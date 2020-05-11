@@ -6,7 +6,7 @@ import {validarMinimoCheckBox} from './validadores_especiales';
 import {isObservable, Observable, of, Subscription} from 'rxjs';
 import {
   PrincipalFormFieldInterface,
-  CheckInterface,
+  CheckTypeInterface,
   AutoCompleteFieldInterface, HashMap
 } from '../interfaces/controls-interfaces';
 import {MetadataAutocompleteInterface} from '../interfaces/metadata-autocomplete.interface';
@@ -190,11 +190,11 @@ export class FormularioPrincipal {
               return control.controlName === llave;
             }
           );
-          if (indice !== -1 && (this.formConfig[indice].type as CheckInterface).options) {
+          if (indice !== -1 && (this.formConfig[indice].type as CheckTypeInterface).options) {
             const arreglo = arregloBoolean.reduce(
               (acumulador, item, index) => {
                 if (item && this.formConfig[indice]) {
-                  acumulador.push((this.formConfig[indice].type as CheckInterface).options[index].value);
+                  acumulador.push((this.formConfig[indice].type as CheckTypeInterface).options[index].value);
                 }
                 return acumulador;
               }, []

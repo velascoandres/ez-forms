@@ -43,9 +43,7 @@ components ``
         AppComponent  
       ],  
       imports: [  
-        BrowserModule,  
         EzFormModule,  
-        BrowserAnimationsModule,  
       ],  
       providers: [],  
       bootstrap: [AppComponent]  
@@ -58,227 +56,231 @@ First we need a config object inside of parent component.
 For example: we need to create a form with the following fields:
 * UUID: `Disabled` input (Optional)
 ```typescript
-      {
-        controlName: 'uuid',
-        type: {
-          typeName: 'input-text'
-        } as InputTextInterface,
-        disabled: true,
-      },
+     uuidField: InputTextFieldInterface = {
+       controlName: 'uuid',
+       type: {
+         typeName: 'input-text'
+       },
+       disabled: true,
+     };
 ```
 * Password: `Password` input (Required)
 ```typescript
-      {
+      passwordField: InputTextFieldInterface = {
         controlName: 'password',
         type: {
           typeName: 'input-text',
           class: 'password',
-        } as InputTextInterface,
+        },
         validators: [
           Validators.required,
         ]
-      },
+      };
 ```
 * Brithday: `Date` input (Required)
 ```typescript
-       {
-        controlName: 'birthday',
-        placeholder: 'Enter your birthday date',
-        hint: 'Enter a valid date',
-        type: {
-          typeName: 'date'
-        } as DateInterface,
-        validators: [
-          Validators.required,
-        ]
-      },
+  birthdayField: DateFieldInterface = {
+    controlName: 'birthday',
+    placeholder: 'Enter your birthday date',
+    hint: 'Enter a valid date',
+    type: {
+      typeName: 'date'
+    },
+    validators: [
+      Validators.required,
+    ]
+  };
 ```
 * Address: `Long text` input (Required)
 ```typescript
-       {
-        controlName: 'address',
-        placeholder: 'Enter a complete address',
-        type: {
-          typeName: 'textArea',
-          maxLength: 20,
-        } as TextAreaInterface,
-        validators: [
-          Validators.required,
-        ],
-      },
+  addressField: TextAreaFieldInterface = {
+    controlName: 'address',
+    label: 'Address',
+    placeholder: 'Enter a complete address',
+    type: {
+      typeName: 'textArea',
+      maxLength: 20,
+    },
+    validators: [
+      Validators.required,
+    ],
+  };
 ```
 * Email: `Text` input (Required, Email Validation)
 ```typescript
-       {
-        controlName: 'email',
-        validators: [
-          Validators.required,
-          Validators.email
-        ],
-        placeholder: 'Enter an email',
-        type: {
-          typeName: 'input-text',
-          maxLength: 30,
-        } as InputTextInterface,
-        errorMessages: {
-          required: 'The email is mandatory',
-          email: 'You must enter a valid email',
-        },
-        hint: 'Enter a valid email'
-      },
+  emailField: InputTextFieldInterface = {
+    controlName: 'email',
+    validators: [
+      Validators.required,
+      Validators.email
+    ],
+    placeholder: 'Enter an email',
+    type: {
+      typeName: 'input-text',
+      maxLength: 30,
+    },
+    errorMessages: {
+      required: 'The email is mandatory',
+      email: 'You must enter a valid email',
+    },
+    hint: 'Enter a valid email'
+  };
 ```
 * Civil State: `Select` input (Required)
 ```typescript
-    {
-        controlName: 'civilState',
-        placeholder: 'Choose a civil state',
-        label: 'Civil state',
-        hint: 'Please pick a Civil State',
-        validators: [
-          Validators.required
-        ],
-        type: {
-          typeName: 'select',
-          options: [
-            {
-              value: 1,
-              label: 'Married'
-            },
-            {
-              value: 2,
-              label: 'Single'
-            }
-          ]
-        } as SimpleSelectInterface,
-      },
+  civilStateField: SimpleSelectFieldInterface = {
+    controlName: 'civilState',
+    placeholder: 'Choose a civil state',
+    label: 'Civil state',
+    hint: 'Please pick a Civil State',
+    validators: [
+      Validators.required
+    ],
+    type: {
+      typeName: 'select',
+      options: [
+        {
+          value: 1,
+          label: 'Married'
+        },
+        {
+          value: 2,
+          label: 'Single'
+        }
+      ]
+    },
+  };
 ```
 * Cities: `Multiple Select` input  (Required, minimum 2)
 ```typescript
-      {
-        controlName: 'cities',
-        type: {
-          typeName: 'check',
-          minRequired : 2,
-          options: [
-            {
-              value: 1,
-              label: 'Quito'
-            },
-            {
-              value: 2,
-              label: 'Cuenca'
-            },
-            {
-              value: 3,
-              label: 'Ambato'
-            }
-          ]
-        } as CheckInterface,
-        label: 'Cities',
-        errorMessages: {
-          required: 'select two cities at least',
+  citiesField: CheckFieldInterface = {
+    controlName: 'cities',
+    type: {
+      typeName: 'check',
+      minRequired: 2,
+      options: [
+        {
+          value: 1,
+          label: 'Quito'
+        },
+        {
+          value: 2,
+          label: 'Cuenca'
+        },
+        {
+          value: 3,
+          label: 'Ambato'
         }
-      },    
+      ]
+    },
+    label: 'Cities',
+    errorMessages: {
+      required: 'select two cities at least',
+    }
+  };
 ```
 * Favorite Fruit: `Radio Button` input  (Required)
 ```typescript
-        {
-          controlName: 'favoriteFruit',
-          validators: [
-            Validators.required
-          ],
-          label: 'Favorite Fruit',
-          type: {
-            typeName: 'radio',
-            options: [
-              {
-                value: 3,
-                label: 'Apple'
-              },
-              {
-                value: 1,
-                label: 'Pear'
-              },
-              {
-                value: 2,
-                label: 'Pineapple'
-              }
+          favoriteFruitField: RadioFieldInterface = {
+            controlName: 'favoriteFruit',
+            validators: [
+              Validators.required
             ],
-          } as RadioInterface,
-        }
+            label: 'Favorite Fruit',
+            type: {
+              typeName: 'radio',
+              options: [
+                {
+                  value: 3,
+                  label: 'Apple'
+                },
+                {
+                  value: 1,
+                  label: 'Pear'
+                },
+                {
+                  value: 2,
+                  label: 'Pineapple'
+                }
+              ],
+            },
+          };
 ```
 * Profile Picture: `File` input (Accept images only)
 ```typescript
-    {
-          controlName: 'profilePicture',
-          label: 'Profile Picture',
-          hint: 'Please upload your profile picture',
-          placeholder: 'Add your profile picture',
-          type: {
-            typeName: 'file',
-            multiple: false,
-            accept: 'image/*',
-          } as FileInterface,
-        }
+  profilePictureField: FileFieldInterface = {
+    controlName: 'profilePicture',
+    label: 'Profile Picture',
+    hint: 'Please upload your profile picture',
+    placeholder: 'Add your profile picture',
+    validators: [
+      Validators.required,
+      FileValidator.extensions(['jpg']),
+      FileValidator.minSize(100),
+      FileValidator.maxSize(500),
+    ],
+    errorMessages: {
+      required: 'Mandatory File',
+      fileExtension: 'Please select a jpg file',
+      fileMinSize: 'File size must be above of 100 kilobytes',
+      fileMaxSize: 'File size is larger than 500 kilobytes'
+    },
+    type: {
+      typeName: 'file',
+      multiple: false,
+      accept: 'image/*',
+      showFile: true,
+    },
+  };
 ```
 
-* Favorite Files: `File` input (Multiple)
+* someFields: `File` input (Multiple)
   * Validators: Required, minSize, maxSize, file extension.
 ```typescript
-{
+  someFilesField: FileFieldInterface = {
       controlName: 'someFiles',
-      label: 'Add Some Files',
+      label: 'Pictures',
       hint: 'Please upload your files',
       placeholder: 'Add Files',
       validators: [
         Validators.required,
         FileValidator.extensions(['png']),
-        FileValidator.minSize(100),
         FileValidator.maxSize(500),
       ],
       errorMessages: {
-        required: 'Mandatory File',
         fileExtension: 'Please select png files only',
-        fileMinSize: 'File size must be above of 100 kilobytes',
+        required: 'Mandatory File',
         fileMaxSize: 'File size is larger than 500 kilobytes'
-      }
+      },
       type: {
         typeName: 'file',
         multiple: true,
         accept: '*/*',
         showFile: true,
-        tableHeaders: { // Optional
+        tableHeaders: {
           actions: 'Operations',
           description: 'Entry Files'
-        } as TableHeadersInterface,
-      } as FileInterface
-    }
+        }
+      },
+    };
 ```
 All fields must be at a config array like this in our parent component, for example: 
 
 ### `parentComponent.ts`
 
 ```typescript  
-  myConfiguration: PrincipalFormInterface[] = [
-      {
-        controlName: 'uuid',
-        type: {
-          typeName: 'input-text'
-        } as InputTextInterface,
-        disabled: true,
-      },
-      {
-        controlName: 'password',
-        type: {
-          typeName: 'input',
-          class: 'password',
-        } as InputTextInterface,
-        validators: [
-          Validators.required,
-        ]
-      },
-       .... you could add more fields as you wish  ... 
-    ];
+myConfiguration: PrincipalFormFieldInterface[] = [
+    this.uuidField,
+    this.passwordField,
+    this.birthdayField,
+    this.addressField,
+    this.emailField,
+    this.civilStateField,
+    this.citiesField,
+    this.favoriteFruitField,
+    this.profilePictureField,
+    this.someFilesField,
+  ];
 ```  
   
 So in our `parentComponent.html` call the component.
@@ -350,29 +352,28 @@ Results:
 Parent component typescript code:
 
 ```typescript
-    {
-          controlName: 'article',
-          validators: [
-            Validators.required
-          ],
-          label: 'City',
-          placeholder: 'Example: DNA',
-          type: {
-            typeName: 'autoComplete',
-            maxLength: 30,
-            completeMethod: this.filterArticleWithHttpService,
-            showAttributte: 'name', // object attribute that will be displayed in the component
-            componentReference: this
-          } as AutoCompleteInterface,
-          errorMessages: {
-            required: 'The article is mandatory',
-          },
-          hint: 'Search an article'
-    }
+    articleField: AutoCompleteFieldInterface = {
+        controlName: 'article',
+        validators: [
+          Validators.required
+        ],
+        label: 'Wikipedia article',
+        placeholder: 'Example: DNA',
+        type: {
+          typeName: 'autoComplete',
+          completeMethod: this.filterWikipediaArticleByTitle,
+          showAttribute: 'title',
+          componentReference: this,
+        },
+        errorMessages: {
+          required: 'The article is mandatory',
+        },
+        hint: 'Search an article'
+      };
 
-    filterArticleWithHttpService(event, context) {
-        return context._wikipediaService.find(event.query ? event.query : event);
-    }
+    filterWikipediaArticleByTitle(event, contexto) {
+        return contexto._wikipediaService.find(event.query ? event.query : event);
+      }
 ```
 ### About filter method
 ```text
