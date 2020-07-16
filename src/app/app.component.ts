@@ -1,8 +1,8 @@
-import {Component} from '@angular/core';
-import {Validators} from '@angular/forms';
-import {ToastService} from '../../projects/toast/src/lib/toast.service';
-import {WikipediaRestService} from './servicios/wikipedia-rest.service';
-import {FileValidator} from '../../projects/ez-form/src/lib/clases-genericas/file.validator';
+import { Component } from '@angular/core';
+import { Validators } from '@angular/forms';
+import { ToastService } from '../../projects/toast/src/lib/toast.service';
+import { WikipediaRestService } from './servicios/wikipedia-rest.service';
+import { FileValidator } from '../../projects/ez-form/src/lib/clases-genericas/file.validator';
 import {
   PrincipalFormFieldInterface,
   InputTextFieldInterface,
@@ -12,6 +12,7 @@ import {
   RadioFieldInterface,
   CheckFieldInterface, FileFieldInterface, AutoCompleteFieldInterface
 } from 'projects/ez-form/src/lib/interfaces/controls-interfaces';
+import { InputDecorator } from 'projects/ez-form/src/lib/functions/control-verificator-helper';
 
 @Component({
   selector: 'mat-ta-root',
@@ -19,6 +20,17 @@ import {
   styleUrls: ['./app.component.sass']
 })
 export class AppComponent {
+
+  @InputDecorator(
+    {
+      controlName: 'passwd',
+      label: 'new passw',
+      type: {
+        typeName: 'input-text',
+      }
+    },
+  )
+  passwd: any;
   title = 'formularios';
   // uuidField
   uuidField: InputTextFieldInterface = {
@@ -183,35 +195,36 @@ export class AppComponent {
   };
   // someFiles
   someFilesField: FileFieldInterface = {
-      controlName: 'someFiles',
-      label: 'Pictures',
-      hint: 'Please upload your files',
-      placeholder: 'Add Files',
-      validators: [
-        Validators.required,
-        FileValidator.extensions(['png']),
-        FileValidator.maxSize(500),
-      ],
-      errorMessages: {
-        fileExtension: 'Please select png files only',
-        required: 'Mandatory File',
-        fileMaxSize: 'File size is larger than 500 kilobytes'
-      },
-      type: {
-        typeName: 'file',
-        multiple: true,
-        accept: '*/*',
-        showFile: true,
-        tableHeaders: {
-          actions: 'Operations',
-          description: 'Entry Files'
-        }
-      },
-    };
+    controlName: 'someFiles',
+    label: 'Pictures',
+    hint: 'Please upload your files',
+    placeholder: 'Add Files',
+    validators: [
+      Validators.required,
+      FileValidator.extensions(['png']),
+      FileValidator.maxSize(500),
+    ],
+    errorMessages: {
+      fileExtension: 'Please select png files only',
+      required: 'Mandatory File',
+      fileMaxSize: 'File size is larger than 500 kilobytes'
+    },
+    type: {
+      typeName: 'file',
+      multiple: true,
+      accept: '*/*',
+      showFile: true,
+      tableHeaders: {
+        actions: 'Operations',
+        description: 'Entry Files'
+      }
+    },
+  };
   // Form Config
   myConfiguration: PrincipalFormFieldInterface[] = [
     this.uuidField,
     this.passwordField,
+    this.passwd,
     this.birthdayField,
     this.addressField,
     this.emailField,
@@ -268,7 +281,7 @@ export class AppComponent {
   ];
   infoLoca = {
     userEmail: 'juan.pecados@mail.com',
-    city: {id: 2894, name: 'Parbasdorf', country: 'AT', lat: '48.28333', lng: '16.6'},
+    city: { id: 2894, name: 'Parbasdorf', country: 'AT', lat: '48.28333', lng: '16.6' },
   };
   usuario = {
     uuid: 1234,

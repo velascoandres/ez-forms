@@ -60,6 +60,8 @@ export interface InputTextTypeInterface extends PrincipalTypeInterface {
     maxLength?: number;
     minLenght?: number;
     class?: 'password';
+    isTextArea?: boolean;
+    rows?: number;
 }
 // text-area
 export interface TextAreaInterface extends InputTextTypeInterface {
