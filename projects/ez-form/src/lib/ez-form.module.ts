@@ -18,6 +18,7 @@ import {ImgItemComponent} from './componentes-auxiliares/img-item/img-item.compo
 import {AutoCompleteModule} from 'primeng/autocomplete';
 import {TableModule} from 'primeng/table';
 import {MatNativeDateModule} from '@angular/material/core';
+import {ToastModule} from 'primeng/toast';
 
 
 @NgModule({
@@ -44,6 +45,7 @@ import {MatNativeDateModule} from '@angular/material/core';
     AutoCompleteModule,
     TableModule,
     MatNativeDateModule,
+    ToastModule,
   ],
   exports: [
     EzFormComponent,

@@ -1,6 +1,6 @@
 import {AbstractControl, FormArray, FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import {ChangeDetectorRef, EventEmitter, Input, Output, Component} from '@angular/core';
-import {ToasterConfig, ToasterService} from 'angular2-toaster';
+// import {ToasterConfig, ToasterService} from 'angular2-toaster';
 import {debounceTime} from 'rxjs/operators';
 import {validarMinimoCheckBox} from './validadores_especiales';
 import {isObservable, Observable, of, Subscription} from 'rxjs';
@@ -10,6 +10,7 @@ import {
   AutoCompleteFieldInterface, HashMap
 } from '../interfaces/controls-interfaces';
 import {MetadataAutocompleteInterface} from '../interfaces/metadata-autocomplete.interface';
+import {MessageService} from 'primeng';
 
 export class FormularioPrincipal {
   listaMetadataAutoComplete: MetadataAutocompleteInterface[] = [];
@@ -29,14 +30,14 @@ export class FormularioPrincipal {
   @Input()
   toasterConfig = {
     success: {
-      type: 'info',
-      title: 'Correct',
-      body: 'Valid Form'
+      severity: 'info',
+      summary: 'Correct',
+      detail: 'Valid Form'
     },
     fail: {
-      type: 'warning',
-      title: 'Incorrect',
-      body: 'Invalid Form'
+      severity: 'warning',
+      summary: 'Incorrect',
+      detail: 'Invalid Form'
     }
   };
   @Input()
@@ -58,11 +59,11 @@ export class FormularioPrincipal {
 
   constructor(
     public fb: FormBuilder,
-    public readonly toaster: ToasterService,
+    public readonly toaster: MessageService,
   ) {
   }
 
-  public config: ToasterConfig = new ToasterConfig({animation: 'fade', limit: 1});
+  // public config: ToasterConfig = new ToasterConfig({animation: 'fade', limit: 1});
 
 
   iniciarFormulario() {
@@ -223,14 +224,14 @@ export class FormularioPrincipal {
           const formularioValido = !this.formulario.invalid;
           if (formularioValido) {
             if (this.showToaster) {
-              this.toaster.pop(
+              this.toaster.add(
                 this.toasterConfig.success
               );
             }
             this.dataFromForm.emit(informacionFormulario);
           } else {
             if (this.showToaster) {
-              this.toaster.pop(
+              this.toaster.add(
                 this.toasterConfig.fail
               );
             }

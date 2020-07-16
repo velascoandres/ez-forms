@@ -1,8 +1,9 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder} from '@angular/forms';
-import {ToasterService} from 'angular2-toaster';
+// import {ToasterService} from 'angular2-toaster';
 import {FormularioPrincipal} from './clases-genericas/formulario.principal';
 import {Subscription} from 'rxjs';
+import {MessageService} from 'primeng';
 
 @Component({
   selector: 'ez-form',
@@ -12,7 +13,7 @@ import {Subscription} from 'rxjs';
 export class EzFormComponent extends FormularioPrincipal implements OnInit, OnDestroy {
   constructor(
     public fb: FormBuilder,
-    public readonly toaster: ToasterService,
+    public readonly toaster: MessageService,
   ) {
     super(fb, toaster);
   }
