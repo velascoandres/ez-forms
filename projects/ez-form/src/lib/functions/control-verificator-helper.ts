@@ -22,28 +22,3 @@ export class ControlVerificatorHelper {
       'rows' in control;
   }
 }
-
-
-export function InputDecorator(
-  config: InputTextFieldInterface
-) {
-  return (target: any, key: string | symbol) => {
-    let val = target[key];
-    val = config;
-    config.type.typeName = 'input-text';
-    const getter = () => {
-      return val;
-    };
-    const setter = (next) => {
-      console.log(next);
-      val = next;
-    };
-
-    Object.defineProperty(target, key, {
-      get: getter,
-      set: setter,
-      enumerable: true,
-      configurable: true,
-    });
-  };
-}

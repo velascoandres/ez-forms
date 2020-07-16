@@ -2,8 +2,10 @@ import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
 
+
+export type TypeName = 'textArea' | 'input-text' | 'file' | 'date' | 'password' | 'radio' | 'check' | 'select' | 'autoComplete';
 // Principal Form Field
-export interface PrincipalFormFieldInterface {
+export interface BaseFormField {
     controlName: string;
     placeholder?: string;
     label?: string;
@@ -14,49 +16,50 @@ export interface PrincipalFormFieldInterface {
     errorMessages?: { [key: string]: string };
 }
 // InputText Field
-export interface InputTextFieldInterface extends PrincipalFormFieldInterface{
+export interface InputTextFieldInterface extends BaseFormField{
   type: InputTextTypeInterface;
 }
 // TextArea Field
-export interface TextAreaFieldInterface extends PrincipalFormFieldInterface{
+export interface TextAreaFieldInterface extends BaseFormField{
   type: TextAreaInterface;
 }
 // Selection Field
-export interface SelectionFieldInterface extends PrincipalFormFieldInterface{
+export interface SelectionFieldInterface extends BaseFormField{
   type: SelectionTypeInterface;
 }
 // SimpleSelect Field
-export interface SimpleSelectFieldInterface extends PrincipalFormFieldInterface{
+export interface SimpleSelectFieldInterface extends BaseFormField{
   type: SimpleSelectTypeInterface;
 }
 // radio Field
-export interface RadioFieldInterface extends PrincipalFormFieldInterface {
+export interface RadioFieldInterface extends BaseFormField {
   type: RadioTypeInterface;
 }
 // check Field
-export interface CheckFieldInterface extends PrincipalFormFieldInterface {
+export interface CheckFieldInterface extends BaseFormField {
   type: CheckTypeInterface;
 }
 // Date Field
-export interface DateFieldInterface extends PrincipalFormFieldInterface{
+export interface DateFieldInterface extends BaseFormField{
   type: DateTypeInterface;
 }
 // File Field
-export interface FileFieldInterface extends PrincipalFormFieldInterface{
+export interface FileFieldInterface extends BaseFormField{
   type: FileTypeInterface;
 }
 // AutoComplete Field
-export interface AutoCompleteFieldInterface extends PrincipalFormFieldInterface{
+export interface AutoCompleteFieldInterface extends BaseFormField{
   type: AutoCompleteTypeInterface;
 }
 
 
 export interface PrincipalTypeInterface {
-    typeName: 'textArea' | 'input-text' | 'file' | 'date' | 'password' | 'radio' | 'check' | 'select' | 'autoComplete';
+    typeName?: TypeName;
+    value?: any;
 }
 // input-text
 export interface InputTextTypeInterface extends PrincipalTypeInterface {
-    typeName: 'input-text' | 'textArea';
+    typeName?: 'input-text' | 'textArea';
     maxLength?: number;
     minLenght?: number;
     class?: 'password';

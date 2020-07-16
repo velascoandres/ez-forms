@@ -5,7 +5,7 @@ import {debounceTime} from 'rxjs/operators';
 import {validarMinimoCheckBox} from './validadores_especiales';
 import {isObservable, Observable, of, Subscription} from 'rxjs';
 import {
-  PrincipalFormFieldInterface,
+  BaseFormField,
   CheckTypeInterface,
   AutoCompleteFieldInterface, HashMap
 } from '../interfaces/controls-interfaces';
@@ -40,7 +40,7 @@ export class FormularioPrincipal {
     }
   };
   @Input()
-  formConfig: PrincipalFormFieldInterface[] = [];
+  formConfig: BaseFormField[] = [];
 
   mensajesErrores = {};
   objetoArreglosErrores = {};

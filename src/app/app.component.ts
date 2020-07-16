@@ -4,7 +4,7 @@ import { ToastService } from '../../projects/toast/src/lib/toast.service';
 import { WikipediaRestService } from './servicios/wikipedia-rest.service';
 import { FileValidator } from '../../projects/ez-form/src/lib/clases-genericas/file.validator';
 import {
-  PrincipalFormFieldInterface,
+  BaseFormField,
   InputTextFieldInterface,
   DateFieldInterface,
   TextAreaFieldInterface,
@@ -12,7 +12,7 @@ import {
   RadioFieldInterface,
   CheckFieldInterface, FileFieldInterface, AutoCompleteFieldInterface
 } from 'projects/ez-form/src/lib/interfaces/controls-interfaces';
-import { InputDecorator } from 'projects/ez-form/src/lib/functions/control-verificator-helper';
+import {InputText} from '../../projects/ez-form/src/lib/decoradores/form-fields';
 
 @Component({
   selector: 'mat-ta-root',
@@ -21,7 +21,7 @@ import { InputDecorator } from 'projects/ez-form/src/lib/functions/control-verif
 })
 export class AppComponent {
 
-  @InputDecorator(
+  @InputText(
     {
       controlName: 'passwd',
       label: 'new passw',
@@ -221,7 +221,7 @@ export class AppComponent {
     },
   };
   // Form Config
-  myConfiguration: PrincipalFormFieldInterface[] = [
+  myConfiguration: BaseFormField[] = [
     this.uuidField,
     this.passwordField,
     this.passwd,
