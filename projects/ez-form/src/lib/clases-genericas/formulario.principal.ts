@@ -40,7 +40,7 @@ export class FormularioPrincipal {
     }
   };
   @Input()
-  formConfig: BaseFormField[] = [];
+  formConfig: BaseFormField[] | any[] = [];
 
   mensajesErrores = {};
   objetoArreglosErrores = {};

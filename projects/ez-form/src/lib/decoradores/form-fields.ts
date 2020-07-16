@@ -7,7 +7,7 @@ import {
 } from '../interfaces/controls-interfaces';
 import {delegateDecorator} from './delegator';
 
-export function InputText(
+export function InputTextField(
   config: InputTextFieldInterface
 ) {
   return delegateDecorator<InputTextFieldInterface>(
@@ -16,7 +16,7 @@ export function InputText(
   );
 }
 
-export function TextArea(
+export function TextAreaField(
   config: TextAreaFieldInterface
 ) {
   return delegateDecorator<TextAreaFieldInterface>(
@@ -25,7 +25,7 @@ export function TextArea(
   );
 }
 
-export function SimpleSelect(
+export function SimpleSelectField(
   config: SimpleSelectFieldInterface
 ) {
   return delegateDecorator<SimpleSelectFieldInterface>(
@@ -34,7 +34,7 @@ export function SimpleSelect(
   );
 }
 
-export function RadioButton(
+export function RadioButtonField(
   config: RadioFieldInterface
 ) {
   return delegateDecorator<RadioFieldInterface>(
@@ -43,7 +43,7 @@ export function RadioButton(
   );
 }
 
-export function CheckButton(
+export function CheckButtonField(
   config: CheckFieldInterface
 ) {
   return delegateDecorator<CheckFieldInterface>(
@@ -52,7 +52,7 @@ export function CheckButton(
   );
 }
 
-export function AutoComplete(
+export function AutoCompleteField(
   config: AutoCompleteFieldInterface
 ) {
   return delegateDecorator<AutoCompleteFieldInterface>(

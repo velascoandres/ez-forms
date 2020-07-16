@@ -12,7 +12,7 @@ import {
   RadioFieldInterface,
   CheckFieldInterface, FileFieldInterface, AutoCompleteFieldInterface
 } from 'projects/ez-form/src/lib/interfaces/controls-interfaces';
-import {InputText} from '../../projects/ez-form/src/lib/decoradores/form-fields';
+import {InputTextField} from '../../projects/ez-form/src/lib/decoradores/form-fields';
 
 @Component({
   selector: 'mat-ta-root',
@@ -21,7 +21,7 @@ import {InputText} from '../../projects/ez-form/src/lib/decoradores/form-fields'
 })
 export class AppComponent {
 
-  @InputText(
+  @InputTextField(
     {
       controlName: 'passwd',
       label: 'new passw',

@@ -9,7 +9,7 @@ export interface BaseFormField {
     controlName: string;
     placeholder?: string;
     label?: string;
-    type: PrincipalTypeInterface;
+    type?: PrincipalTypeInterface;
     validators?: ((control: AbstractControl) => ValidationErrors | null)[] | ((param: number | Array<string>) => ValidatorFn)[];
     disabled?: boolean;
     hint?: string;
@@ -41,15 +41,15 @@ export interface CheckFieldInterface extends BaseFormField {
 }
 // Date Field
 export interface DateFieldInterface extends BaseFormField{
-  type: DateTypeInterface;
+  type?: DateTypeInterface;
 }
 // File Field
 export interface FileFieldInterface extends BaseFormField{
-  type: FileTypeInterface;
+  type?: FileTypeInterface;
 }
 // AutoComplete Field
 export interface AutoCompleteFieldInterface extends BaseFormField{
-  type: AutoCompleteTypeInterface;
+  type?: AutoCompleteTypeInterface;
 }
 
 
@@ -63,12 +63,10 @@ export interface InputTextTypeInterface extends PrincipalTypeInterface {
     maxLength?: number;
     minLenght?: number;
     class?: 'password';
-    isTextArea?: boolean;
-    rows?: number;
 }
 // text-area
 export interface TextAreaInterface extends InputTextTypeInterface {
-    typeName: 'textArea';
+    typeName?: 'textArea';
     rows?: number;
 }
 // option
@@ -78,25 +76,25 @@ export interface OptionInterface {
 }
 // selection
 export interface SelectionTypeInterface extends PrincipalTypeInterface {
-    typeName: 'select' | 'radio' | 'check';
+    typeName?: 'select' | 'radio' | 'check';
     options: OptionInterface[];
 }
 // select
 export interface SimpleSelectTypeInterface extends SelectionTypeInterface {
-    typeName: 'select';
+    typeName?: 'select';
 }
 // radio
 export interface RadioTypeInterface extends SelectionTypeInterface {
-    typeName: 'radio';
+    typeName?: 'radio';
 }
 // check
 export interface CheckTypeInterface extends SelectionTypeInterface {
-    typeName: 'check';
+    typeName?: 'check';
     minRequired?: number;
 }
 // date
 export interface DateTypeInterface extends PrincipalTypeInterface {
-    typeName: 'date';
+    typeName?: 'date';
 }
 
 

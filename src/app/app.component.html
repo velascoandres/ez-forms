@@ -10,26 +10,27 @@
   >
     <button [disabled]="!usuario" class="btn btn-block btn-info">Submit</button>
   </ez-form> -->
-  <ez-form
-    [formConfig]="myConfiguration"
-    (dataFromForm)="escucharDatosDelFormulario($event)"
-    [styleFramework]="'bootstrap'"
-    [msgErrorAnimation]="'fadeInLeft'"
-    [toasterConfig]="myToasterConfig"
-    [showToaster]="true"
-  >
-    <button [disabled]="!usuario" class="btn btn-block btn-info">Submit</button>
-  </ez-form>
-  <ez-form
-    [formConfig]="configuracionFormularioBusqueda"
-    [styleFramework]="'bootstrap'"
-    [msgErrorAnimation]="'fadeInLeft'"
-    [showToaster]="true"
-    [inputData]='infoLoca'
-    [fullWidth]="true"
-    (dataFromForm)="escucharDatosDelFormulario($event)"
-  >
-  </ez-form>
-<!--  <ez-toast body="ocurrio un error con el servidor intente mas tarde" title="error">-->
-<!--  </ez-toast>-->
+  <!--  <ez-form-->
+  <!--    [formConfig]="myConfiguration"-->
+  <!--    (dataFromForm)="escucharDatosDelFormulario($event)"-->
+  <!--    [styleFramework]="'bootstrap'"-->
+  <!--    [msgErrorAnimation]="'fadeInLeft'"-->
+  <!--    [toasterConfig]="myToasterConfig"-->
+  <!--    [showToaster]="true"-->
+  <!--  >-->
+  <!--    <button [disabled]="!usuario" class="btn btn-block btn-info">Submit</button>-->
+  <!--  </ez-form>-->
+  <!--  <ez-form-->
+  <!--    [formConfig]="configuracionFormularioBusqueda"-->
+  <!--    [styleFramework]="'bootstrap'"-->
+  <!--    [msgErrorAnimation]="'fadeInLeft'"-->
+  <!--    [showToaster]="true"-->
+  <!--    [inputData]='infoLoca'-->
+  <!--    [fullWidth]="true"-->
+  <!--    (dataFromForm)="escucharDatosDelFormulario($event)"-->
+  <!--  >-->
+  <!--  </ez-form>-->
+  <!--  <ez-toast body="ocurrio un error con el servidor intente mas tarde" title="error">-->
+  <!--  </ez-toast>-->
+  <mat-ta-sign-up-form></mat-ta-sign-up-form>
 </div>

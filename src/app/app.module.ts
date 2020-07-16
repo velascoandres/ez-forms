@@ -9,10 +9,12 @@ import {ToastModule} from '../../projects/toast/src/lib/toast.module';
 import {ToastService} from '../../projects/toast/src/lib/toast.service';
 import {WikipediaRestService} from './servicios/wikipedia-rest.service';
 import {HttpClientModule} from '@angular/common/http';
+import { SignUpFormComponent } from './forms/sign-up-form/sign-up-form.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    SignUpFormComponent
   ],
   imports: [
     BrowserModule,

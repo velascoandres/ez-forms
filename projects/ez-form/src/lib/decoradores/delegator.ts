@@ -6,7 +6,13 @@ export function delegateDecorator<T extends BaseFormField>(
 ) {
   return (target: any, key: string | symbol) => {
     let valorObjeto = target[key];
-    config.type.typeName = typeName;
+    if (config.type) {
+      config.type['typeName'] = typeName;
+    } else {
+      config['type'] = {
+        typeName,
+      }
+    }
     valorObjeto = config;
     const getter = () => {
       return valorObjeto;
