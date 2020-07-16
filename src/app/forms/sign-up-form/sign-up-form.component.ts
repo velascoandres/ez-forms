@@ -39,6 +39,14 @@ export class SignUpFormComponent implements OnInit {
       hint: 'Enter your password',
       type: {
         class: 'password',
+      },
+      validators: [
+        Validators.minLength(4),
+        Validators.maxLength(8),
+      ],
+      errorMessages: {
+        minlength: 'Password must has 4 characters almost',
+        maxlength: 'Maximun 8 characters',
       }
     }
   )
