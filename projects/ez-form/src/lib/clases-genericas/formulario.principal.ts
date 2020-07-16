@@ -1,5 +1,5 @@
 import {AbstractControl, FormArray, FormBuilder, FormControl, FormGroup} from '@angular/forms';
-import { ChangeDetectorRef, EventEmitter, Input, Output, Component } from '@angular/core';
+import {ChangeDetectorRef, EventEmitter, Input, Output, Component, Directive} from '@angular/core';
 // import {ToasterConfig, ToasterService} from 'angular2-toaster';
 import {debounceTime} from 'rxjs/operators';
 import {validarMinimoCheckBox} from './validadores_especiales';
@@ -12,6 +12,7 @@ import {
 import {MetadataAutocompleteInterface} from '../interfaces/metadata-autocomplete.interface';
 import {MessageService} from 'primeng';
 
+@Directive()
 export class FormularioPrincipal {
   listaMetadataAutoComplete: MetadataAutocompleteInterface[] = [];
   formulario: FormGroup;
@@ -30,12 +31,12 @@ export class FormularioPrincipal {
   @Input()
   toasterConfig = {
     success: {
-      severity: 'info',
+      severity: 'success',
       summary: 'Correct',
       detail: 'Valid Form'
     },
     fail: {
-      severity: 'warning',
+      severity: 'warn',
       summary: 'Incorrect',
       detail: 'Invalid Form'
     }

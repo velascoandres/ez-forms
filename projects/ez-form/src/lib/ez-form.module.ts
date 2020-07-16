@@ -2,7 +2,6 @@ import {NgModule} from '@angular/core';
 import {EzFormComponent} from './ez-form.component';
 import {CommonModule} from '@angular/common';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {ToasterModule} from 'angular2-toaster';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
@@ -19,6 +18,7 @@ import {AutoCompleteModule} from 'primeng/autocomplete';
 import {TableModule} from 'primeng/table';
 import {MatNativeDateModule} from '@angular/material/core';
 import {ToastModule} from 'primeng/toast';
+import {MessageService} from 'primeng';
 
 
 @NgModule({
@@ -31,7 +31,6 @@ import {ToastModule} from 'primeng/toast';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    ToasterModule.forRoot(),
     MatFormFieldModule,
     MatInputModule,
     MatOptionModule,
@@ -51,6 +50,9 @@ import {ToastModule} from 'primeng/toast';
     EzFormComponent,
     BsInputComponent,
   ],
+  providers: [
+    MessageService,
+  ]
 })
 export class EzFormModule {
 }
